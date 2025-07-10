@@ -1,0 +1,14 @@
+{
+  "theme": "GitHub",
+  "autoAccept": true,
+  "sandbox": true,
+  "fileFiltering": {
+    "respectGitIgnore": true,
+    "enableRecursiveFileSearch": true
+  },
+  "contextFileName": [
+    "GEMINI.md",
+    ".github/copilot-instructions.md"
+  ],
+  "preferredEditor": "vscode"
+}
