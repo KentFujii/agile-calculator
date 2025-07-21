@@ -20,6 +20,8 @@ dependencies = [
     "jupyterlab",
     "pandas",
     "matplotlib",
+    "PyGithub",
+    "jira",
 ]
 
 [project.urls]

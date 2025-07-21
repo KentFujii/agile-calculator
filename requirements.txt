@@ -2,3 +2,5 @@ jupyterlab
 pandas
 matplotlib
 pytest
+PyGithub
+jira
