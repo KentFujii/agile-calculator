@@ -32,7 +32,7 @@ jobs:
       - name: execute gh cli
         run: |
           gh issue list
-          # gh issue view ${{ github.event.inputs.issue_number }}
+          gh issue view ${{ github.event.inputs.issue_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
