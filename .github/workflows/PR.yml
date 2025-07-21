@@ -33,12 +33,13 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Create the Pull Request
         run: |
+          git config user.name KentFujii
+          git config user.email kent.where.the.light.is@gmail.com
           GH_ISSUE_NUMBER=$(echo $GH_ISSUE | jq -r '.number')
           GH_ISSUE_TITLE=$(echo $GH_ISSUE | jq -r '.title')
           GH_ISSUE_URL=$(echo $GH_ISSUE | jq -r '.url')
           git checkout -b "gemini/$GH_ISSUE_NUMBER"
-          git config user.name KentFujii
-          git config user.email kent.where.the.light.is@gmail.com
+          git add .
           git commit -m "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           gh pr create --title "$GH_ISSUE_TITLE" --body "$GH_ISSUE_URL"
         env:
