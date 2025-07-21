@@ -41,6 +41,7 @@ jobs:
           git checkout -b "gemini/$GH_ISSUE_NUMBER"
           git add .
           git commit -m "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          git push
           gh pr create --title "$GH_ISSUE_TITLE" --body "$GH_ISSUE_URL"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
