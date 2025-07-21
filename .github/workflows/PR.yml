@@ -25,14 +25,12 @@ jobs:
       - name: Fetch Issue Details
         run: |
           GH_ISSUE=`gh issue view ${{ github.event.inputs.issue_number }} --json title,body`
-          GH_ISSUE_TITLE=$(echo $GH_ISSUE | jq -r '.title')
-          GH_ISSUE_BODY=$(echo $GH_ISSUE | jq -r '.body')
-          echo "GH_ISSUE_TITLE=$GH_ISSUE_TITLE" >> $GITHUB_ENV
-          echo "GH_ISSUE_BODY=$GH_ISSUE_BODY" >> $GITHUB_ENV
+          echo "GH_ISSUE=$GH_ISSUE" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Diffs with Gemini CLI
         run: |
+          GH_ISSUE_BODY=$(echo $GH_ISSUE | jq -r '.body')
           npm install -g @google/gemini-cli
           gemini -y -p "$GH_ISSUE_BODY"
         env:
@@ -40,5 +38,6 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Print environment variables
         run: |
+          GH_ISSUE_TITLE=$(echo $GH_ISSUE | jq -r '.title')
           echo $GH_ISSUE_TITLE
-          echo $GH_ISSUE_BODY
+          echo "後でPRのタイトルに使用します..."
