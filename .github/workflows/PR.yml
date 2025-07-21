@@ -22,12 +22,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       # - uses: mxschmitt/action-tmate@v3
-      - name: Install Gemini CLI
+      # - name: execute Gemini CLI
+      #   run: |
+      #     npm install -g @google/gemini-cli
+      #     gemini -s -y -p "このリポジトリの解説をしてください"
+      #   env:
+      #     GOOGLE_CLOUD_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
+      #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - name: execute gh cli
         run: |
-          npm install -g @google/gemini-cli
-          gemini -s -y -p "このリポジトリの解説をしてください"
+          gh issue view ${{ github.event.inputs.issue_number }}
         env:
-          GOOGLE_CLOUD_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
           
