@@ -18,36 +18,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      # - name: Run Gemini CLI to make changes
-      #   id: gemini
-      #   run: |
-      #     # This is an example command. You may need to adjust it based on how the Gemini CLI
-      #     # is actually invoked and how it handles file changes.
-      #     # This assumes the CLI is in the PATH and configured with an API key.
-      #     gemini "${{ github.event.inputs.prompt }}"
-      #   env:
-      #     # Most CLIs that interact with an API use an environment variable for the key.
-      #     # Replace GEMINI_API_KEY with the actual variable name if it's different.
-      #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v6
-      #   with:
-      #     # The GITHUB_TOKEN is automatically created by Actions.
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     # The commit message for the changes.
-      #     commit-message: "${{ github.event.inputs.commit_message }}"
-      #     # The title of the pull request.
-      #     title: "[GEMINI] ${{ github.event.inputs.commit_message }}"
-      #     # The body of the pull request.
-      #     body: |
-      #       This PR was automatically created by a GitHub Action using the Gemini CLI.
-
-      #       **Prompt:**
-      #       > ${{ github.event.inputs.prompt }}
-      #     # The name of the new branch to create.
-      #     branch: "${{ github.event.inputs.branch }}"
-      #     # The base branch to create the PR against.
-      #     base: main
-      #     # Add labels to the PR.
-      #     labels: 'gemini, automated'
+      # - uses: mxschmitt/action-tmate@v3
+      - name: Install Gemini CLI
+        run: |
+          npm install -g @google/gemini-cli
+          gemini -s -y -p "このリポジトリの解説をしてください"
+        env:
+          GOOGLE_CLOUD_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      
+          
