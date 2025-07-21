@@ -31,7 +31,8 @@ jobs:
       #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: execute gh cli
         run: |
-          gh issue view ${{ github.event.inputs.issue_number }}
+          gh issue list
+          # gh issue view ${{ github.event.inputs.issue_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
