@@ -22,20 +22,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       # - uses: mxschmitt/action-tmate@v3
-      - name: execute Gemini CLI with GH CLI
+      - name: Fetch Issue Details
         run: |
-          npm install -g @google/gemini-cli
           GH_ISSUE=`gh issue view ${{ github.event.inputs.issue_number }} --json title,body`
-          echo "GH_ISSUE=$GH_ISSUE" >> $GITHUB_ENV
           GH_ISSUE_TITLE=$(echo $GH_ISSUE | jq -r '.title')
           GH_ISSUE_BODY=$(echo $GH_ISSUE | jq -r '.body')
-          echo "Issue Title: $GH_ISSUE_TITLE"
-          echo "Issue Body: $GH_ISSUE_BODY"
-          gemini -s -y -p "$GH_ISSUE_BODY"
+          echo "GH_ISSUE_TITLE=$GH_ISSUE_TITLE" >> $GITHUB_ENV
+          echo "GH_ISSUE_BODY=$GH_ISSUE_BODY" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Diffs with Gemini CLI
+        run: |
+          npm install -g @google/gemini-cli
+          gemini -y -p "$GH_ISSUE_BODY"
         env:
           GOOGLE_CLOUD_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Print environment variables
         run: |
-          echo $GH_ISSUE
+          echo $GH_ISSUE_TITLE
+          echo $GH_ISSUE_BODY
