@@ -7,10 +7,6 @@ on:
         description: 'The issue number to associate with the PR'
         required: true
         default: 'gemini/fix-typos'
-      commit_message:
-        description: 'The commit message'
-        required: true
-        default: 'docs: Fix typos in README.md'
 
 jobs:
   create-pr:
@@ -24,7 +20,7 @@ jobs:
       # - uses: mxschmitt/action-tmate@v3
       - name: Fetch Issue Details
         run: |
-          GH_ISSUE=`gh issue view ${{ github.event.inputs.issue_number }} --json number,title,body`
+          GH_ISSUE=`gh issue view ${{ github.event.inputs.issue_number }} --json number,title,body,url`
           echo "GH_ISSUE=$GH_ISSUE" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,8 +36,9 @@ jobs:
         run: |
           GH_ISSUE_NUMBER=$(echo $GH_ISSUE | jq -r '.number')
           GH_ISSUE_TITLE=$(echo $GH_ISSUE | jq -r '.title')
-          GH_ISSUE_BODY=$(echo $GH_ISSUE | jq -r '.body')
+          GH_ISSUE_URL=$(echo $GH_ISSUE | jq -r '.url')
           git checkout -b "gemini/$GH_ISSUE_NUMBER"
-          gh pr create --title "$GH_ISSUE_TITLE" --body "$GH_ISSUE_BODY"
+          git commit -m "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          gh pr create --title "$GH_ISSUE_TITLE" --body "$GH_ISSUE_URL"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
