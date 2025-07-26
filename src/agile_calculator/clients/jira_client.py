@@ -9,14 +9,14 @@ class JiraClient(BaseClient):
         try:
             self.client = JIRA(server=self.server, token_auth=self.token)
         except JIRAError as e:
-            raise ConnectionError(f"Failed to connect to Jira: {e.message}")
+            raise ConnectionError(f"Failed to connect to Jira: {e.text}")
 
     def get_issues(self, project_key: str) -> list:
         try:
             issues = self.client.search_issues(f'project={project_key}')
             return issues
         except JIRAError as e:
-            print(f"Failed to get issues from Jira: {e.message}")
+            print(f"Failed to get issues from Jira: {e.text}")
             return []
 
 def get_jira_client() -> JiraClient:
