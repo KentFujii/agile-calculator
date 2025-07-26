@@ -5,5 +5,5 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONPATH=/agile-calculator/
 
 WORKDIR /agile-calculator
-ADD ./requirements.txt /agile-calculator/requirements.txt
+ADD . ./
 RUN pip install -r requirements.txt
