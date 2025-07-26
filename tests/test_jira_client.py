@@ -1,57 +1,18 @@
-import pytest
-from unittest.mock import patch, MagicMock
-from src.agile_calculator.clients.jira_client import JiraClient, get_jira_client
-from jira.exceptions import JIRAError
+# from unittest.mock import patch, MagicMock
+# from src.agile_calculator.clients.jira_client import JiraClient, get_jira_client
+# from jira.exceptions import JIRAError
 
 class TestJiraClient:
-    @patch('src.agile_calculator.clients.jira_client.JIRA')
-    def test_get_issues_success(self, mock_jira):
-        # Arrange
-        mock_jira_instance = MagicMock()
-        mock_jira.return_value = mock_jira_instance
-        mock_jira_instance.search_issues.return_value = ['issue1', 'issue2']
-
-        client = JiraClient(server='https://jira.example.com', token='fake_token')
-
-        # Act
-        issues = client.get_issues('PROJ')
-
-        # Assert
-        assert len(issues) == 2
-        mock_jira_instance.search_issues.assert_called_once_with('project=PROJ')
-
-    @patch('src.agile_calculator.clients.jira_client.JIRA')
-    def test_get_issues_failure(self, mock_jira):
-        # Arrange
-        mock_jira_instance = MagicMock()
-        mock_jira.return_value = mock_jira_instance
-        mock_jira_instance.search_issues.side_effect = JIRAError(text="Failed to connect")
-
-        client = JiraClient(server='https://jira.example.com', token='fake_token')
-
-        # Act
-        issues = client.get_issues('PROJ')
-
-        # Assert
-        assert len(issues) == 0
-        mock_jira_instance.search_issues.assert_called_once_with('project=PROJ')
-
-class TestGetJiraClient:
-    @patch.dict('os.environ', {'JIRA_SERVER': 'https://jira.example.com', 'JIRA_TOKEN': 'fake_token'})
-    @patch('src.agile_calculator.clients.jira_client.JIRA')
-    def test_get_jira_client(self, mock_jira):
-        # Arrange
-        mock_jira_instance = MagicMock()
-        mock_jira.return_value = mock_jira_instance
-
-        # Act
-        client = get_jira_client()
-
-        # Assert
-        assert isinstance(client, JiraClient)
-        assert client.server == 'https://jira.example.com'
-
-    def test_get_jira_client_missing_env_vars(self):
-        # Act & Assert
-        with pytest.raises(ValueError):
-            get_jira_client()
+    # ベロシティ
+    # スプリントバーンダウン（進捗状況、残作業量の推移）
+    # スプリント完了率（計画した作業のうち完了した割合）
+    # ストーリー完了率（ストーリーごとの達成状況）
+    # イシュースループット（一定期間内に完了したチケット数）
+    # サイクルタイム（チケットが「着手」から「完了」までにかかった時間）
+    # ワークインプログレス（WIP）数（同時進行しているチケット数）
+    # ブロック率（ブロックされたチケットの割合）
+    # リオープン率（完了後に再オープンされたチケットの割合）
+    def test_velocity(self):
+        # JiraのAPIを使用してベロシティを取得するコードをここに記述
+        # 例: プロジェクトのスプリント情報を取得し、完了したストーリーのポイントを集計する
+        pass

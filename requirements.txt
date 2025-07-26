@@ -4,3 +4,5 @@ matplotlib==3.10.3
 pytest==8.4.1
 PyGithub==2.6.1
 jira==3.8.0
+uv==0.8.3
+ruff==0.12.5
