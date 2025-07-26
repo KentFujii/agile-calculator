@@ -27,3 +27,7 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/YOUR_USERNAME/agile-calculator"
 "Bug Tracker" = "https://github.com/YOUR_USERNAME/agile-calculator/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-s -p no:cacheprovider"

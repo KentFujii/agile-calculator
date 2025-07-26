@@ -7,3 +7,5 @@ services:
     volumes:
       - .:/agile-calculator
     command: jupyter lab --notebook-dir /agile-calculator/workspace --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''
+    env_file:
+      - .env
