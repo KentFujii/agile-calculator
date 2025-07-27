@@ -31,5 +31,4 @@ class TestJiraClient:
             print(f"status: {issue.fields.status.name}")
             print(f"assignee: {issue.fields.assignee.displayName}")
             print(f"story points: {getattr(issue.fields, nameMap['Story point estimate'])}")
-            breakpoint()
-            print(f"sprints: {getattr(issue.fields, nameMap['Sprint'])}")
+            print(f"sprints: {[sprint.name for sprint in getattr(issue.fields, nameMap['Sprint'])]}")
