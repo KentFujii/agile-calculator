@@ -1,7 +1,6 @@
 {
   "theme": "GitHub",
   "autoAccept": true,
-  "sandbox": true,
   "fileFiltering": {
     "respectGitIgnore": true,
     "enableRecursiveFileSearch": true
