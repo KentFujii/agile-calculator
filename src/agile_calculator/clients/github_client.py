@@ -12,11 +12,11 @@ class GitHubClient(BaseClient):
     def to_csv(self, repo_name: str) -> list:
         return []
 
-    def get_df(self, repo_name: str):
+    def df(self, repo_name: str):
         """デプロイ頻度 (DF) を取得する"""
         pass
 
-    def get_ltfc(self, repo_name: str):
+    def ltfc(self, repo_name: str):
         """リードタイム (LTFC) を取得する"""
         import os
         from github import Auth, Github
@@ -50,10 +50,10 @@ class GitHubClient(BaseClient):
             # print(f"labels: {[label.name for label in pr.labels]}")
             # print(f"assignees: {[assignee.login for assignee in pr.assignees]}")
 
-    def get_cfr(self, repo_name: str):
+    def cfr(self, repo_name: str):
         """変更失敗率 (CFR) を取得する"""
         pass
 
-    def get_mttr(self, repo_name: str):
+    def mttr(self, repo_name: str):
         """平均復旧時間 (MTTR) を取得する"""
         pass

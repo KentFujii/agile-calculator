@@ -19,7 +19,7 @@ class JiraClient(BaseClient):
     def to_csv(self, project_key: str) -> list:
         return []
 
-    def get_velocity(self, project_key: str, assignee: str):
+    def velocity(self, project_key: str, assignee: str):
         """ベロシティを取得する"""
         try:
             allfields = self.client.fields()
@@ -43,34 +43,34 @@ class JiraClient(BaseClient):
             print(f"Failed to get velocity from Jira: {e.text}")
             return []
 
-    def get_sprint_burndown(self, project_key: str, sprint_id: str):
+    def sprint_burndown(self, project_key: str, sprint_id: str):
         """スプリントバーンダウン（進捗状況、残作業量の推移）を取得する"""
         pass
 
-    def get_sprint_completion_rate(self, project_key: str, sprint_id: str):
+    def sprint_completion_rate(self, project_key: str, sprint_id: str):
         """スプリント完了率（計画した作業のうち完了した割合）を取得する"""
         pass
 
-    def get_story_completion_rate(self, project_key: str, sprint_id: str):
+    def story_completion_rate(self, project_key: str, sprint_id: str):
         """ストーリー完了率（ストーリーごとの達成状況）を取得する"""
         pass
 
-    def get_issue_throughput(self, project_key: str, period: str):
+    def issue_throughput(self, project_key: str, period: str):
         """イシュースループット（一定期間内に完了したチケット数）を取得する"""
         pass
 
-    def get_cycle_time(self, project_key: str, issue_id: str):
+    def cycle_time(self, project_key: str, issue_id: str):
         """サイクルタイム（チケットが「着手」から「完了」までにかかった時間）を取得する"""
         pass
 
-    def get_wip_count(self, project_key: str):
+    def wip_count(self, project_key: str):
         """ワークインプログレス（WIP）数（同時進行しているチケット数）を取得する"""
         pass
 
-    def get_block_rate(self, project_key: str, period: str):
+    def block_rate(self, project_key: str, period: str):
         """ブロック率（ブロックされたチケットの割合）を取得する"""
         pass
 
-    def get_reopen_rate(self, project_key: str, period: str):
+    def reopen_rate(self, project_key: str, period: str):
         """リオープン率（完了後に再オープンされたチケットの割合）を取得する"""
         pass
