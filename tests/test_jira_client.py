@@ -1,5 +1,5 @@
 import os
-from jira import JIRA
+
 from src.agile_calculator.clients.jira_client import JiraClient
 
 
