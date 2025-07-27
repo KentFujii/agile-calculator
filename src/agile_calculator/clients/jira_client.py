@@ -1,31 +1,73 @@
 import os
-
 from jira import JIRA, JIRAError
-
 from .base_client import BaseClient
 
 
 class JiraClient(BaseClient):
-    def __init__(self, server: str, token: str):
+    def __init__(self, server: str, email: str, token: str):
         self.server = server
+        self.email = email
         self.token = token
         try:
-            self.client = JIRA(server=self.server, token_auth=self.token)
+            self.client = JIRA(self.server, basic_auth=(self.email, self.token))
         except JIRAError as e:
             raise ConnectionError(f"Failed to connect to Jira: {e.text}")
 
-    def get_issues(self, project_key: str) -> list:
+    def to_pandas(self, project_key: str) -> list:
+        return []
+    
+    def get_velocity(self, project_key: str, assignee: str):
+        """ベロシティを取得する"""
         try:
-            issues = self.client.search_issues(f"project={project_key}")
-            return issues
+            allfields = self.client.fields()
+            name_map = {field["name"]: field["id"] for field in allfields}
+            issues = self.client.search_issues(
+                f'project = "{project_key}" AND assignee = "{assignee}" ORDER BY created DESC'
+            )
+            for issue in issues:
+                print("----------------------")
+                print(f"key: {issue.key}")
+                print(f"summary: {issue.fields.summary}")
+                print(f"status: {issue.fields.status.name}")
+                print(f"assignee: {issue.fields.assignee.displayName}")
+                print(
+                    f"story points: {getattr(issue.fields, name_map['Story point estimate'])}"
+                )
+                print(
+                    f"sprints: {[sprint.name for sprint in getattr(issue.fields, name_map['Sprint'])]}"
+                )
         except JIRAError as e:
-            print(f"Failed to get issues from Jira: {e.text}")
+            print(f"Failed to get velocity from Jira: {e.text}")
             return []
 
+    def get_sprint_burndown(self, project_key: str, sprint_id: str):
+        """スプリントバーンダウン（進捗状況、残作業量の推移）を取得する"""
+        pass
 
-def get_jira_client() -> JiraClient:
-    server = os.environ.get("JIRA_SERVER")
-    token = os.environ.get("JIRA_TOKEN")
-    if not server or not token:
-        raise ValueError("JIRA_SERVER and JIRA_TOKEN environment variables must be set")
-    return JiraClient(server, token)
+    def get_sprint_completion_rate(self, project_key: str, sprint_id: str):
+        """スプリント完了率（計画した作業のうち完了した割合）を取得する"""
+        pass
+
+    def get_story_completion_rate(self, project_key: str, sprint_id: str):
+        """ストーリー完了率（ストーリーごとの達成状況）を取得する"""
+        pass
+
+    def get_issue_throughput(self, project_key: str, period: str):
+        """イシュースループット（一定期間内に完了したチケット数）を取得する"""
+        pass
+
+    def get_cycle_time(self, project_key: str, issue_id: str):
+        """サイクルタイム（チケットが「着手」から「完了」までにかかった時間）を取得する"""
+        pass
+
+    def get_wip_count(self, project_key: str):
+        """ワークインプログレス（WIP）数（同時進行しているチケット数）を取得する"""
+        pass
+
+    def get_block_rate(self, project_key: str, period: str):
+        """ブロック率（ブロックされたチケットの割合）を取得する"""
+        pass
+
+    def get_reopen_rate(self, project_key: str, period: str):
+        """リオープン率（完了後に再オープンされたチケットの割合）を取得する"""
+        pass

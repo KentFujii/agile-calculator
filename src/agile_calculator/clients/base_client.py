@@ -3,5 +3,9 @@ from abc import ABC, abstractmethod
 
 class BaseClient(ABC):
     @abstractmethod
-    def get_issues(self, project_key: str):
+    def to_pandas(self, project_key: str) -> list:
+        pass
+
+    @abstractmethod
+    def to_csv(self, project_key: str) -> list:
         pass
