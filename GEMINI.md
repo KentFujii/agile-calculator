@@ -54,6 +54,16 @@ docker compose run --rm jupyter <command>
 ```
 
 例えば、テストの実行は以下です
-```bash
+```sh
 docker compose run --rm jupyter pytest
+```
+
+静的解析は以下です
+```sh
+docker compose run --rm jupyter ruff check --fix
+```
+
+型検査は以下です
+```sh
+docker compose run --rm jupyter ty check
 ```
