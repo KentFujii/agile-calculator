@@ -47,8 +47,13 @@ JiraやGitHubから取得したデータをデータフレームとして出力�
 ```bash
 docker compose build
 ```
-### コマンド一覧
-テストの実行
+### 開発コマンド
+本プロジェクトのコマンドは、以下のように`docker compose run --rm jupyter`を先頭につけて実行します。
+```bash
+docker compose run --rm jupyter <command>
+```
+
+例えば、テストの実行は以下です
 ```bash
 docker compose run --rm jupyter pytest
 ```
