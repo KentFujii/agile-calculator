@@ -16,6 +16,9 @@ class JiraClient(BaseClient):
     def to_pandas(self, project_key: str) -> list:
         return []
 
+    def to_csv(self, project_key: str) -> list:
+        return []
+
     def get_velocity(self, project_key: str, assignee: str):
         """ベロシティを取得する"""
         try:
