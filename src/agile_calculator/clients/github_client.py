@@ -1,5 +1,7 @@
 from github import Github
+
 from .base_client import BaseClient
+
 
 class GitHubClient(BaseClient):
     def __init__(self, token: str):

@@ -1,6 +1,5 @@
 import os
 
-from github import Auth, Github
 from src.agile_calculator.clients.github_client import GitHubClient
 
 
