@@ -1,6 +1,9 @@
 import os
+
 from jira import JIRA, JIRAError
+
 from .base_client import BaseClient
+
 
 class JiraClient(BaseClient):
     def __init__(self, server: str, token: str):
@@ -13,11 +16,12 @@ class JiraClient(BaseClient):
 
     def get_issues(self, project_key: str) -> list:
         try:
-            issues = self.client.search_issues(f'project={project_key}')
+            issues = self.client.search_issues(f"project={project_key}")
             return issues
         except JIRAError as e:
             print(f"Failed to get issues from Jira: {e.text}")
             return []
+
 
 def get_jira_client() -> JiraClient:
     server = os.environ.get("JIRA_SERVER")
