@@ -18,13 +18,8 @@ class GitHubClient(BaseClient):
 
     def ltfc(self, repo_name: str):
         """リードタイム (LTFC) を取得する"""
-        import os
-        from github import Auth, Github
-        token = os.environ.get("GITHUB_CLASSIC_TOKEN")
-        auth = Auth.Token(token)
-        g = Github(auth=auth)
-        g.get_user().login
-        repo = g.get_repo(repo_name)
+        self.client.get_user().login
+        repo = self.client.get_repo(repo_name)
         pulls = repo.get_pulls(state="close", sort="created")
         for pr in pulls:
             print("----------------------")

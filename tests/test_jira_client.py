@@ -19,5 +19,5 @@ class TestJiraClient:
         token = os.environ.get("JIRA_TOKEN")
         assignee = "k_fujii"
         project_key = "NC"
-        jira_client = JiraClient(server=server_url, email=email, token=token)
-        jira_client.velocity(project_key=project_key, assignee=assignee)
+        client = JiraClient(server=server_url, email=email, token=token)
+        client.velocity(project_key=project_key, assignee=assignee)
