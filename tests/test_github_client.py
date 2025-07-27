@@ -1,6 +1,7 @@
 import os
-from github import Auth
-from github import Github
+
+from github import Auth, Github
+
 
 class TestGitHubClient:
     # DF  (デプロイ頻度)
@@ -15,9 +16,9 @@ class TestGitHubClient:
         repo = g.get_repo("itandi/nomad-cloud")
         # https://pygithub.readthedocs.io/en/stable/github_objects/Repository.html?highlight=get_pulls#github.Repository.Repository.get_pulls
         # https://pygithub.readthedocs.io/en/latest/github_objects/PullRequest.html
-        pulls = repo.get_pulls(state='close', sort='created')
+        pulls = repo.get_pulls(state="close", sort="created")
         for pr in pulls:
-            print('----------------------')
+            print("----------------------")
             print(f"number: {pr.number}")
             print(f"title: {pr.title}")
             print(f"draft: {pr.draft}")
