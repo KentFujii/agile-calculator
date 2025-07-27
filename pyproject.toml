@@ -31,3 +31,46 @@ dependencies = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-s -p no:cacheprovider"
+
+# Ruff Linter & Formatter Configuration
+[tool.ruff]
+# Pythonの対象バージョン
+target-version = "py311"
+
+[tool.ruff.lint]
+# 有効にするルールセットを選択
+# "F": Pyflakes, "E": pycodestyle Error, "W": pycodestyle Warning, "I": isort, "N": pep8-naming
+select = ["E", "F", "W", "I", "N"]
+
+# 無視するルール (例: E501はフォーマッターが処理するため無視)
+ignore = ["E501"]
+
+# 除外するディレクトリ
+exclude = [
+ ".bzr",
+ ".direnv",
+ ".eggs",
+ ".git",
+ ".hg",
+ ".mypy_cache",
+ ".nox",
+ ".pants.d",
+ ".ruff_cache",
+ ".svn",
+ ".tox",
+ ".venv",
+ "__pypackages__",
+ "_build",
+ "buck-out",
+ "build",
+ "dist",
+ "node_modules",
+ "venv",
+]
+
+[tool.ruff.format]
+# Black互換のフォーマットを有効にする
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
