@@ -3,7 +3,7 @@ import os
 from src.agile_calculator.extracts.github_extract import GitHubExtract
 
 
-class TestGitHubClient:
+class TestGitHubExtract:
     # DF  (デプロイ頻度)
     # LTFC (リードタイム)
     # CFR (変更失敗率)

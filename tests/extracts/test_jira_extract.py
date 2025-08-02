@@ -3,7 +3,7 @@ import os
 from src.agile_calculator.extracts.jira_extract import JiraExtract
 
 
-class TestJiraClient:
+class TestJiraExtract:
     # ベロシティ
     # スプリントバーンダウン（進捗状況、残作業量の推移）
     # スプリント完了率（計画した作業のうち完了した割合）
