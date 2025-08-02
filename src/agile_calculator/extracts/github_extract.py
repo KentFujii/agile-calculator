@@ -1,3 +1,4 @@
+from collections import namedtuple
 from github import Github
 
 from .base_extract import BaseExtract
@@ -40,7 +41,6 @@ class GitHubExtract(BaseExtract):
             )
 
     def _get_prinfo_namedtuple(self):
-        from collections import namedtuple
         return namedtuple(
             "PRInfo",
             [

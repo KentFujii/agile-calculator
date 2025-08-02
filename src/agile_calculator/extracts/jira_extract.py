@@ -1,4 +1,5 @@
-from jira import JIRA, JIRAError
+from collections import namedtuple
+from jira import JIRA
 
 from .base_extract import BaseExtract
 
@@ -14,24 +15,35 @@ class JiraExtract(BaseExtract):
             raise ConnectionError(f"Failed to connect to Jira: {e.text}")
 
     def extract(self, project_key: str, assignee: str):
-        try:
-            allfields = self.client.fields()
-            name_map = {field["name"]: field["id"] for field in allfields}
-            issues = self.client.search_issues(
-                f'project = "{project_key}" AND assignee = "{assignee}" ORDER BY created DESC'
+        from collections import namedtuple
+        allfields = self.client.fields()
+        name_map = {field["name"]: field["id"] for field in allfields}
+        IssueInfo = self._get_issueinfo_namedtuple()
+        issues = self.client.search_issues(
+            f'project = "{project_key}" AND assignee = "{assignee}" ORDER BY created DESC'
+        )
+        for issue in issues:
+            yield IssueInfo(
+                key=issue.key,
+                summary=issue.fields.summary,
+                status=issue.fields.status.name,
+                assignee=issue.fields.assignee.displayName if issue.fields.assignee else None,
+                story_points=getattr(issue.fields, name_map['Story point estimate'], None),
+                sprints=[sprint.name for sprint in getattr(issue.fields, name_map['Sprint'], [])],
             )
-            for issue in issues:
-                yield {
-                    "key": issue.key,
-                    "summary": issue.fields.summary,
-                    "status": issue.fields.status.name,
-                    "assignee": issue.fields.assignee.displayName if issue.fields.assignee else None,
-                    "story_points": getattr(issue.fields, name_map['Story point estimate'], None),
-                    "sprints": [sprint.name for sprint in getattr(issue.fields, name_map['Sprint'], [])],
-                }
-        except JIRAError as e:
-            print(f"Failed to get velocity from Jira: {e.text}")
-            return []
+
+    def _get_issueinfo_namedtuple(self):
+        return namedtuple(
+            "IssueInfo",
+            [
+                "key",
+                "summary",
+                "status",
+                "assignee",
+                "story_points",
+                "sprints",
+            ]
+        )
 
     # def to_pandas(self, project_key: str) -> list:
     #     return []
