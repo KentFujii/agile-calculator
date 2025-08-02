@@ -1,4 +1,5 @@
 from collections import namedtuple
+
 from github import Github
 
 from .base_extract import BaseExtract
@@ -11,12 +12,12 @@ class GitHubExtract(BaseExtract):
 
     def extract(self, repo_name: str):
         """リードタイム (LTFC) を取得する。pull requestごとにnamedtupleでyieldで返す"""
-        PRInfo = self._get_prinfo_namedtuple()
+        pr_info = self._get_prinfo_namedtuple()
         self.client.get_user().login
         repo = self.client.get_repo(repo_name)
         prs = repo.get_pulls(state="close", sort="created")
         for pr in prs:
-            yield PRInfo(
+            yield pr_info(
                 number=pr.number,
                 title=pr.title,
                 draft=pr.draft,

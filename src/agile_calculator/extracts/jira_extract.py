@@ -1,5 +1,4 @@
 from collections import namedtuple
-from jira import JIRA
 
 from .base_extract import BaseExtract
 
@@ -9,21 +8,16 @@ class JiraExtract(BaseExtract):
         self.server = server
         self.email = email
         self.token = token
-        try:
-            self.client = JIRA(self.server, basic_auth=(self.email, self.token))
-        except JIRAError as e:
-            raise ConnectionError(f"Failed to connect to Jira: {e.text}")
 
     def extract(self, project_key: str, assignee: str):
-        from collections import namedtuple
         allfields = self.client.fields()
         name_map = {field["name"]: field["id"] for field in allfields}
-        IssueInfo = self._get_issueinfo_namedtuple()
+        issue_info = self._get_issueinfo_namedtuple()
         issues = self.client.search_issues(
             f'project = "{project_key}" AND assignee = "{assignee}" ORDER BY created DESC'
         )
         for issue in issues:
-            yield IssueInfo(
+            yield issue_info(
                 key=issue.key,
                 summary=issue.fields.summary,
                 status=issue.fields.status.name,
