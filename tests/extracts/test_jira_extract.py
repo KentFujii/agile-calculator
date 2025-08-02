@@ -19,5 +19,6 @@ class TestJiraExtract:
         token = os.environ.get("JIRA_TOKEN")
         assignee = "k_fujii"
         project_key = "NC"
-        extract = JiraExtract(server=server_url, email=email, token=token)
-        extract.velocity(project_key=project_key, assignee=assignee)
+        jira_extract = JiraExtract(server=server_url, email=email, token=token)
+        for issue in jira_extract.extract(project_key=project_key, assignee=assignee):
+            print(issue)
