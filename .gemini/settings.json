@@ -6,8 +6,7 @@
     "enableRecursiveFileSearch": true
   },
   "contextFileName": [
-    "GEMINI.md",
-    ".github/copilot-instructions.md"
+    "README.md"
   ],
   "preferredEditor": "vscode"
 }
