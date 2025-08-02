@@ -9,34 +9,64 @@ class GitHubExtract(BaseExtract):
         self.client = Github(self.token)
 
     def extract(self, repo_name: str):
-        """リードタイム (LTFC) を取得する。pull requestごとにyieldで返す"""
+        """リードタイム (LTFC) を取得する。pull requestごとにnamedtupleでyieldで返す"""
+        PRInfo = self._get_prinfo_namedtuple()
         self.client.get_user().login
         repo = self.client.get_repo(repo_name)
         prs = repo.get_pulls(state="close", sort="created")
         for pr in prs:
-            yield {
-                "number": pr.number,
-                "title": pr.title,
-                "draft": pr.draft,
-                "user": pr.user.login,
-                "created_at": pr.created_at,
-                "updated_at": pr.updated_at,
-                "merged_at": pr.merged_at,
-                "closed_at": pr.closed_at,
-                "state": pr.state,
-                "base_ref": pr.base.ref,
-                "head_ref": pr.head.ref,
-                "merged": pr.merged,
-                "merge_commit_sha": pr.merge_commit_sha,
-                "comments": pr.comments,
-                "review_comments": pr.review_comments,
-                "commits": pr.commits,
-                "additions": pr.additions,
-                "deletions": pr.deletions,
-                "changed_files": pr.changed_files,
-                # "labels": [label.name for label in pr.labels],
-                # "assignees": [assignee.login for assignee in pr.assignees],
-            }
+            yield PRInfo(
+                number=pr.number,
+                title=pr.title,
+                draft=pr.draft,
+                user=pr.user.login,
+                created_at=pr.created_at,
+                updated_at=pr.updated_at,
+                merged_at=pr.merged_at,
+                closed_at=pr.closed_at,
+                state=pr.state,
+                base_ref=pr.base.ref,
+                head_ref=pr.head.ref,
+                merged=pr.merged,
+                merge_commit_sha=pr.merge_commit_sha,
+                comments=pr.comments,
+                review_comments=pr.review_comments,
+                commits=pr.commits,
+                additions=pr.additions,
+                deletions=pr.deletions,
+                changed_files=pr.changed_files,
+                # labels=[label.name for label in pr.labels],
+                # assignees=[assignee.login for assignee in pr.assignees],
+            )
+
+    def _get_prinfo_namedtuple(self):
+        from collections import namedtuple
+        return namedtuple(
+            "PRInfo",
+            [
+                "number",
+                "title",
+                "draft",
+                "user",
+                "created_at",
+                "updated_at",
+                "merged_at",
+                "closed_at",
+                "state",
+                "base_ref",
+                "head_ref",
+                "merged",
+                "merge_commit_sha",
+                "comments",
+                "review_comments",
+                "commits",
+                "additions",
+                "deletions",
+                "changed_files",
+                # "labels",
+                # "assignees",
+            ]
+        )
 
     # def to_pandas(self, repo_name: str) -> list:
     #     return []
