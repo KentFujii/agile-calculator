@@ -1,9 +1,9 @@
 from github import Github
 
-from .base_client import BaseClient
+from .base_extract import BaseExtract
 
 
-class GitHubClient(BaseClient):
+class GitHubExtract(BaseExtract):
     def __init__(self, token: str):
         self.token = token
         self.client = Github(self.token)

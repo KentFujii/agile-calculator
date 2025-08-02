@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class BaseClient(ABC):
+class BaseExtract(ABC):
     @abstractmethod
     def to_pandas(self, project_key: str) -> list:
         pass

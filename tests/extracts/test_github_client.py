@@ -1,6 +1,6 @@
 import os
 
-from src.agile_calculator.clients.github_client import GitHubClient
+from src.agile_calculator.extracts.github_extract import GitHubExtract
 
 
 class TestGitHubClient:
@@ -10,6 +10,6 @@ class TestGitHubClient:
     # MTTR (平均復旧時間)
     def test_ltfc(self):
         token = os.environ.get("GITHUB_CLASSIC_TOKEN")
-        client = GitHubClient(token=token)
+        extract = GitHubExtract(token=token)
         repo_name = "itandi/nomad-cloud"
-        client.ltfc(repo_name=repo_name)
+        extract.ltfc(repo_name=repo_name)

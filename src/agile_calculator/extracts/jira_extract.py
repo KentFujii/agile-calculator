@@ -1,9 +1,9 @@
 from jira import JIRA, JIRAError
 
-from .base_client import BaseClient
+from .base_extract import BaseExtract
 
 
-class JiraClient(BaseClient):
+class JiraExtract(BaseExtract):
     def __init__(self, server: str, email: str, token: str):
         self.server = server
         self.email = email

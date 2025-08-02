@@ -1,6 +1,6 @@
 import os
 
-from src.agile_calculator.clients.jira_client import JiraClient
+from src.agile_calculator.extracts.jira_extract import JiraExtract
 
 
 class TestJiraClient:
@@ -19,5 +19,5 @@ class TestJiraClient:
         token = os.environ.get("JIRA_TOKEN")
         assignee = "k_fujii"
         project_key = "NC"
-        client = JiraClient(server=server_url, email=email, token=token)
-        client.velocity(project_key=project_key, assignee=assignee)
+        extract = JiraExtract(server=server_url, email=email, token=token)
+        extract.velocity(project_key=project_key, assignee=assignee)
