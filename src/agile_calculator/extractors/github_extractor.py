@@ -1,7 +1,6 @@
-from collections import namedtuple
-
 from github import Github
 
+from ..records.pull_request_record import PullRequestRecord
 from .base_extractor import BaseExtractor
 
 
@@ -11,13 +10,12 @@ class GitHubExtractor(BaseExtractor):
         self.client = Github(self.token)
 
     def extract(self, repo_name: str):
-        """リードタイム (LTFC) を取得する。pull requestごとにnamedtupleでyieldで返す"""
-        pr_info = self._get_prinfo_namedtuple()
+        """リードタイム (LTFC) を取得する。pull requestごとにPullRequestRecordでyieldで返す"""
         self.client.get_user().login
         repo = self.client.get_repo(repo_name)
-        prs = repo.get_pulls(state="close", sort="created")
-        for pr in prs:
-            yield pr_info(
+        pull_requests = repo.get_pulls(state="close", sort="created")
+        for pr in pull_requests:
+            yield PullRequestRecord(
                 number=pr.number,
                 title=pr.title,
                 draft=pr.draft,
@@ -37,37 +35,7 @@ class GitHubExtractor(BaseExtractor):
                 additions=pr.additions,
                 deletions=pr.deletions,
                 changed_files=pr.changed_files,
-                # labels=[label.name for label in pr.labels],
-                # assignees=[assignee.login for assignee in pr.assignees],
             )
-
-    def _get_prinfo_namedtuple(self):
-        return namedtuple(
-            "PRInfo",
-            [
-                "number",
-                "title",
-                "draft",
-                "user",
-                "created_at",
-                "updated_at",
-                "merged_at",
-                "closed_at",
-                "state",
-                "base_ref",
-                "head_ref",
-                "merged",
-                "merge_commit_sha",
-                "comments",
-                "review_comments",
-                "commits",
-                "additions",
-                "deletions",
-                "changed_files",
-                # "labels",
-                # "assignees",
-            ]
-        )
 
     # def to_pandas(self, repo_name: str) -> list:
     #     return []
