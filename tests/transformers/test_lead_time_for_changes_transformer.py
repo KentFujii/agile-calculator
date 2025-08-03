@@ -24,7 +24,6 @@ class TestLeadTimeForChangesTransformer:
         assert isinstance(result, LeadTimeForChangesRecord)
         assert result.number == 1
         assert result.title == "テストPR"
-        assert result.created_at == created_at
         assert result.merged_at == merged_at
         assert result.lead_time_seconds == 86400.0  # 1日分の秒数
 
@@ -42,6 +41,5 @@ class TestLeadTimeForChangesTransformer:
         assert isinstance(result, LeadTimeForChangesRecord)
         assert result.number == 2
         assert result.title == "未マージPR"
-        assert result.created_at == created_at
         assert result.merged_at == merged_at
         assert result.lead_time_seconds == 86400.0 # 1日分の秒数
