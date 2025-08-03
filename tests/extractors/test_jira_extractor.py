@@ -1,9 +1,9 @@
 import os
 
-from src.agile_calculator.extracts.jira_extract import JiraExtract
+from src.agile_calculator.extractors.jira_extractor import JiraExtractor
 
 
-class TestJiraExtract:
+class TestJiraExtractor:
     # ベロシティ
     # スプリントバーンダウン（進捗状況、残作業量の推移）
     # スプリント完了率（計画した作業のうち完了した割合）
@@ -19,6 +19,6 @@ class TestJiraExtract:
         token = os.environ.get("JIRA_TOKEN")
         assignee = "k_fujii"
         project_key = "NC"
-        jira_extract = JiraExtract(server=server_url, email=email, token=token)
-        for issue in jira_extract.extract(project_key=project_key, assignee=assignee):
+        jira_extractor = JiraExtractor(server=server_url, email=email, token=token)
+        for issue in jira_extractor.extract(project_key=project_key, assignee=assignee):
             print(issue)

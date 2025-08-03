@@ -1,5 +1,7 @@
 from collections import namedtuple
 
+from jira import JIRA
+
 from .base_extractor import BaseExtractor
 
 
@@ -8,6 +10,7 @@ class JiraExtractor(BaseExtractor):
         self.server = server
         self.email = email
         self.token = token
+        self.client = JIRA(self.server, basic_auth=(self.email, self.token))
 
     def extract(self, project_key: str, assignee: str):
         allfields = self.client.fields()
