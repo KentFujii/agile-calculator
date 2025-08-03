@@ -12,6 +12,6 @@ class LeadTimeForChangesTransformer:
         return LeadTimeForChangesRecord(
             number=self.pull_request.number,
             title=self.pull_request.title,
-            merged_at=self.pull_request.merged_at,
+            merged_date=self.pull_request.merged_at.date(),
             lead_time_seconds=lead_time_seconds
         )
