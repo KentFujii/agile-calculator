@@ -32,16 +32,19 @@ Pythonを利用しJiraやGitHubのデータをJupyter Notebookで可視化する
 [ユーザーストーリーマッピング](https://www.canva.com/design/DAGc0-KJrLg/_1o6i9n5LO1YdSLCs_IXFA/view?utm_content=DAGc0-KJrLg&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3a1ac8b254)
 
 #### データを取得する(Extract)
-JiraやGitHubのAPIからデータを取得するためのモジュールを実装します。
+分析対象となるサービスのAPIからデータを取得するためのモジュールを実装します。
 - src/extractors
 #### データを加工する(Transform)
-JiraやGitHubから取得したデータを加工するためのモジュールを実装します。
+取得したデータを用途に沿って加工するためのモジュールを実装します。
 - src/transformers
 #### データを出力する(Load)
 加工したデータを用途に則した各形式に出力するためのモジュールを実装します。
 - src/loaders
+### データの形式を保持する(Record)
+各工程間でデータの形式を保持するためのモジュールを実装します。
+- src/records
 #### データの流れを管理する(Workflow)
-JiraやGitHubのデータを取得し、加工し、出力するためのワークフローを管理するモジュールを実装します。
+データを取得し、加工し、出力するためのワークフローを管理するモジュールを実装します。
 - src/workflows
 #### アプリケーション
 このシステムを利用するためのインターフェースアプリケーション向けのモジュールを実装します。
