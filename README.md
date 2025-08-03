@@ -48,7 +48,7 @@ Pythonを利用しJiraやGitHubのデータをJupyter Notebookで可視化する
 - src/workflows
 #### アプリケーション
 このシステムを利用するためのインターフェースアプリケーション向けのモジュールを実装します。
-- src/jupyter
+- src/pandas
 - src/cli
 
 ### 開発手順
