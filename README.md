@@ -10,10 +10,10 @@
 Pythonを利用しJiraやGitHubのデータを、抽出・加工し可視化することで、開発サイクル改善の施策を推進します。
 
 ## エレベーターピッチ
-[ 潜在的なニーズを満たしたり、潜在的な課題を解決したり ]したい
+[ プロダクト開発の生産性を向上 ]したい
 [ JiraやGitHubユーザーのITエンジニア ]向けの
 [ agile-calculator ]というプロダクトは
-[ Jupyter Notebookで利用する、JiraやGitHub向けのPythonクライアント ]です。
+[ JiraやGitHub向けのPythonクライアント ]です。
 これは[ Four Keysといった各種開発サイクルの指標計測 ]ができ、
 [ Findy Team+ ]とは違って
 [ JiraやGitHubのクレデンシャルさえあれば、無料で利用できるという特徴 ]が備わっている。
