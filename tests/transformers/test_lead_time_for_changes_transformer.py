@@ -28,14 +28,20 @@ class TestLeadTimeForChangesTransformer:
         assert result.merged_at == merged_at
         assert result.lead_time == 86400.0  # 1日分の秒数
 
-    def test_transform_returns_none_lead_time_if_not_merged(self):
+    def test_transform_returns_lead_time(self):
         created_at = datetime.datetime(2024, 1, 1, 12, 0, 0)
+        merged_at = datetime.datetime(2024, 1, 2, 12, 0, 0)
         pr = PullRequestRecord(
             number=2,
             title="未マージPR",
             created_at=created_at,
-            merged_at=None
+            merged_at=merged_at
         )
         transformer = LeadTimeForChangesTransformer(pr)
         result = transformer.transform()
-        assert result.lead_time is None
+        assert isinstance(result, LeadTimeForChangesRecord)
+        assert result.number == 2
+        assert result.title == "未マージPR"
+        assert result.created_at == created_at
+        assert result.merged_at == merged_at
+        assert result.lead_time == 86400.0 # 1日分の秒数
