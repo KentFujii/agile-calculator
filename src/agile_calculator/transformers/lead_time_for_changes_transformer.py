@@ -8,11 +8,11 @@ class LeadTimeForChangesTransformer:
         self.pull_request = pull_request
 
     def transform(self) -> 'LeadTimeForChangesRecord':
-        lead_time = (self.pull_request.merged_at - self.pull_request.created_at).total_seconds() if self.pull_request.merged_at else None
+        lead_time_seconds = (self.pull_request.merged_at - self.pull_request.created_at).total_seconds() if self.pull_request.merged_at else None
         return LeadTimeForChangesRecord(
             number=self.pull_request.number,
             title=self.pull_request.title,
             created_at=self.pull_request.created_at,
             merged_at=self.pull_request.merged_at,
-            lead_time=lead_time
+            lead_time_seconds=lead_time_seconds
         )

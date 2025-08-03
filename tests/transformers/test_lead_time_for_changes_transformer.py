@@ -26,7 +26,7 @@ class TestLeadTimeForChangesTransformer:
         assert result.title == "テストPR"
         assert result.created_at == created_at
         assert result.merged_at == merged_at
-        assert result.lead_time == 86400.0  # 1日分の秒数
+        assert result.lead_time_seconds == 86400.0  # 1日分の秒数
 
     def test_transform_returns_lead_time(self):
         created_at = datetime.datetime(2024, 1, 1, 12, 0, 0)
@@ -44,4 +44,4 @@ class TestLeadTimeForChangesTransformer:
         assert result.title == "未マージPR"
         assert result.created_at == created_at
         assert result.merged_at == merged_at
-        assert result.lead_time == 86400.0 # 1日分の秒数
+        assert result.lead_time_seconds == 86400.0 # 1日分の秒数
