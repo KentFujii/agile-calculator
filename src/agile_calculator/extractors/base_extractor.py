@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class BaseExtract(ABC):
+class BaseExtractor(ABC):
     @abstractmethod
     def extract(self, project_key: str) -> list:
         pass

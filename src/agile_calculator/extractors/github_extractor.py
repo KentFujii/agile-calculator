@@ -2,10 +2,10 @@ from collections import namedtuple
 
 from github import Github
 
-from .base_extract import BaseExtract
+from .base_extractor import BaseExtractor
 
 
-class GitHubExtract(BaseExtract):
+class GitHubExtractor(BaseExtractor):
     def __init__(self, token: str):
         self.token = token
         self.client = Github(self.token)

@@ -1,9 +1,9 @@
 from collections import namedtuple
 
-from .base_extract import BaseExtract
+from .base_extractor import BaseExtractor
 
 
-class JiraExtract(BaseExtract):
+class JiraExtractor(BaseExtractor):
     def __init__(self, server: str, email: str, token: str):
         self.server = server
         self.email = email
