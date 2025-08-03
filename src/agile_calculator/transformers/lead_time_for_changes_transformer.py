@@ -1,15 +1,18 @@
+
 from ..records.pull_request_record import PullRequestRecord
+from ..records.lead_time_for_changes_record import LeadTimeForChangesRecord
 
 
 class LeadTimeForChangesTransformer:
-    def __init__(self):
-        pass
+    def __init__(self, pull_request: PullRequestRecord):
+        self.pull_request = pull_request
 
-    def transform(self, pull_request: PullRequestRecord) -> dict:
-        return {
-            "number": pull_request.number,
-            "title": pull_request.title,
-            "created_at": pull_request.created_at,
-            "merged_at": pull_request.merged_at,
-            "lead_time": (pull_request.merged_at - pull_request.created_at).total_seconds if pull_request.merged_at else None
-        }
+    def transform(self) -> 'LeadTimeForChangesRecord':
+        lead_time = (self.pull_request.merged_at - self.pull_request.created_at).total_seconds() if self.pull_request.merged_at else None
+        return LeadTimeForChangesRecord(
+            number=self.pull_request.number,
+            title=self.pull_request.title,
+            created_at=self.pull_request.created_at,
+            merged_at=self.pull_request.merged_at,
+            lead_time=lead_time
+        )

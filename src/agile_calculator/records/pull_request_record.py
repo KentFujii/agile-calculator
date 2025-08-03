@@ -1,4 +1,6 @@
-class PullRequestRecord:
+from .base_record import BaseRecorder
+
+class PullRequestRecord(BaseRecorder):
     def __init__(self, number, title, draft, user, created_at, updated_at, merged_at, closed_at, state,
                  base_ref, head_ref, merged, merge_commit_sha, comments, review_comments, commits,
                  additions, deletions, changed_files):
