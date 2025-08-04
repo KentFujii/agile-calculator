@@ -1,4 +1,5 @@
 from collections import defaultdict
+from statistics import mean
 
 import matplotlib.dates as mdates
 import matplotlib.ticker as ticker
@@ -21,14 +22,14 @@ class MatplotlibLoader:
         self.records = records
 
     def load(self):
-        # merged_atごとにlead_time_secondsを合計
-        merged_dict = defaultdict(float)
+        # merged_dateごとにlead_time_secondsの平均を算出
+        merged_dict = defaultdict(list)
         for r in self.records:
-            merged_dict[r.merged_date] += r.lead_time_seconds
-        # 日付でソート
-        sorted_items = sorted(merged_dict.items())
+            merged_dict[r.merged_date].append(r.lead_time_seconds)
+        # 日付でソートし、平均値を算出
+        sorted_items = sorted((k, mean(v)) for k, v in merged_dict.items())
         x = [k for k, v in sorted_items]
-        y = [v for k, v in sorted_items]  # 秒のまま
+        y = [v for k, v in sorted_items]  # 秒のまま（平均）
         plt.plot(x, y, marker='o')
         plt.xlabel(self.X_LABEL)
         plt.ylabel(self.Y_LABEL)
