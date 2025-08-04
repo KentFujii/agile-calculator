@@ -2,9 +2,8 @@ from collections import defaultdict
 from statistics import mean
 
 import matplotlib.dates as mdates
-import matplotlib.ticker as ticker
 import matplotlib.pyplot as plt
-
+import matplotlib.ticker as ticker
 
 
 class MatplotlibLoader:

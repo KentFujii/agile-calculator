@@ -68,17 +68,17 @@ docker compose run --rm jupyter <command>
 
 例えば、テストの実行は以下です
 ```sh
-docker compose run --rm jupyter pytest
+docker compose run --rm jupyter uv run pytest
 ```
 
 静的解析は以下です
 ```sh
-docker compose run --rm jupyter ruff check --fix
+docker compose run --rm jupyter uv run ruff check --fix
 ```
 
 型検査は以下です
 ```sh
-docker compose run --rm jupyter ty check
+docker compose run --rm jupyter uv run ty check
 ```
 
 # ワーキングアグリーメント
