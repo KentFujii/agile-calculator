@@ -1,6 +1,10 @@
 import datetime
+
 from src.agile_calculator.loaders.matplotlib_loader import MatplotlibLoader
-from src.agile_calculator.records.lead_time_for_changes_record import LeadTimeForChangesRecord
+from src.agile_calculator.records.lead_time_for_changes_record import (
+    LeadTimeForChangesRecord,
+)
+
 
 class TestMatplotlibLoader:
     def test_matplotlib_loader_sum(self, monkeypatch):

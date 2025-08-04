@@ -1,6 +1,9 @@
 import os
-import pytest
-from src.agile_calculator.workflows.lead_time_for_changes_workflow import LeadTimeForChangesWorkflow
+
+from src.agile_calculator.workflows.lead_time_for_changes_workflow import (
+    LeadTimeForChangesWorkflow,
+)
+
 
 class TestLeadTimeForChangesWorkflow:
     def test_lead_time_for_changes_workflow_integration(self):

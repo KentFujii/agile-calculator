@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+
 from github import Github
 
 from ..records.pull_request_record import PullRequestRecord
@@ -10,15 +11,14 @@ class GitHubExtractor(BaseExtractor):
         self.token = token
         self.client = Github(self.token)
 
-    def extract(self, repo_name: str):
+    def extract(self, repo_name: str, since_days: int = 14, users: list[str] = None):
         self.client.get_user().login
         repo = self.client.get_repo(repo_name)
-        # https://pygithub.readthedocs.io/en/latest/github_objects/Repository.html?highlight=get_pulls#github.Repository.Repository.get_pulls
         pull_requests = repo.get_pulls(state="close", sort="created", direction="desc", base='main')
         for pr in pull_requests:
-            if pr.created_at < datetime.now(pr.created_at.tzinfo) - timedelta(days=30):
+            if pr.created_at < datetime.now(pr.created_at.tzinfo) - timedelta(days=since_days):
                 break
-            if pr.user.login != "KentFujii":
+            if users and pr.user.login not in users:
                 continue
             print(pr)
             yield PullRequestRecord(

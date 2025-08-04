@@ -1,6 +1,9 @@
 from ..extractors.github_extractor import GitHubExtractor
-from ..transformers.lead_time_for_changes_transformer import LeadTimeForChangesTransformer
 from ..loaders.matplotlib_loader import MatplotlibLoader
+from ..transformers.lead_time_for_changes_transformer import (
+    LeadTimeForChangesTransformer,
+)
+
 
 class LeadTimeForChangesWorkflow:
     def __init__(self, github_token, repo_name):
