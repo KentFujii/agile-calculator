@@ -3,5 +3,9 @@ from abc import ABC, abstractmethod
 
 class BaseExtractor(ABC):
     @abstractmethod
-    def extract(self, project_key: str) -> list:
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def extract(self) -> list:
         pass
