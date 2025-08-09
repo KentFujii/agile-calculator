@@ -1,7 +1,7 @@
-from .base_record import BaseRecorder
+from .base_record import BaseRecord
 
 
-class PullRequestRecord(BaseRecorder):
+class PullRequestRecord(BaseRecord):
     def __init__(
         self,
         number=None,
