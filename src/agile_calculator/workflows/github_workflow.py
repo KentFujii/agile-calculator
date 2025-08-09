@@ -5,7 +5,7 @@ from ..transformers.lead_time_for_changes_transformer import (
 )
 
 
-class LeadTimeForChangesWorkflow:
+class GithubWorkflow:
     def __init__(self, github_token, repo_name, since_days=None, users=None):
         self.github_token = github_token
         self.repo_name = repo_name
