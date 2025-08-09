@@ -38,9 +38,6 @@ requires-dist = [
     { name = "uv", specifier = "==0.8.3" },
 ]
 
-[package.metadata.requires-dev]
-dev = []
-
 [[package]]
 name = "anyio"
 version = "4.9.0"

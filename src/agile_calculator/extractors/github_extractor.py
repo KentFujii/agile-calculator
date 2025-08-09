@@ -11,5 +11,5 @@ class GitHubExtractor(BaseExtractor):
         self.token = token
         self.client = Github(self.token)
 
-    def extract(self):
+    def run(self):
         pass

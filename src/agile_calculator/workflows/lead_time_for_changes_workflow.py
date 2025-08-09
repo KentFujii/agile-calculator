@@ -20,16 +20,16 @@ class LeadTimeForChangesWorkflow:
         )
 
     def _extract(self):
-        extracted_records = PullRequestExtractor(self.github_token).extract(
+        extracted_records = PullRequestExtractor(self.github_token).run(
             self.repo_name, since_days=self.since_days, users=self.users
         )
         return extracted_records
 
     def _transform(self, extracted_records):
         transformed_records = [
-            LeadTimeForChangesTransformer(pr).transform() for pr in extracted_records if pr.merged_at
+            LeadTimeForChangesTransformer(pr).run() for pr in extracted_records if pr.merged_at
         ]
         return transformed_records
 
     def _load(self, transformed_records):
-        MatplotlibLoader(transformed_records).load()
+        MatplotlibLoader(transformed_records).run()

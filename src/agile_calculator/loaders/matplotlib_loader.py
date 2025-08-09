@@ -20,7 +20,7 @@ class MatplotlibLoader:
         """
         self.records = records
 
-    def load(self):
+    def run(self):
         # merged_dateごとにlead_time_secondsの平均を算出
         merged_dict = defaultdict(list)
         for r in self.records:

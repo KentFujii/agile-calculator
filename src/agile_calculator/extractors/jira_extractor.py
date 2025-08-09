@@ -12,7 +12,7 @@ class JiraExtractor(BaseExtractor):
         self.token = token
         self.client = JIRA(self.server, basic_auth=(self.email, self.token))
 
-    def extract(self, project_key: str, assignee: str):
+    def run(self, project_key: str, assignee: str):
         allfields = self.client.fields()
         name_map = {field["name"]: field["id"] for field in allfields}
         issue_info = self._get_issueinfo_namedtuple()

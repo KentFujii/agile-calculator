@@ -7,5 +7,5 @@ class BaseExtractor(ABC):
         pass
 
     @abstractmethod
-    def extract(self) -> list:
+    def run(self) -> list:
         pass
