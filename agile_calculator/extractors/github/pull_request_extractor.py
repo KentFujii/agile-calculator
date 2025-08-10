@@ -1,3 +1,4 @@
+from typing import Optional
 from datetime import datetime, timedelta
 
 from github import Github
@@ -7,23 +8,25 @@ from ..github_extractor import GitHubExtractor
 
 
 class PullRequestExtractor(GitHubExtractor):
-    def __init__(self, token: str):
-        super().__init__(token)
+    def __init__(self, repo_name: str, users: tuple, since_days: int):
+        super().__init__()
+        self.repo_name = repo_name
+        self.users = users
+        self.since_days = since_days
 
     # TODO: .github.PullRequestExtractorに継承させる
     # https://docs.github.com/en/rest/pulls/pulls?apiVersion=2022-11-28#get-a-pull-request
-    def run(self, repo_name: str, since_days: int = 14, users: list[str] = None):
-        self.client.get_user().login
-        repo = self.client.get_repo(repo_name)
+    def run(self):
+        repo = self.client.get_repo(self.repo_name)
         pull_requests = repo.get_pulls(state="close", sort="created", direction="desc", base='main')
-        return list(self._extract_request_records(pull_requests, since_days, users))
+        return list(self._extract_request_records(pull_requests))
 
-    def _extract_request_records(self, pull_requests, since_days, users):
+    def _extract_request_records(self, pull_requests):
         for pr in pull_requests:
-            if pr.created_at < datetime.now(pr.created_at.tzinfo) - timedelta(days=since_days):
-                break
-            if users and pr.user.login not in users:
+            if self.users and pr.user.login not in self.users:
                 continue
+            if pr.created_at < datetime.now(pr.created_at.tzinfo) - timedelta(days=self.since_days):
+                break
             # TODO: 後でloggerに出力することを検討
             print(pr)
             yield PullRequestRecord(
