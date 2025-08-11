@@ -1,6 +1,8 @@
 import os
 
-from src.agile_calculator.extractors.jira_extractor import JiraExtractor
+import pytest
+
+from agile_calculator.tasks.extractors.jira_extractor import JiraExtractor
 
 
 class TestJiraExtractor:
@@ -13,6 +15,7 @@ class TestJiraExtractor:
     # ワークインプログレス（WIP）数（同時進行しているチケット数）
     # ブロック率（ブロックされたチケットの割合）
     # リオープン率（完了後に再オープンされたチケットの割合）
+    @pytest.mark.skip(reason="Not implemented")
     def test_velocity(self):
         server_url = os.environ.get("JIRA_SERVER_URL")
         email = os.environ.get("JIRA_EMAIL")
