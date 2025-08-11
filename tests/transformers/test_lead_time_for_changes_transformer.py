@@ -3,6 +3,7 @@ import datetime
 from src.agile_calculator.records.lead_time_for_changes_record import (
     LeadTimeForChangesRecord,
 )
+
 from agile_calculator.records.extractors.pull_request_record import PullRequestRecord
 from agile_calculator.tasks.transformers.lead_time_for_changes_transformer import (
     LeadTimeForChangesTransformer,

@@ -3,7 +3,7 @@ from collections import namedtuple
 from jira import JIRA
 
 
-class JiraExtractor(BaseExtractor):
+class JiraExtractor:
     def __init__(self, server: str, email: str, token: str):
         self.server = server
         self.email = email
