@@ -14,16 +14,10 @@ class MatplotlibLoader:
     Y_LABEL = "Lead Time (hours)"
     TITLE = "Lead Time for Changes per Merged Date"
 
-    def __init__(self, records):
-        """
-        records: List[LeadTimeForChangesRecord]
-        """
-        self.records = records
-
-    def run(self):
+    def run(self, records):
         # merged_dateごとにlead_time_secondsの平均を算出
         merged_dict = defaultdict(list)
-        for r in self.records:
+        for r in records:
             merged_dict[r.merged_date].append(r.lead_time_seconds)
         # 日付でソートし、平均値を算出
         sorted_items = sorted((k, mean(v)) for k, v in merged_dict.items())

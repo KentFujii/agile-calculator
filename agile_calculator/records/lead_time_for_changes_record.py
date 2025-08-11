@@ -1,7 +1,7 @@
-from .base_record import BaseRecorder
+from .base_record import BaseRecord
 
 
-class LeadTimeForChangesRecord(BaseRecorder):
+class LeadTimeForChangesRecord(BaseRecord):
     def __init__(
         self,
         number=None,

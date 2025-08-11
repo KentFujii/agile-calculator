@@ -3,14 +3,14 @@ from ..records.pull_request_record import PullRequestRecord
 
 
 class LeadTimeForChangesTransformer:
-    def __init__(self, pull_request: PullRequestRecord):
-        self.pull_request = pull_request
-
-    def run(self) -> 'LeadTimeForChangesRecord':
-        lead_time_seconds = (self.pull_request.merged_at - self.pull_request.created_at).total_seconds() if self.pull_request.merged_at else None
-        return LeadTimeForChangesRecord(
-            number=self.pull_request.number,
-            title=self.pull_request.title,
-            merged_date=self.pull_request.merged_at.date(),
-            lead_time_seconds=lead_time_seconds
+    def run(self, records):
+        for record in records:
+            if not record.merged_at:
+                continue
+            lead_time_seconds = (record.merged_at - record.created_at).total_seconds()
+            yield LeadTimeForChangesRecord(
+                number=record.number,
+                title=record.title,
+                merged_date=record.merged_at.date(),
+                lead_time_seconds=lead_time_seconds
         )

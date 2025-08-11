@@ -1,23 +1,10 @@
 import fire
 
-
-class LeadTimeForChanges:
-    def matplotlib(self, ticks):
-        print(ticks)
-        print('matplotlib')
-
-class PullRequest:
-    def lead_time_for_changes(self, per_days):
-        print(per_days)
-        return LeadTimeForChanges()
-
+from .workflows.github_workflow import GitHubWorkflow
 
 class Cli:
     def github(self):
-        return GitHub()
-
-    def jira(self):
-        pass
+        return GitHubWorkflow()
 
 def main():
     fire.Fire(Cli, name='agile-calculator')
