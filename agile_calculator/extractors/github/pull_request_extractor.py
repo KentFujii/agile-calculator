@@ -28,7 +28,6 @@ class PullRequestExtractor(GitHubExtractor):
             if pr.created_at < datetime.now(pr.created_at.tzinfo) - timedelta(days=self.since_days):
                 break
             # TODO: 後でloggerに出力することを検討
-            print(pr)
             yield PullRequestRecord(
                 number=pr.number,
                 title=pr.title,

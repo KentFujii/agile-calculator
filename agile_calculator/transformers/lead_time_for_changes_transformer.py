@@ -5,6 +5,8 @@ from ..records.pull_request_record import PullRequestRecord
 class LeadTimeForChangesTransformer:
     def run(self, records):
         for record in records:
+            if not record.merged_at:
+                continue
             lead_time_seconds = (record.merged_at - record.created_at).total_seconds()
             yield LeadTimeForChangesRecord(
                 number=record.number,
