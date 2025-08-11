@@ -1,10 +1,10 @@
 import fire
 
-from .interfaces.github_interface import GitHubInterface
+from .workflows.github_workflow import GitHubWorkflow
 
 class Cli:
     def github(self):
-        return GitHubInterface()
+        return GitHubWorkflow()
 
 def main():
     fire.Fire(Cli, name='agile-calculator')
