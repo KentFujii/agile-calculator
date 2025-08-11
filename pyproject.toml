@@ -41,6 +41,9 @@ agile-calculator = "agile_calculator.cli:main"
 testpaths = ["tests"]
 addopts = "-s -p no:cacheprovider"
 
+[tool.setuptools.packages.find]
+include = ["agile_calculator"]
+
 # Ruff Linter & Formatter Configuration
 [tool.ruff]
 # Pythonの対象バージョン
@@ -85,6 +88,6 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.ty.environment]
-root = ["./src"]
+root = ["./agile_calculator"]
 python = "/usr/local/bin/python"
 extra-paths = ["./"]

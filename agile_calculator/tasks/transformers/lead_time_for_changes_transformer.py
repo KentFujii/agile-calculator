@@ -1,5 +1,6 @@
-from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
-from agile_calculator.records.transformed.lead_time_for_changes_record import LeadTimeForChangesRecord
+from agile_calculator.records.transformed.lead_time_for_changes_record import (
+    LeadTimeForChangesRecord,
+)
 
 
 class LeadTimeForChangesTransformer:

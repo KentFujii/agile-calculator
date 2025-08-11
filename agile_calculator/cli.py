@@ -2,6 +2,7 @@ import fire
 
 from .workflows.github_workflow import GitHubWorkflow
 
+
 class Cli:
     def github(self):
         return GitHubWorkflow()

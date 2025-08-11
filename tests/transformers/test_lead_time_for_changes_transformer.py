@@ -3,8 +3,8 @@ import datetime
 from src.agile_calculator.records.lead_time_for_changes_record import (
     LeadTimeForChangesRecord,
 )
-from src.agile_calculator.records.pull_request_record import PullRequestRecord
-from src.agile_calculator.transformers.lead_time_for_changes_transformer import (
+from agile_calculator.records.extractors.pull_request_record import PullRequestRecord
+from agile_calculator.tasks.transformers.lead_time_for_changes_transformer import (
     LeadTimeForChangesTransformer,
 )
 
@@ -20,7 +20,7 @@ class TestLeadTimeForChangesTransformer:
             merged_at=merged_at
         )
         transformer = LeadTimeForChangesTransformer(pr)
-        result = transformer.transform()
+        result = transformer.run()
         assert isinstance(result, LeadTimeForChangesRecord)
         assert result.number == 1
         assert result.title == "テストPR"
@@ -37,7 +37,7 @@ class TestLeadTimeForChangesTransformer:
             merged_at=merged_at
         )
         transformer = LeadTimeForChangesTransformer(pr)
-        result = transformer.transform()
+        result = transformer.run()
         assert isinstance(result, LeadTimeForChangesRecord)
         assert result.number == 2
         assert result.title == "未マージPR"

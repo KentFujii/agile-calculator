@@ -1,6 +1,8 @@
 import os
 
-from src.agile_calculator.extractors.github.pull_request_extractor import PullRequestExtractor
+from src.agile_calculator.extractors.github.pull_request_extractor import (
+    PullRequestExtractor,
+)
 
 
 class TestGitHubExtractor:

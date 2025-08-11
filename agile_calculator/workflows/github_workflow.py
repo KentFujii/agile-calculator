@@ -1,6 +1,9 @@
 from ..tasks.extractors.github.pull_request_extractor import PullRequestExtractor
-from ..tasks.transformers.lead_time_for_changes_transformer import LeadTimeForChangesTransformer
 from ..tasks.loaders.matplotlib_loader import MatplotlibLoader
+from ..tasks.transformers.lead_time_for_changes_transformer import (
+    LeadTimeForChangesTransformer,
+)
+
 
 class GitHubWorkflow:
     def pull_request(self, repo_name: str, users: tuple, since_days: int):

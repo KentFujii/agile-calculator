@@ -1,7 +1,7 @@
 import os
-from datetime import datetime, timedelta
 
 from github import Github
+
 
 class GitHubExtractor:
     def __init__(self):
