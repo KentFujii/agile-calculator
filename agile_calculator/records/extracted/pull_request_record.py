@@ -1,4 +1,4 @@
-from ..base_record import BaseRecord
+from agile_calculator.records.base_record import BaseRecord
 
 
 class PullRequestRecord(BaseRecord):

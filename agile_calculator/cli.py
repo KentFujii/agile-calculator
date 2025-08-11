@@ -1,8 +1,13 @@
 import logging
+
 import fire
 
-from .workflows.github_workflow import PullRequestWorkflow
-from .tasks.extractors.github.pull_request_extractor import PullRequestExtractor
+from agile_calculator.tasks.extractors.github.pull_request_extractor import (
+    PullRequestExtractor,
+)
+from agile_calculator.workflows.extracting.pull_request_workflow import (
+    PullRequestWorkflow,
+)
 
 
 # agile-calculator github-pull-request --repo_name=itandi/nomad-cloud --since_days=30 --users="" lead_time_for_changes matplotlib
@@ -11,6 +16,7 @@ class Cli:
         level = getattr(logging, log_level.upper(), logging.INFO)
         logging.basicConfig(level=level)
         logging.getLogger("urllib3").setLevel(logging.WARNING)
+        logging.getLogger("matplotlib").setLevel(logging.WARNING)
 
     def github_pull_request(self, repo_name: str, users: tuple, since_days: int):
         """

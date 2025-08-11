@@ -1,4 +1,4 @@
-from ..records.pull_request_record import PullRequestRecord
+from agile_calculator.records.pull_request_record import PullRequestRecord
 
 
 class PassThroughTransformer:
