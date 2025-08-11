@@ -3,8 +3,7 @@ from datetime import datetime, timedelta
 
 from github import Github
 
-from ..records.pull_request_record import PullRequestRecord
-# from .base_extractor import BaseExtractor
+from agile_calculator.records.pull_request_record import PullRequestRecord
 
 
 class GitHubExtractor:
