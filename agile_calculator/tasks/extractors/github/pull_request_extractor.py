@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from github import Github
 
-from agile_calculator.records.pull_request_record import PullRequestRecord
+from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
 from agile_calculator.tasks.extractors.github_extractor import GitHubExtractor
 
 

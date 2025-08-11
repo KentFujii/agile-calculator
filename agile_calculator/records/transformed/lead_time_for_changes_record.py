@@ -1,4 +1,4 @@
-from .base_record import BaseRecord
+from ..base_record import BaseRecord
 
 
 class LeadTimeForChangesRecord(BaseRecord):
