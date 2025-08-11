@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 
 from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
@@ -24,8 +25,7 @@ class PullRequestExtractor(GitHubExtractor):
                 continue
             if pr.created_at < datetime.now(pr.created_at.tzinfo) - timedelta(days=self.since_days):
                 break
-            # TODO: 後でloggerに出力することを検討
-            yield PullRequestRecord(
+            record = PullRequestRecord(
                 number=pr.number,
                 title=pr.title,
                 draft=pr.draft,
@@ -46,3 +46,5 @@ class PullRequestExtractor(GitHubExtractor):
                 deletions=pr.deletions,
                 changed_files=pr.changed_files,
             )
+            logging.debug(record)
+            yield record

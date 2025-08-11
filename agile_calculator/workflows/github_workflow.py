@@ -1,22 +1,9 @@
-from ..tasks.extractors.github.pull_request_extractor import PullRequestExtractor
-from ..tasks.loaders.matplotlib_loader import MatplotlibLoader
+# from ..tasks.extractors.github.pull_request_extractor import PullRequestExtractor
 from ..tasks.transformers.lead_time_for_changes_transformer import (
     LeadTimeForChangesTransformer,
 )
+from ..tasks.loaders.matplotlib_loader import MatplotlibLoader
 
-
-class GitHubWorkflow:
-    def pull_request(self, repo_name: str, users: tuple, since_days: int):
-        """
-        GitHubのPull Requestからデータを抽出します。
-
-        :param repo_name: リポジトリ名 (例: 'owner/repo')
-        :param users: 特定のユーザーのPull Requestのみを取得する場合、そのユーザー名 (例: 'A,B,C')
-        :param since_days: 何日前からのデータを取得するか
-        """
-        return PullRequestWorkflow(
-            extractor=PullRequestExtractor(repo_name, users, since_days)
-        )
 
 class PullRequestWorkflow:
     def __init__(self, extractor):
