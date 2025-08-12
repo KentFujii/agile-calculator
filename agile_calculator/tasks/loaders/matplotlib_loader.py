@@ -14,7 +14,7 @@ class MatplotlibLoader:
     Y_LABEL = "Lead Time (hours)"
     TITLE = "Lead Time for Changes per Merged Date"
 
-    def run(self, records):
+    def run(self, records) -> None:
         # merged_dateごとにlead_time_secondsの平均を算出
         merged_dict = defaultdict(list)
         for r in records:

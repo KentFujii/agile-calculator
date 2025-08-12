@@ -1,17 +1,18 @@
+from typing import Iterator
+
+from agile_calculator.records.extracted.pull_request_record import (
+    PullRequestRecord,
+)
 from agile_calculator.records.transformed.lead_time_for_changes_record import (
     LeadTimeForChangesRecord,
 )
 
 
 class LeadTimeForChangesTransformer:
-    def run(self, records):
-        # TODO: 
-        # merged_dateごとにlead_time_secondsの平均を算出
-        # merged_dict = defaultdict(list)
-        # for r in records:
-        #     merged_dict[r.merged_date].append(r.lead_time_seconds)
-        # # 日付でソートし、平均値を算出
-        # sorted_items = sorted((k, mean(v)) for k, v in merged_dict.items())
+    def run(self, records: list[PullRequestRecord]) -> list[LeadTimeForChangesRecord]:
+        return list(self._generate_records(records))
+
+    def _generate_records(self, records: list[PullRequestRecord]) -> Iterator[LeadTimeForChangesRecord]:
         for record in records:
             if not record.merged_at:
                 continue
@@ -21,4 +22,4 @@ class LeadTimeForChangesTransformer:
                 title=record.title,
                 merged_date=record.merged_at.date(),
                 lead_time_seconds=lead_time_seconds
-        )
+            )

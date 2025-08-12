@@ -1,4 +1,3 @@
-from agile_calculator.tasks.loaders.matplotlib_loader import MatplotlibLoader
 
 
 class ReviewCommentsWorkflow:

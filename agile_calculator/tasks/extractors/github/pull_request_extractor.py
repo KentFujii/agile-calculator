@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime, timedelta
+from typing import Iterator
 
 from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
 from agile_calculator.tasks.extractors.github_extractor import GitHubExtractor
@@ -14,12 +15,12 @@ class PullRequestExtractor(GitHubExtractor):
 
     # TODO: .github.PullRequestExtractorに継承させる
     # https://docs.github.com/en/rest/pulls/pulls?apiVersion=2022-11-28#get-a-pull-request
-    def run(self):
+    def run(self) -> list[PullRequestRecord]:
         repo = self.client.get_repo(self.repo_name)
         pull_requests = repo.get_pulls(state="close", sort="created", direction="desc", base='main')
         return list(self._extract_request_records(pull_requests))
 
-    def _extract_request_records(self, pull_requests):
+    def _extract_request_records(self, pull_requests) -> Iterator[PullRequestRecord]:
         for pr in pull_requests:
             if self.users and pr.user.login not in self.users:
                 continue
