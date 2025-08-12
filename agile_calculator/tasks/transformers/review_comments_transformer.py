@@ -3,7 +3,7 @@ from agile_calculator.records.transformed.review_comments_record import (
 )
 
 
-class LeadTimeForChangesTransformer:
+class ReviewCommentsTransformer:
     def run(self, records):
         for record in records:
             yield LeadTimeForChangesRecord(

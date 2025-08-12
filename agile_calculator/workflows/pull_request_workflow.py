@@ -4,6 +4,12 @@ from agile_calculator.tasks.transformers.lead_time_for_changes_transformer impor
 from agile_calculator.workflows.lead_time_for_changes_workflow import (
     LeadTimeForChangesWorkflow,
 )
+from agile_calculator.tasks.transformers.review_comments_transformer import (
+    ReviewCommentsTransformer
+)
+from agile_calculator.workflows.review_comments_workflow import (
+    ReviewCommentsWorkflow
+)
 
 
 class PullRequestWorkflow:
@@ -17,4 +23,13 @@ class PullRequestWorkflow:
         return LeadTimeForChangesWorkflow(
             extractor=self._extractor,
             transformer=LeadTimeForChangesTransformer()
+        )
+
+    def review_comments(self):
+        """
+        Pull Requestのレビューコメント数を計算します。
+        """
+        return ReviewCommentsWorkflow(
+            extractor=self._extractor,
+            transformer=ReviewCommentsTransformer()
         )

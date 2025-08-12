@@ -8,7 +8,6 @@ from agile_calculator.workflows.pull_request_workflow import (
 )
 
 
-# agile-calculator github-pull-request --repo_name=itandi/nomad-cloud --since_days=30 --users="" lead_time_for_changes matplotlib
 class RootWorkflow:
     def __init__(self, log_level="INFO"):
         level = getattr(logging, log_level.upper(), logging.INFO)
@@ -16,7 +15,7 @@ class RootWorkflow:
         logging.getLogger("urllib3").setLevel(logging.WARNING)
         logging.getLogger("matplotlib").setLevel(logging.WARNING)
 
-    def github_pull_request(self, repo_name: str, users: tuple, since_days: int):
+    def pull_requests(self, repo_name: str, users: tuple, since_days: int):
         """
         GitHubのPull Requestからデータを抽出します。
 
