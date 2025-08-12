@@ -88,6 +88,8 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.ty.environment]
-root = ["./agile_calculator"]
+root = ["."]
 python = "/usr/local/bin/python"
-extra-paths = ["./"]
+
+[tool.ty.src]
+include = ["./agile_calculator/**"]
