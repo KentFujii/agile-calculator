@@ -11,6 +11,9 @@ class PullRequestWorkflow:
         self._extractor = extractor
 
     def lead_time_for_changes(self):
+        """
+        変更のリードタイムを計算します。
+        """
         return LeadTimeForChangesWorkflow(
             extractor=self._extractor,
             transformer=LeadTimeForChangesTransformer()

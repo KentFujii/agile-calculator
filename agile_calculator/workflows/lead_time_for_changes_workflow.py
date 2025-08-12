@@ -7,6 +7,9 @@ class LeadTimeForChangesWorkflow:
         self._transformer = transformer
 
     def matplotlib(self):
+        """
+        計算結果をMatplotlibへ出力します。
+        """
         MatplotlibLoader().run(
             self._transformer.run(
                 self._extractor.run()
