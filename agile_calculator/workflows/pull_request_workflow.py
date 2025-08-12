@@ -1,7 +1,7 @@
 from agile_calculator.tasks.transformers.lead_time_for_changes_transformer import (
     LeadTimeForChangesTransformer,
 )
-from agile_calculator.workflows.transforming.lead_time_for_changes_workflow import (
+from agile_calculator.workflows.lead_time_for_changes_workflow import (
     LeadTimeForChangesWorkflow,
 )
 
