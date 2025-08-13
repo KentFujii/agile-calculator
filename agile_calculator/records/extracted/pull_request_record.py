@@ -1,7 +1,7 @@
-from agile_calculator.records.base_record import BaseRecord
+from agile_calculator.records.extracted_record import ExtractedRecord
 
 
-class PullRequestRecord(BaseRecord):
+class PullRequestRecord(ExtractedRecord):
     def __init__(
         self,
         number=None,

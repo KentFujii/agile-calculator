@@ -1,7 +1,7 @@
-from agile_calculator.records.base_record import BaseRecord
+from agile_calculator.records.transformed_record import TransformedRecord
 
 
-class ReviewCommentsRecord(BaseRecord):
+class ReviewCommentsRecord(TransformedRecord):
     def __init__(
         self,
         number=None,
