@@ -12,7 +12,9 @@ class MatplotlibLoader:
     OUTPUT_FILENAME = "lead_time_chart.png"
     X_LABEL = "Merged Date"
     Y_LABEL = "Lead Time (hours)"
-    TITLE = "Lead Time for Changes per Merged Date"
+
+    def __init__(self, title):
+        self.title = title
 
     def run(self, records) -> None:
         # merged_dateごとにlead_time_secondsの平均を算出
@@ -31,6 +33,6 @@ class MatplotlibLoader:
         plt.gca().yaxis.set_major_formatter(
             ticker.FuncFormatter(lambda x, pos: f'{x/self.SECONDS_PER_HOUR:.1f}')
         )
-        plt.title(self.TITLE)
+        plt.title(self.title)
         plt.savefig(self.OUTPUT_FILENAME, bbox_inches='tight')
         plt.close()

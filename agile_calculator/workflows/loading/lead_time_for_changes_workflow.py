@@ -10,7 +10,9 @@ class LeadTimeForChangesWorkflow:
         """
         計算結果をMatplotlibへ出力します。
         """
-        MatplotlibLoader().run(
+        MatplotlibLoader(
+            "Lead Time for Changes per Merged Date"
+        ).run(
             self._transformer.run(
                 self._extractor.run()
             )
