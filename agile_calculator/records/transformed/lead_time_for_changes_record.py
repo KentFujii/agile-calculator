@@ -14,6 +14,12 @@ class LeadTimeForChangesRecord(TransformedRecord):
         self.merged_date = merged_date
         self.lead_time_seconds = lead_time_seconds
 
+    def x(self):
+        return lead_time_seconds
+
+    def y(self):
+        return merged_date
+
     def __repr__(self):
         return (
             f"<LeadTimeForChangesRecord #{self.number} {self.title} "

@@ -34,50 +34,40 @@ Pythonを利用しJiraやGitHubのデータを、抽出・加工し可視化す�
 ### システム構成
 [ユーザーストーリーマッピング](https://www.canva.com/design/DAGc0-KJrLg/_1o6i9n5LO1YdSLCs_IXFA/view?utm_content=DAGc0-KJrLg&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3a1ac8b254)
 
-#### データを取得する(Extract)
-分析対象となるサービスのAPIからデータを取得するためのモジュールを実装します。
-- src/extractors
-#### データを加工する(Transform)
-取得したデータを用途に沿って加工するためのモジュールを実装します。
-- src/transformers
-#### データを出力する(Load)
-加工したデータを用途に則した各形式に出力するためのモジュールを実装します。
-- src/loaders
-### データの形式を保持する(Record)
-各工程間でデータの形式を保持するためのモジュールを実装します。
-- src/records
-#### データの流れを管理する(Workflow)
-データを取得し、加工し、出力するためのワークフローを管理するモジュールを実装します。
-- src/workflows
-#### アプリケーション
-このシステムを利用するためのインターフェースアプリケーション向けのモジュールを実装します。
-- src/pandas
-- src/cli
+- tasks
+  - extractors: 分析対象となるサービスのAPIからデータを取得するためのモジュールを提供します。
+  - transformers: 取得したデータを用途に沿って加工するためのモジュールを提供します。
+  - loaders: 加工したデータを用途に則した各形式に出力するためのモジュールを提供します。
+- records
+  - extracted: extractorが取得したデータを保持し、後段の処理に必要な振る舞いを持たせたモジュールを提供します。
+  - transformed: transformerが加工したデータを保持するためのモジュールを提供します。
+- workflows: データを取得し、加工し、出力するための一連の流れを管理するモジュールを提供します。
+  - transforming
+    - loading
 
 ### 開発手順
-#### 開発環境のセットアップ手順
-ビルドの実行
+ビルドの実行は以下です。
 ```bash
 docker compose build
 ```
-#### 開発コマンド
+
 本プロジェクトのコマンドは、以下のように`docker compose run --rm jupyter`を先頭につけて実行します。
 ```bash
 docker compose run --rm jupyter <command>
 ```
 
 例えば、テストの実行は以下です
-```sh
+```bash
 docker compose run --rm jupyter uv run pytest
 ```
 
 静的解析は以下です
-```sh
+```bash
 docker compose run --rm jupyter uv run ruff check --fix
 ```
 
 型検査は以下です
-```sh
+```bash
 docker compose run --rm jupyter uv run ty check
 ```
 

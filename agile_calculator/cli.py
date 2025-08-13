@@ -1,10 +1,10 @@
 import fire
 
-from agile_calculator.workflows.root_workflow import RootWorkflow
+from agile_calculator.workflows.extracting_workflow import ExtractingWorkflow
 
 
 def main():
-    fire.Fire(RootWorkflow, name='agile-calculator')
+    fire.Fire(ExtractingWorkflow, name='agile-calculator')
 
 if __name__ == "__main__":
     main()

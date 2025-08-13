@@ -4,10 +4,10 @@ from agile_calculator.tasks.transformers.lead_time_for_changes_transformer impor
 from agile_calculator.tasks.transformers.review_comments_transformer import (
     ReviewCommentsTransformer,
 )
-from agile_calculator.workflows.lead_time_for_changes_workflow import (
+from agile_calculator.workflows.loading.lead_time_for_changes_workflow import (
     LeadTimeForChangesWorkflow,
 )
-from agile_calculator.workflows.review_comments_workflow import ReviewCommentsWorkflow
+from agile_calculator.workflows.loading.review_comments_workflow import ReviewCommentsWorkflow
 
 
 class PullRequestWorkflow:

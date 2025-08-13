@@ -3,12 +3,12 @@ import logging
 from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
-from agile_calculator.workflows.pull_request_workflow import (
+from agile_calculator.workflows.transforming.pull_request_workflow import (
     PullRequestWorkflow,
 )
 
 
-class RootWorkflow:
+class ExtractingWorkflow:
     def __init__(self, log_level="INFO"):
         level = getattr(logging, log_level.upper(), logging.INFO)
         logging.basicConfig(level=level)

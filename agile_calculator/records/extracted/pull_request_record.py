@@ -1,3 +1,5 @@
+from datetime import date
+
 from agile_calculator.records.extracted_record import ExtractedRecord
 
 
@@ -62,6 +64,12 @@ class PullRequestRecord(ExtractedRecord):
         self.additions = additions
         self.deletions = deletions
         self.changed_files = changed_files
+
+    def merged_date(self) -> date | None:
+        return self.merged_at.date() if self.merged_at else None
+
+    def lead_time_for_changes(self):
+        return (self.merged_at - self.created_at).total_seconds()
 
     def __repr__(self):
         return f"<PullRequestRecord #{self.number} {self.title}>"
