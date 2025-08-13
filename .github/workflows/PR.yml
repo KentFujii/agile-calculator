@@ -23,25 +23,26 @@ jobs:
           echo "GH_ISSUE=$GH_ISSUE" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create Diffs with Gemini CLI
+      - name: Create Increments with Gemini CLI
         run: |
           GH_ISSUE_BODY=$(echo $GH_ISSUE | jq -r '.body')
+          git config --global user.name KentFujii
+          git config --global user.email kent.where.the.light.is@gmail.com
+          git config --global push.default current
           npm install -g @google/gemini-cli
           gemini -y -p "$GH_ISSUE_BODY"
+          # NOTE: 以下の処理をgeminiに移行
+          git checkout -b "gemini/github-run-id-${GITHUB_RUN_ID}"
+          git add .
+          git commit -m "${GITHUB_RUN_ID}"
+          git push
         env:
           GOOGLE_CLOUD_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Create the Pull Request
         run: |
-          git config user.name KentFujii
-          git config user.email kent.where.the.light.is@gmail.com
-          GH_ISSUE_NUMBER=$(echo $GH_ISSUE | jq -r '.number')
           GH_ISSUE_TITLE=$(echo $GH_ISSUE | jq -r '.title')
           GH_ISSUE_URL=$(echo $GH_ISSUE | jq -r '.url')
-          git checkout -b "gemini/$GH_ISSUE_NUMBER"
-          git add .
-          git commit -m "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          git push --set-upstream origin gemini/$GH_ISSUE_NUMBER
           gh pr create --title "$GH_ISSUE_TITLE" --body "$GH_ISSUE_URL"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

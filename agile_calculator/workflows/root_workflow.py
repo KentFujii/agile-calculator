@@ -20,7 +20,7 @@ class RootWorkflow:
         GitHubのPull Requestからデータを抽出します。
 
         :param repo_name: リポジトリ名 (例: 'owner/repo')
-        :param users: 特定のユーザーのPull Requestのみを取得する場合、そのユーザー名 (例: 'jimi_hendrix,stevie-ray-vaughan,JerryGarcia')
+        :param users: 特定のユーザーのPull Requestのみを取得する場合、そのユーザー名 (例: 'BBKing,albert-king,freddie_king')
         :param since_days: 何日前からのデータを取得するか (例: 7)
         """
         return PullRequestWorkflow(
