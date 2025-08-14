@@ -16,7 +16,7 @@ class PullRequestWorkflow:
 
     def lead_time_for_changes(self):
         """
-        変更のリードタイムを計算します。
+        Pull Requestのリードタイムを、一日ごとの移動平均推移で計算します。
         """
         return LeadTimeForChangesWorkflow(
             extractor=self._extractor,
@@ -25,7 +25,7 @@ class PullRequestWorkflow:
 
     def review_comments(self):
         """
-        Pull Requestのレビューコメント数を計算します。
+        Pull Requestのレビューコメント数を、一日ごとの移動平均推移で計算します。
         """
         return ReviewCommentsWorkflow(
             extractor=self._extractor,
