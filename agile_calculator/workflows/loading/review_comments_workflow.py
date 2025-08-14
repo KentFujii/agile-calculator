@@ -11,8 +11,8 @@ class ReviewCommentsWorkflow:
         """
         pass
         # MatplotlibLoader().run(
-        #     self._transformer.run(
-        #         self._extractor.run()
-        #     )
+        self._transformer.run(
+            self._extractor.run()
+        )
         # )
 

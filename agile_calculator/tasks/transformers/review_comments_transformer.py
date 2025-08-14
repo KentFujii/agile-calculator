@@ -10,9 +10,9 @@ class ReviewCommentsTransformer:
 
     def _generate_records(self, records: list[PullRequestRecord]):
         for record in records:
+            if not record.merged_at:
+                continue
             yield ReviewCommentsRecord(
-                number=record.number,
-                title=record.title,
                 merged_date=record.merged_at.date(),
                 review_comments=record.review_comments
             )

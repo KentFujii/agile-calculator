@@ -17,8 +17,6 @@ class LeadTimeForChangesTransformer:
             if not record.merged_at:
                 continue
             yield LeadTimeForChangesRecord(
-                number=record.number,
-                title=record.title,
                 merged_date=record.merged_at.date(),
                 lead_time_seconds=record.lead_time_for_changes()
             )
