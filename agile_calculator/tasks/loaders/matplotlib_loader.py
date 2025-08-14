@@ -10,11 +10,11 @@ class MatplotlibLoader:
     DEFAULT_INTERVAL_DAYS = 7
     SECONDS_PER_HOUR = 3600
     OUTPUT_FILENAME = "lead_time_chart.png"
-    X_LABEL = "Merged Date"
-    Y_LABEL = "Lead Time (hours)"
 
-    def __init__(self, title):
+    def __init__(self, title, x_label, y_label):
         self.title = title
+        self.x_label = x_label
+        self.y_label = y_label
 
     def run(self, records) -> None:
         # merged_dateごとにlead_time_secondsの平均を算出
@@ -26,8 +26,8 @@ class MatplotlibLoader:
         x = [k for k, v in sorted_items]
         y = [v for k, v in sorted_items]  # 秒のまま（平均）
         plt.plot(x, y, marker='o')
-        plt.xlabel(self.X_LABEL)
-        plt.ylabel(self.Y_LABEL)
+        plt.xlabel(self.x_label)
+        plt.ylabel(self.y_label)
         plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=self.DEFAULT_INTERVAL_DAYS))
         plt.xticks(rotation=45)
         plt.gca().yaxis.set_major_formatter(
