@@ -28,11 +28,11 @@ class MatplotlibLoader:
         plt.plot(x, y, marker='o')
         plt.xlabel(self.x_label)
         plt.ylabel(self.y_label)
-        plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=self.DEFAULT_INTERVAL_DAYS))
-        plt.xticks(rotation=45)
-        plt.gca().yaxis.set_major_formatter(
-            ticker.FuncFormatter(lambda x, pos: f'{x/self.SECONDS_PER_HOUR:.1f}')
-        )
+        # plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=self.DEFAULT_INTERVAL_DAYS))
+        # plt.xticks(rotation=45)
+        # plt.gca().yaxis.set_major_formatter(
+        #     ticker.FuncFormatter(lambda x, pos: f'{x/self.SECONDS_PER_HOUR:.1f}')
+        # )
         plt.title(self.title)
         plt.savefig(self.OUTPUT_FILENAME, bbox_inches='tight')
         plt.close()
