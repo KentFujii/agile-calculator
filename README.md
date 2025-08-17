@@ -36,11 +36,11 @@ Pythonを利用しJiraやGitHubのデータを、抽出・加工し可視化す�
 
 - tasks
   - extractors: 分析対象となるサービスのAPIからデータを取得するためのモジュールを提供します。
-  - transformers: 取得したデータを用途に沿って加工するためのモジュールを提供します。
+  - transformers: 取得したデータを用途に沿って加工(MapReduce)するためのモジュールを提供します。
   - loaders: 加工したデータを用途に則した各形式に出力するためのモジュールを提供します。
 - records
   - extracted: extractorが取得したデータを保持し、後段の処理に必要な振る舞いを持たせたモジュールを提供します。
-  - transformed: transformerが加工したデータを保持するためのモジュールを提供します。
+  - transformed: transformerが加工(MapReduce)したデータを保持するためのモジュールを提供します。
 - workflows: データを取得し、加工し、出力するための一連の流れを管理するモジュールを提供します。
   - transforming
     - loading
