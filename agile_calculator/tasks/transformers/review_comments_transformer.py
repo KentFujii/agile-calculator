@@ -2,7 +2,6 @@ from collections import defaultdict
 from statistics import mean
 from typing import Iterator
 
-
 from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
 from agile_calculator.records.transformed.review_comments_record import (
     ReviewCommentsRecord,

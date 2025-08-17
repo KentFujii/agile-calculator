@@ -1,5 +1,6 @@
 from agile_calculator.tasks.loaders.matplotlib_loader import MatplotlibLoader
 
+
 class ReviewCommentsWorkflow:
     def __init__(self, extractor, transformer):
         self._extractor = extractor
