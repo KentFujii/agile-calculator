@@ -56,17 +56,17 @@ docker compose build
 docker compose run --rm jupyter <command>
 ```
 
-例えば、テストの実行は以下です
+例えば、テスト実行は以下です
 ```bash
 docker compose run --rm jupyter uv run pytest
 ```
 
-静的解析は以下です
+静的解析実行は以下です
 ```bash
 docker compose run --rm jupyter uv run ruff check --fix
 ```
 
-型検査は以下です
+型検査実行は以下です
 ```bash
 docker compose run --rm jupyter uv run ty check
 ```
@@ -76,15 +76,26 @@ docker compose run --rm jupyter uv run ty check
 以下の開発サイクルを守ることを、ワーキングアグリーメントとします。
 
 ```mermaid
+---
+title: 開発サイクル
+---
+
 graph TD
-    subgraph "開発サイクル"
-        A[コード編集] --> B{テスト実行};
-        B -- 成功 --> C{静的解析実行};
-        B -- 失敗 --> G[コード修正];
-        C -- 成功 --> D{型検査実行};
-        C -- 失敗 --> G;
-        D -- 成功 --> E[完了];
-        D -- 失敗 --> G;
-        G --> B;
-    end
+  A[ビルド]
+  B[要件・受け入れ条件の確認]
+  C[コード編集]
+  D[テスト実行]
+  E[静的解析実行]
+  F[型検査実行]
+  G[完了]
+
+  A --> B;
+  B --> C;
+  C --> D;
+  D -- 成功 --> E;
+  D -- 失敗 --> B;
+  E -- 成功 --> F;
+  E -- 失敗 --> B;
+  F -- 成功 --> G;
+  F -- 失敗 --> B;
 ```
