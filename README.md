@@ -46,8 +46,9 @@ Pythonを利用しJiraやGitHubのデータを、抽出・加工し可視化す�
     - loading
 
 ### 開発手順
-ビルドの実行は以下です。
+開発環境の構築は以下です。
 ```bash
+touch .env
 docker compose build
 ```
 
@@ -81,7 +82,7 @@ title: 開発サイクル
 ---
 
 graph TD
-  A[ビルド]
+  A[開発環境の構築]
   B[要件・受け入れ条件の確認]
   C[コーディング]
   D[テスト実行]
