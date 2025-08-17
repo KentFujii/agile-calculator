@@ -38,6 +38,7 @@ jobs:
           git commit -m "${GH_ISSUE_TITLE}"
           git push
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOOGLE_CLOUD_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Create the Pull Request
