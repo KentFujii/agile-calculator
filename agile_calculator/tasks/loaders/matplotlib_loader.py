@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 class MatplotlibLoader:
     DEFAULT_INTERVAL_DAYS = 7
-    OUTPUT_FILENAME = "figure.png"
+    OUTPUT_FILENAME = "matplotlib.png"
 
     def __init__(self, title, x_label, y_label):
         self.title = title

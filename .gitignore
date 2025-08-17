@@ -146,3 +146,6 @@ cython_debug/
 
 # ruff
 .ruff_cache/
+
+# matplotlib
+matplotlib.png
