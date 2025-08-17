@@ -1,40 +1,22 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
-
----
-
-## 概要 (Overview)
-
-<!-- A clear and concise description of what the feature is. -->
-<!-- 機能の概要を簡潔に記述してください。 -->
-
-
-## ユーザーストーリー (User Story)
-
-```
-As a [type of user], I want [an action] so that [a benefit].
-```
-
+# 目的
+<!-- ユーザーストーリーを簡潔に記述してください -->
 <!--
-例 (Example):
-As a TRPG player, I want to roll different types of dice (d4, d6, d8, d10, d12, d20, d100) so that I can use the appropriate dice for different game mechanics.
+<ユーザーの種類（Who）>として、
+<機能や性能（What）>がほしい。
+それは<ビジネス価値（Why）>のためだ。
 -->
 
+# 背景
+<!-- ユーザーストーリの背後にあるニーズや詳細情報を記述してください。 -->
 
-## 受け入れ基準 (Acceptance Criteria)
+# 調査
+<!-- ユーザーストーリーの達成に向けた情報の整理や、調査内容を簡潔に記述してください。-->
 
+# 方針
+<!-- ユーザーストーリーの達成に向けた開発の方針や、受け入れ条件などを記述してください。 -->
 <!--
-- [ ] Criteria 1
-- [ ] Criteria 2
-- [ ] Criteria 3
+受け入れ条件
+  - [ ] Criteria 1
+  - [ ] Criteria 2
+  - [ ] Criteria 3
 -->
-
-
-## その他 (Additional Context)
-
-<!-- Add any other context or screenshots about the feature request here. -->
-<!-- その他、補足情報やスクリーンショットなどがあれば追記してください。 -->
