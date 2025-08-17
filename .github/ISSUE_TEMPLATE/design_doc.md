@@ -1,3 +1,12 @@
+---
+name: Design Doc
+about: 'Design Doc Template'
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 # 目的
 <!-- ユーザーストーリーを簡潔に記述してください -->
 <!--
