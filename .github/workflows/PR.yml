@@ -19,19 +19,19 @@ jobs:
       # - uses: mxschmitt/action-tmate@v3
       - name: Fetch Issue Details
         run: |
-          GH_ISSUE=`gh issue view ${{ github.event.inputs.issue_number }} --json number,title,body,url`
+          GH_ISSUE=`gh issue view ${{ github.event.inputs.issue_number }} --json number,title,url`
           echo "GH_ISSUE=$GH_ISSUE" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Increments with Gemini CLI
         run: |
+          GH_ISSUE_NUMBER=$(echo $GH_ISSUE | jq -r '.number')
           GH_ISSUE_TITLE=$(echo $GH_ISSUE | jq -r '.title')
-          GH_ISSUE_BODY=$(echo $GH_ISSUE | jq -r '.body')
           git config --global user.name KentFujii
           git config --global user.email kent.where.the.light.is@gmail.com
           git config --global push.default current
           npm install -g @google/gemini-cli
-          gemini -y -p "$GH_ISSUE_BODY"
+          gemini -y -p "ghコマンドでissue ${GH_ISSUE_NUMBER}を読み込み、ワーキングアグリーメントに従ってコードを編集してください"
           # NOTE: 以下の処理をgeminiに移行
           git checkout -b "gemini/github-run-id-${GITHUB_RUN_ID}"
           git add .
