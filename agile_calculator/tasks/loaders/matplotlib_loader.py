@@ -1,5 +1,3 @@
-from collections import defaultdict
-from statistics import mean
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt

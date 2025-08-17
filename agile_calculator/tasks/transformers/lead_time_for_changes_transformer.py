@@ -1,6 +1,6 @@
-from typing import Iterator
 from collections import defaultdict
 from statistics import mean
+from typing import Iterator
 
 from agile_calculator.records.extracted.pull_request_record import (
     PullRequestRecord,

@@ -1,5 +1,7 @@
-from agile_calculator.records.base_record import BaseRecord
 from abc import abstractmethod
+
+from agile_calculator.records.base_record import BaseRecord
+
 
 class TransformedRecord(BaseRecord):
     @abstractmethod
