@@ -6,8 +6,7 @@ import matplotlib.ticker as ticker
 
 class MatplotlibLoader:
     DEFAULT_INTERVAL_DAYS = 7
-    SECONDS_PER_HOUR = 3600
-    OUTPUT_FILENAME = "lead_time_chart.png"
+    OUTPUT_FILENAME = "figure.png"
 
     def __init__(self, title, x_label, y_label):
         self.title = title
