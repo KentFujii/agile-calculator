@@ -31,7 +31,7 @@ jobs:
           git config --global user.email kent.where.the.light.is@gmail.com
           git config --global push.default current
           npm install -g @google/gemini-cli
-          gemini -y -p "ghコマンドでissue ${GH_ISSUE_NUMBER}を読み込み、ワーキングアグリーメントに従ってコードを編集してください"
+          gemini -y -p "ghコマンドでissue ${GH_ISSUE_NUMBER}を読み込み、ワーキングアグリーメントに従ってプログラミングしてください。"
           # NOTE: 以下の処理をgeminiに移行
           git checkout -b "gemini/github-run-id-${GITHUB_RUN_ID}"
           git add .
