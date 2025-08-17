@@ -34,11 +34,11 @@ Pythonを利用しJiraやGitHubのデータを、抽出・加工し可視化す�
 ### システム構成
 [ユーザーストーリーマッピング](https://www.canva.com/design/DAGc0-KJrLg/_1o6i9n5LO1YdSLCs_IXFA/view?utm_content=DAGc0-KJrLg&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3a1ac8b254)
 
-- tasks
+- tasks: データを抽出し、加工し、出力するためのモジュールを提供します。
   - extractors: 分析対象となるサービスのAPIからデータを取得するためのモジュールを提供します。
   - transformers: 取得したデータを用途に沿って加工(MapReduce)するためのモジュールを提供します。
   - loaders: 加工したデータを用途に則した各形式に出力するためのモジュールを提供します。
-- records
+- records: データの抽出・加工・出力の各ステージで生成される、データモデルを表現するためのモジュールを提供します。
   - extracted: extractorが取得したデータを保持し、後段の処理に必要な振る舞いを持たせたモジュールを提供します。
   - transformed: transformerが加工(MapReduce)したデータを保持するためのモジュールを提供します。
 - workflows: データを取得し、加工し、出力するための一連の流れを管理するモジュールを提供します。
