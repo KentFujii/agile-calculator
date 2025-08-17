@@ -7,7 +7,7 @@ from agile_calculator.tasks.extractors.github.pull_request_extractor import (
 )
 
 
-class TestGitHubExtractor:
+class TestPullRequestExtractor:
     @pytest.mark.skip(reason="Not implemented")
     def test_extract(self):
         token = os.environ.get("GITHUB_CLASSIC_TOKEN")
