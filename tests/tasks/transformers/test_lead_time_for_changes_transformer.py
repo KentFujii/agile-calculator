@@ -13,7 +13,8 @@ from agile_calculator.tasks.transformers.lead_time_for_changes_transformer impor
 
 class TestLeadTimeForChangesTransformer:
     @pytest.mark.skip(reason="Not implemented")
-    def test_transform_returns_correct_lead_time(self): created_at = datetime.datetime(2024, 1, 1, 12, 0, 0)
+    def test_transform_returns_correct_lead_time(self):
+        created_at = datetime.datetime(2024, 1, 1, 12, 0, 0)
         merged_at = datetime.datetime(2024, 1, 2, 12, 0, 0)
         pr = PullRequestRecord(
             number=1,
