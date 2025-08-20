@@ -72,7 +72,7 @@ class PullRequestRecord(ExtractedRecord):
         # TODO: 型をつける
         # TODO: テストを書く
         # TODO: 土日を考慮する
-        return (self.merged_at - self.created_at).total_seconds() / 3600
+        return (self.merged_at - self.created_at).total_seconds()
 
     def __repr__(self):
         return f"<PullRequestRecord #{self.number} {self.title}>"
