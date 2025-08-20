@@ -1,23 +1,69 @@
-import datetime
+from datetime import date
+from unittest.mock import MagicMock
 
 import pytest
 
-from agile_calculator.records.transformed.lead_time_for_changes_record import (
-    LeadTimeForChangesRecord,
-)
 from agile_calculator.tasks.loaders.matplotlib_loader import MatplotlibLoader
 
 
 class TestMatplotlibLoader:
-    @pytest.mark.skip(reason="Not implemented")
-    def test_matplotlib_loader_sum(self, monkeypatch):
-        # テスト用データ: merged_atが重複するケース
+    @pytest.fixture
+    def mock_plt(self, mocker):
+        return mocker.patch("agile_calculator.tasks.loaders.matplotlib_loader.plt")
+
+    @pytest.fixture
+    def mock_mdates(self, mocker):
+        return mocker.patch("agile_calculator.tasks.loaders.matplotlib_loader.mdates")
+
+    def test_run(self, mock_plt, mock_mdates):
+        # Setup mock data
+        class MockRecord:
+            def __init__(self, x_val, y_val):
+                self._x = x_val
+                self._y = y_val
+
+            def x(self):
+                return self._x
+
+            def y(self):
+                return self._y
+
         records = [
-            LeadTimeForChangesRecord(number=1, title='A', merged_date=datetime.date(2023, 1, 1), lead_time_seconds=100),
-            LeadTimeForChangesRecord(number=2, title='B', merged_date=datetime.date(2023, 1, 1), lead_time_seconds=200),
-            LeadTimeForChangesRecord(number=3, title='C', merged_date=datetime.date(2023, 1, 2), lead_time_seconds=300),
-            LeadTimeForChangesRecord(number=4, title='D', merged_date=datetime.date(2023, 1, 2), lead_time_seconds=400),
-            LeadTimeForChangesRecord(number=5, title='E', merged_date=datetime.date(2023, 1, 3), lead_time_seconds=500),
+            MockRecord(date(2023, 1, 1), 10),
+            MockRecord(date(2023, 1, 2), 20),
         ]
-        loader = MatplotlibLoader(records)
-        loader.load()
+        x_data = [record.x() for record in records]
+        y_data = [record.y() for record in records]
+
+        # Instantiate the loader
+        title = "Test Title"
+        x_label = "Test X Label"
+        y_label = "Test Y Label"
+        loader = MatplotlibLoader(title, x_label, y_label)
+
+        # Execute
+        loader.run(records)
+
+        # Assertions for plt calls
+        mock_plt.plot.assert_called_once_with(x_data, y_data, marker='o')
+        mock_plt.xlabel.assert_called_once_with(x_label)
+        mock_plt.ylabel.assert_called_once_with(y_label)
+        mock_plt.xticks.assert_called_once_with(rotation=45)
+        mock_plt.title.assert_called_once_with(title)
+        mock_plt.savefig.assert_called_once_with(loader.OUTPUT_FILENAME, bbox_inches='tight')
+        mock_plt.close.assert_called_once()
+
+        # Assertion for gca and xaxis calls
+        mock_gca = mock_plt.gca.return_value
+        mock_xaxis = mock_gca.xaxis
+        mock_mdates.DayLocator.assert_called_once_with(interval=loader.DEFAULT_INTERVAL_DAYS)
+        mock_xaxis.set_major_locator.assert_called_once_with(mock_mdates.DayLocator.return_value)
+
+    def test_init(self):
+        title = "Test Title"
+        x_label = "Test X Label"
+        y_label = "Test Y Label"
+        loader = MatplotlibLoader(title, x_label, y_label)
+        assert loader.title == title
+        assert loader.x_label == x_label
+        assert loader.y_label == y_label
