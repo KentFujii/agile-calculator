@@ -6,7 +6,7 @@
     "enableRecursiveFileSearch": true
   },
   "contextFileName": [
-    "README.md"
+    "AGENTS.md"
   ],
   "preferredEditor": "vscode"
 }
