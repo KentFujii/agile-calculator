@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from agile_calculator.records.extracted_record import ExtractedRecord
 
@@ -6,26 +6,26 @@ from agile_calculator.records.extracted_record import ExtractedRecord
 class PullRequestRecord(ExtractedRecord):
     def __init__(
         self,
-        number=None,
-        title=None,
-        draft=None,
-        user=None,
-        created_at=None,
-        updated_at=None,
-        merged_at=None,
-        closed_at=None,
-        state=None,
-        base_ref=None,
-        head_ref=None,
-        merged=None,
-        merge_commit_sha=None,
-        comments=None,
-        review_comments=None,
-        commits=None,
-        additions=None,
-        deletions=None,
-        changed_files=None
-    ):
+        number: int | None = None,
+        title: str | None = None,
+        draft: bool | None = None,
+        user: str | None = None,
+        created_at: datetime | None = None,
+        updated_at: datetime | None = None,
+        merged_at: datetime | None = None,
+        closed_at: datetime | None = None,
+        state: str | None = None,
+        base_ref: str | None = None,
+        head_ref: str | None = None,
+        merged: bool | None = None,
+        merge_commit_sha: str | None = None,
+        comments: int | None = None,
+        review_comments: int | None = None,
+        commits: int | None = None,
+        additions: int | None = None,
+        deletions: int | None = None,
+        changed_files: int | None = None,
+    ) -> None:
         self.number = number
         self.title = title
         self.draft = draft
@@ -49,11 +49,12 @@ class PullRequestRecord(ExtractedRecord):
     def merged_date(self) -> date | None:
         return self.merged_at.date() if self.merged_at else None
 
-    def lead_time_for_changes(self):
-        # TODO: 型をつける
+    def lead_time_for_changes(self) -> float:
         # TODO: テストを書く
         # TODO: 土日を考慮する
+        if self.merged_at is None or self.created_at is None:
+            return 0.0
         return (self.merged_at - self.created_at).total_seconds() / 3600
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<PullRequestRecord #{self.number} {self.title}>"

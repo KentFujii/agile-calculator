@@ -1,3 +1,6 @@
+from agile_calculator.tasks.extractors.github.pull_request_extractor import (
+    PullRequestExtractor,
+)
 from agile_calculator.tasks.transformers.lead_time_for_changes_transformer import (
     LeadTimeForChangesTransformer,
 )
@@ -13,10 +16,10 @@ from agile_calculator.workflows.loading.review_comments_workflow import (
 
 
 class PullRequestWorkflow:
-    def __init__(self, extractor):
+    def __init__(self, extractor: PullRequestExtractor) -> None:
         self._extractor = extractor
 
-    def lead_time_for_changes(self):
+    def lead_time_for_changes(self) -> LeadTimeForChangesWorkflow:
         """
         Pull Requestのリードタイムを、一日ごとの移動平均推移で計算します。
         """
@@ -25,7 +28,7 @@ class PullRequestWorkflow:
             transformer=LeadTimeForChangesTransformer()
         )
 
-    def review_comments(self):
+    def review_comments(self) -> ReviewCommentsWorkflow:
         """
         Pull Requestのレビューコメント数を、一日ごとの移動平均推移で計算します。
         """

@@ -20,7 +20,7 @@ class LeadTimeForChangesTransformer:
         merged_dict = defaultdict(list)
         for r in records:
             merged_dict[r.merged_date].append(r.lead_time_seconds)
-        sorted_items = sorted((k, mean(v)) for k, v in merged_dict.items())
+        sorted_items = sorted((k, mean(x for x in v if x is not None)) for k, v in merged_dict.items())
         for k, v in sorted_items:
             yield LeadTimeForChangesRecord(merged_date=k, lead_time_seconds=v)
 

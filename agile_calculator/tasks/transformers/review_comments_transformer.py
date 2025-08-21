@@ -18,9 +18,9 @@ class ReviewCommentsTransformer:
         merged_dict = defaultdict(list)
         for r in records:
             merged_dict[r.merged_date].append(r.review_comments)
-        sorted_items = sorted((k, mean(v)) for k, v in merged_dict.items())
+        sorted_items = sorted((k, mean(x for x in v if x is not None)) for k, v in merged_dict.items())
         for k, v in sorted_items:
-            yield ReviewCommentsRecord(merged_date=k, review_comments=v)
+            yield ReviewCommentsRecord(merged_date=k, review_comments=int(v))
 
     def _map_records(self, records: list[PullRequestRecord]) -> Iterator[ReviewCommentsRecord]:
         for record in records:

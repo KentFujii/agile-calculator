@@ -1,6 +1,8 @@
 import logging
 from datetime import datetime, timedelta
-from typing import Iterator
+from typing import Iterable, Iterator
+
+from github.PullRequest import PullRequest
 
 from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
 from agile_calculator.tasks.extractors.github_extractor import GitHubExtractor
@@ -20,7 +22,7 @@ class PullRequestExtractor(GitHubExtractor):
         pull_requests = repo.get_pulls(state="close", sort="created", direction="desc", base='main')
         return list(self._extract_request_records(pull_requests))
 
-    def _extract_request_records(self, pull_requests) -> Iterator[PullRequestRecord]:
+    def _extract_request_records(self, pull_requests: Iterable[PullRequest]) -> Iterator[PullRequestRecord]:
         for pr in pull_requests:
             if self.users and pr.user.login not in self.users:
                 continue

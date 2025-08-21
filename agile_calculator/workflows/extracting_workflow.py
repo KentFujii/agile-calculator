@@ -9,13 +9,13 @@ from agile_calculator.workflows.transforming.pull_request_workflow import (
 
 
 class ExtractingWorkflow:
-    def __init__(self, log_level="INFO"):
+    def __init__(self, log_level: str = "INFO") -> None:
         level = getattr(logging, log_level.upper(), logging.INFO)
         logging.basicConfig(level=level)
         logging.getLogger("urllib3").setLevel(logging.WARNING)
         logging.getLogger("matplotlib").setLevel(logging.WARNING)
 
-    def pull_requests(self, repo_name: str, users: tuple, since_days: int):
+    def pull_requests(self, repo_name: str, users: tuple, since_days: int) -> PullRequestWorkflow:
         """
         GitHubのPull Requestからデータを抽出します。
 
