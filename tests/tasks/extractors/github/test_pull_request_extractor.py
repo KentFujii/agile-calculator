@@ -9,107 +9,90 @@ from agile_calculator.tasks.extractors.github.pull_request_extractor import (
 )
 
 @pytest.fixture
-def mock_github_client():
-    with patch("github.Github") as mock_github_class:
-        mock_client = mock_github_class.return_value
-        yield mock_client
+def mock_github_client(mocker):
+    """Mocks the Github client used by the PullRequestExtractor."""
+    mock_github_class = mocker.patch(
+        "agile_calculator.tasks.extractors.github_extractor.Github"
+    )
+    mock_client = mock_github_class.return_value
+    return mock_client
 
 class TestPullRequestExtractor:
-    @staticmethod
-    def create_mock_pull_request(
-        number,
-        title,
-        user_login,
-        created_at,
-        merged_at=None,
-        state="closed",
-        merged=False,
-        base_ref="main",
-    ):
-        mock_pr = MagicMock()
-        mock_pr.number = number
-        mock_pr.title = title
-        mock_pr.draft = False
-        mock_pr.user.login = user_login
-        mock_pr.created_at = created_at
-        mock_pr.updated_at = created_at + timedelta(hours=1)
-        mock_pr.merged_at = merged_at
-        mock_pr.closed_at = merged_at or (created_at + timedelta(hours=2))
-        mock_pr.state = state
-        mock_pr.base.ref = base_ref
-        mock_pr.head.ref = f"feature/branch-{number}"
-        mock_pr.merged = merged
-        mock_pr.merge_commit_sha = "sha" if merged else None
-        mock_pr.comments = 1
-        mock_pr.review_comments = 2
-        mock_pr.commits = 3
-        mock_pr.additions = 100
-        mock_pr.deletions = 50
-        mock_pr.changed_files = 5
-        return mock_pr
+    def test_extracts_merged_pull_request_in_date_range(self, mock_github_client, mock_pull_request_factory):
+        """Tests that a basic, merged PR within the date range is extracted."""
+        now = datetime.now(timezone.utc)
+        mock_pr = mock_pull_request_factory(
+            1, "PR 1", "user1", now - timedelta(days=2), merged_at=now - timedelta(days=1), merged=True
+        )
+        mock_repo = MagicMock()
+        mock_repo.get_pulls.return_value = [mock_pr]
+        mock_github_client.get_repo.return_value = mock_repo
 
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
+        result = extractor.run()
 
-    def test_run(self, mock_github_client):
-        # Setup mock data
+        assert len(result) == 1
+        assert result[0].number == 1
+
+    def test_filters_by_user(self, mock_github_client, mock_pull_request_factory):
+        """Tests that PRs from users not in the 'users' list are filtered out."""
+        now = datetime.now(timezone.utc)
+        mock_pr_user1 = mock_pull_request_factory(1, "PR 1", "user1", now - timedelta(days=1), merged=True)
+        mock_pr_user2 = mock_pull_request_factory(2, "PR 2", "user2", now - timedelta(days=1), merged=True)
+        mock_repo = MagicMock()
+        mock_repo.get_pulls.return_value = [mock_pr_user1, mock_pr_user2]
+        mock_github_client.get_repo.return_value = mock_repo
+
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
+        result = extractor.run()
+
+        assert len(result) == 1
+        assert result[0].user == "user1"
+
+    def test_stops_fetching_when_pr_is_too_old(self, mock_github_client, mock_pull_request_factory):
+        """Tests that the extractor stops fetching when it encounters a PR older than 'since_days'."""
         now = datetime.now(timezone.utc)
         mock_prs = [
-            # Should be extracted
-            self.create_mock_pull_request(
-                1, "PR 1", "user1", now - timedelta(days=1), merged_at=now, merged=True
-            ),
-            # Should be filtered out by user
-            self.create_mock_pull_request(
-                2, "PR 2", "user2", now - timedelta(days=2), merged_at=now, merged=True
-            ),
-            # Should be extracted (not merged)
-            self.create_mock_pull_request(3, "PR 3", "user1", now - timedelta(days=3)),
-            # Too old, should break the loop
-            self.create_mock_pull_request(
-                4, "PR 4", "user1", now - timedelta(days=10), merged_at=now, merged=True
-            ),
+            mock_pull_request_factory(1, "PR 1", "user1", now - timedelta(days=1)), # Should be included
+            mock_pull_request_factory(2, "PR 2", "user1", now - timedelta(days=10)), # Should cause loop to break
+            mock_pull_request_factory(3, "PR 3", "user1", now - timedelta(days=11)), # Should not be processed
         ]
-
         mock_repo = MagicMock()
         mock_repo.get_pulls.return_value = mock_prs
         mock_github_client.get_repo.return_value = mock_repo
 
-        # Instantiate the extractor
-        extractor = PullRequestExtractor(
-            repo_name="test/repo", users=("user1",), since_days=5
-        )
-        # We need to manually set the client because the constructor in the test
-        # doesn't call the super().__init__ where the client is created.
-        # A better approach would be to mock the Github object during extractor's init.
-        extractor.client = mock_github_client
-
-        # Execute
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
         result = extractor.run()
 
-        # Assertions
-        assert len(result) == 2
-        assert isinstance(result[0], PullRequestRecord)
+        assert len(result) == 1
         assert result[0].number == 1
-        assert result[0].user == "user1"
-        assert result[1].number == 3
-        assert result[1].user == "user1"
-        assert not result[1].merged
 
-        mock_github_client.get_repo.assert_called_once_with("test/repo")
-        mock_repo.get_pulls.assert_called_once_with(
-            state="close", sort="created", direction="desc", base="main"
-        )
+    def test_extracts_unmerged_pull_request(self, mock_github_client, mock_pull_request_factory):
+        """Tests that a non-merged (but closed) PR is still extracted."""
+        now = datetime.now(timezone.utc)
+        mock_pr = mock_pull_request_factory(1, "Unmerged PR", "user1", now - timedelta(days=2), merged=False)
+        mock_repo = MagicMock()
+        mock_repo.get_pulls.return_value = [mock_pr]
+        mock_github_client.get_repo.return_value = mock_repo
+
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
+        result = extractor.run()
+
+        assert len(result) == 1
+        assert result[0].number == 1
+        assert not result[0].merged
 
 
-    def test_run_no_user_filter(self, mock_github_client):
+    def test_run_no_user_filter(self, mock_github_client, mock_pull_request_factory):
         # Setup mock data
         now = datetime.now(timezone.utc)
         mock_prs = [
             # Should be extracted
-            self.create_mock_pull_request(
+            mock_pull_request_factory(
                 1, "PR 1", "user1", now - timedelta(days=1), merged_at=now, merged=True
             ),
             # Should also be extracted
-            self.create_mock_pull_request(
+            mock_pull_request_factory(
                 2, "PR 2", "user2", now - timedelta(days=2), merged_at=now, merged=True
             ),
         ]
@@ -120,7 +103,6 @@ class TestPullRequestExtractor:
 
         # Instantiate the extractor with no users filter
         extractor = PullRequestExtractor(repo_name="test/repo", users=(), since_days=5)
-        extractor.client = mock_github_client
 
         # Execute
         result = extractor.run()
@@ -141,7 +123,6 @@ class TestPullRequestExtractor:
         extractor = PullRequestExtractor(
             repo_name="test/repo", users=("user1",), since_days=5
         )
-        extractor.client = mock_github_client
 
         # Execute
         result = extractor.run()

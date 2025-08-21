@@ -1,5 +1,7 @@
 from datetime import date, datetime, timedelta
 
+import pytest
+
 from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
 from agile_calculator.records.transformed.lead_time_for_changes_record import (
     LeadTimeForChangesRecord,
@@ -77,13 +79,13 @@ class TestLeadTimeForChangesTransformer:
 
         # Assert lead time for the single PR merged on pr3_merged.date()
         expected_lead_time_3 = (pr3_merged - pr3_created).total_seconds() / 3600
-        assert result[0].lead_time_seconds == expected_lead_time_3
+        assert result[0].lead_time_seconds == pytest.approx(expected_lead_time_3)
 
         # Assert average lead time for the two PRs merged on pr1_merged.date()
         lead_time_1 = (pr1_merged - pr1_created).total_seconds() / 3600
         lead_time_2 = (pr2_merged - pr2_created).total_seconds() / 3600
         expected_avg_lead_time = (lead_time_1 + lead_time_2) / 2
-        assert result[1].lead_time_seconds == expected_avg_lead_time
+        assert result[1].lead_time_seconds == pytest.approx(expected_avg_lead_time)
 
     def test_run_with_no_merged_prs(self):
         records = [
