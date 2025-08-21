@@ -45,25 +45,6 @@ class PullRequestRecord(ExtractedRecord):
         self.additions = additions
         self.deletions = deletions
         self.changed_files = changed_files
-        self.number = number
-        self.title = title
-        self.draft = draft
-        self.user = user
-        self.created_at = created_at
-        self.updated_at = updated_at
-        self.merged_at = merged_at
-        self.closed_at = closed_at
-        self.state = state
-        self.base_ref = base_ref
-        self.head_ref = head_ref
-        self.merged = merged
-        self.merge_commit_sha = merge_commit_sha
-        self.comments = comments
-        self.review_comments = review_comments
-        self.commits = commits
-        self.additions = additions
-        self.deletions = deletions
-        self.changed_files = changed_files
 
     def merged_date(self) -> date | None:
         return self.merged_at.date() if self.merged_at else None
