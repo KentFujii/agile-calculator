@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from agile_calculator.records.extracted_record import ExtractedRecord
 
@@ -49,12 +49,28 @@ class PullRequestRecord(ExtractedRecord):
     def merged_date(self) -> date | None:
         return self.merged_at.date() if self.merged_at else None
 
+    def _get_weekend_days(self, start_dt: datetime, end_dt: datetime) -> int:
+        weekend_days = set()
+        d = start_dt.date()
+        while d <= end_dt.date():
+            if d.weekday() >= 5:  # Saturday or Sunday
+                weekend_days.add(d)
+            d += timedelta(days=1)
+        return len(weekend_days)
+
     def lead_time_for_changes(self) -> float:
         # TODO: テストを書く
-        # TODO: 土日を考慮する
         if self.merged_at is None or self.created_at is None:
             return 0.0
-        return (self.merged_at - self.created_at).total_seconds() / 3600
+
+        total_seconds = (self.merged_at - self.created_at).total_seconds()
+
+        weekend_days = self._get_weekend_days(self.created_at, self.merged_at)
+        weekend_seconds = weekend_days * 24 * 3600
+
+        lead_time_seconds = total_seconds - weekend_seconds
+
+        return max(0, lead_time_seconds) / 3600
 
     def __repr__(self) -> str:
         return f"<PullRequestRecord #{self.number} {self.title}>"
