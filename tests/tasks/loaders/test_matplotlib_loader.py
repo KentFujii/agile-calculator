@@ -46,7 +46,7 @@ class TestMatplotlibLoader:
         # Assertions for plt calls
         mock_mdates.date2num.assert_called()
         x_date_nums = [mock_mdates.date2num.return_value for _ in records]
-    mock_plt.plot_date.assert_called_once_with(x_date_nums, y_data, 'o-')
+        mock_plt.plot_date.assert_called_once_with(x_date_nums, y_data, 'o-')
         mock_plt.xlabel.assert_called_once_with(x_label)
         mock_plt.ylabel.assert_called_once_with(y_label)
         mock_plt.xticks.assert_called_once_with(rotation=45)
