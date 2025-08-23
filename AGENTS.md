@@ -16,7 +16,7 @@ Pythonを利用しJiraやGitHubのデータを、抽出・加工し可視化す�
 [ JiraやGitHubのクレデンシャルさえあれば、無料で利用できるという特徴 ]が備わっている。
 
 ## やらないことリスト
-- リッチなグラフの構築
+- リッチなグラフの作成
 - GUIの開発
 - ミドルウェアの利用
 - サーバーやWeb APIの開発
@@ -27,8 +27,10 @@ Pythonを利用しJiraやGitHubのデータを、抽出・加工し可視化す�
 - 開発チームのメンバー、つまり分析対象の人たちです。
 
 ## 解決案を描く
+
+「HOW」を明らかにする。
+
 ### システム構成
-[ユーザーストーリーマッピング](https://www.canva.com/design/DAGc0-KJrLg/_1o6i9n5LO1YdSLCs_IXFA/view?utm_content=DAGc0-KJrLg&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3a1ac8b254)
 
 - tasks: データを抽出し、加工し、出力するためのモジュールを提供します。
   - extractors: 分析対象となるサービスのAPIからデータを取得するためのモジュールを提供します。
