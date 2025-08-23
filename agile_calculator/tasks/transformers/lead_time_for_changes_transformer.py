@@ -1,3 +1,4 @@
+import logging
 from collections import defaultdict
 from statistics import mean
 from typing import Iterator
@@ -28,7 +29,9 @@ class LeadTimeForChangesTransformer:
         for record in records:
             if not record.merged_at:
                 continue
-            yield LeadTimeForChangesRecord(
+            record = LeadTimeForChangesRecord(
                 merged_date=record.merged_at.date(),
                 lead_time_seconds=record.lead_time_for_changes()
             )
+            logging.debug(record)
+            yield record
