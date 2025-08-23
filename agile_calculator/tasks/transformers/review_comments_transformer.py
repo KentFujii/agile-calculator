@@ -1,3 +1,4 @@
+import logging
 from collections import defaultdict
 from statistics import mean
 from typing import Iterator
@@ -26,7 +27,9 @@ class ReviewCommentsTransformer:
         for record in records:
             if not record.merged_at:
                 continue
-            yield ReviewCommentsRecord(
+            record =  ReviewCommentsRecord(
                 merged_date=record.merged_at.date(),
                 review_comments=record.review_comments
             )
+            logging.debug(record)
+            yield record
