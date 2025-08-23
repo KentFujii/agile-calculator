@@ -32,7 +32,6 @@ class TestMatplotlibLoader:
             MockRecord(date(2023, 1, 1), 10),
             MockRecord(date(2023, 1, 2), 20),
         ]
-        x_data = [record.x() for record in records]
         y_data = [record.y() for record in records]
 
         # Instantiate the loader
@@ -45,7 +44,9 @@ class TestMatplotlibLoader:
         loader.run(records)
 
         # Assertions for plt calls
-        mock_plt.plot.assert_called_once_with(x_data, y_data, marker='o')
+        mock_mdates.date2num.assert_called()
+        x_date_nums = [mock_mdates.date2num.return_value for _ in records]
+        mock_plt.plot_date.assert_called_once_with(x_date_nums, y_data, 'o-')
         mock_plt.xlabel.assert_called_once_with(x_label)
         mock_plt.ylabel.assert_called_once_with(y_label)
         mock_plt.xticks.assert_called_once_with(rotation=45)

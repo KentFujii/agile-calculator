@@ -14,17 +14,18 @@ from agile_calculator.tasks.transformers.lead_time_for_changes_transformer impor
 class TestLeadTimeForChangesTransformer:
     def test_run(self):
         # Setup mock data
-        now = datetime.now()
-        pr1_created = now - timedelta(days=2)
-        pr1_merged = now - timedelta(days=1)
+        # Use fixed dates to make the test deterministic
+        # Using a Wednesday as a reference point
+        pr1_merged = datetime(2024, 1, 10, 10, 0, 0)  # Wed
+        pr1_created = datetime(2024, 1, 9, 10, 0, 0)  # Tue. lead time = 24h
 
-        pr2_created = now - timedelta(days=3)
-        pr2_merged = now - timedelta(days=1)  # Same day as pr1
+        pr2_created = datetime(2024, 1, 8, 10, 0, 0)  # Mon
+        pr2_merged = datetime(2024, 1, 10, 10, 0, 0)  # Wed. lead time = 48h
 
-        pr3_created = now - timedelta(days=5)
-        pr3_merged = now - timedelta(days=4)
+        pr3_created = datetime(2024, 1, 3, 10, 0, 0)  # Wed
+        pr3_merged = datetime(2024, 1, 4, 10, 0, 0)  # Thu. lead time = 24h
 
-        pr4_created = now - timedelta(days=6)  # Not merged
+        pr4_created = datetime(2024, 1, 2, 10, 0, 0)  # Not merged, Tue
 
         records = [
             PullRequestRecord(
