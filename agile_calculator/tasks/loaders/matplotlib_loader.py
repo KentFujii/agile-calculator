@@ -19,7 +19,7 @@ class MatplotlibLoader:
     def run(self, records: Sequence[TransformedRecord]) -> None:
         x = [mdates.date2num(datetime.combine(record.x(), datetime.min.time())) for record in records]
         y = [record.y() for record in records]
-        plt.plot_date(x, y, marker='o', linestyle='-')
+        plt.plot_date(x, y, 'o-')
         plt.xlabel(self.x_label)
         plt.ylabel(self.y_label)
         plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=self.DEFAULT_INTERVAL_DAYS))
