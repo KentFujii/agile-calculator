@@ -21,7 +21,7 @@ class PullRequestWorkflow:
 
     def pull_request_cycle_time(self) -> PullRequestCycleTimeWorkflow:
         """
-        Pull Requestのリードタイムを、一日ごとの移動平均推移で計算します。
+        Pull Requestのサイクルタイムを、一日ごとの移動平均推移で計算します。
         """
         return PullRequestCycleTimeWorkflow(
             extractor=self._extractor,
