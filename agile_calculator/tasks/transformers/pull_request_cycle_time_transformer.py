@@ -20,10 +20,10 @@ class PullRequestCycleTimeTransformer:
     def _reduce_records(self, records: list[PullRequestCycleTimeRecord]) -> Iterator[PullRequestCycleTimeRecord]:
         merged_dict = defaultdict(list)
         for r in records:
-            merged_dict[r.merged_date].append(r.lead_time_seconds)
+            merged_dict[r.merged_date].append(r.lead_time_hours)
         sorted_items = sorted((k, mean(x for x in v if x is not None)) for k, v in merged_dict.items())
         for k, v in sorted_items:
-            yield PullRequestCycleTimeRecord(merged_date=k, lead_time_seconds=v)
+            yield PullRequestCycleTimeRecord(merged_date=k, lead_time_hours=v)
 
     def _map_records(self, records: list[PullRequestRecord]) -> Iterator[PullRequestCycleTimeRecord]:
         for record in records:
@@ -31,7 +31,7 @@ class PullRequestCycleTimeTransformer:
                 continue
             record = PullRequestCycleTimeRecord(
                 merged_date=record.merged_at.date(),
-                lead_time_seconds=record.lead_time_for_changes()
+                lead_time_hours=record.lead_time_for_changes()
             )
             logging.debug(record)
             yield record
