@@ -7,10 +7,10 @@ from agile_calculator.tasks.transformers.pull_request_cycle_time_transformer imp
 from agile_calculator.tasks.transformers.review_comments_transformer import (
     ReviewCommentsTransformer,
 )
-from agile_calculator.workflows.loading.pull_request_cycle_time_workflow import (
+from agile_calculator.workflows.transforming.loading.pull_request_cycle_time_workflow import (
     PullRequestCycleTimeWorkflow,
 )
-from agile_calculator.workflows.loading.review_comments_workflow import (
+from agile_calculator.workflows.transforming.loading.review_comments_workflow import (
     ReviewCommentsWorkflow,
 )
 
