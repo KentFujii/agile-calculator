@@ -4,7 +4,7 @@ from typing import Any
 from agile_calculator.records.transformed_record import TransformedRecord
 
 
-class LeadTimeForChangesRecord(TransformedRecord):
+class PullRequestCycleTimeRecord(TransformedRecord):
     def __init__(
         self,
         number: int | None = None,
@@ -28,7 +28,7 @@ class LeadTimeForChangesRecord(TransformedRecord):
 
     def __repr__(self) -> str:
         return (
-            f"<LeadTimeForChangesRecord "
+            f"<PullRequestCycleTimeRecord "
             f"x: merged_date={self.merged_date}>, "
             f"y: lead_time_seconds={self.lead_time_seconds}>"
         )

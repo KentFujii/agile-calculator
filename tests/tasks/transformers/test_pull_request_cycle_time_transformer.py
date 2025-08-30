@@ -3,15 +3,15 @@ from datetime import date, datetime, timedelta
 import pytest
 
 from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
-from agile_calculator.records.transformed.lead_time_for_changes_record import (
-    LeadTimeForChangesRecord,
+from agile_calculator.records.transformed.pull_request_cycle_time_record import (
+    PullRequestCycleTimeRecord,
 )
-from agile_calculator.tasks.transformers.lead_time_for_changes_transformer import (
-    LeadTimeForChangesTransformer,
+from agile_calculator.tasks.transformers.pull_request_cycle_time_transformer import (
+    PullRequestCycleTimeTransformer,
 )
 
 
-class TestLeadTimeForChangesTransformer:
+class TestPullRequestCycleTimeTransformer:
     def test_run(self):
         # Setup mock data
         # Use fixed dates to make the test deterministic
@@ -64,15 +64,15 @@ class TestLeadTimeForChangesTransformer:
         ]
 
         # Instantiate the transformer
-        transformer = LeadTimeForChangesTransformer()
+        transformer = PullRequestCycleTimeTransformer()
 
         # Execute
         result = transformer.run(records)
 
         # Assertions
         assert len(result) == 2
-        assert isinstance(result[0], LeadTimeForChangesRecord)
-        assert isinstance(result[1], LeadTimeForChangesRecord)
+        assert isinstance(result[0], PullRequestCycleTimeRecord)
+        assert isinstance(result[1], PullRequestCycleTimeRecord)
 
         # Assert the older date comes first
         assert result[0].merged_date == pr3_merged.date()
@@ -99,11 +99,11 @@ class TestLeadTimeForChangesTransformer:
                 merged=False,
             )
         ]
-        transformer = LeadTimeForChangesTransformer()
+        transformer = PullRequestCycleTimeTransformer()
         result = transformer.run(records)
         assert len(result) == 0
 
     def test_run_with_empty_list(self):
-        transformer = LeadTimeForChangesTransformer()
+        transformer = PullRequestCycleTimeTransformer()
         result = transformer.run([])
         assert len(result) == 0

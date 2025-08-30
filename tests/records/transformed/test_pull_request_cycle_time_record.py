@@ -1,12 +1,12 @@
 from datetime import date
 
-from agile_calculator.records.transformed.lead_time_for_changes_record import LeadTimeForChangesRecord
+from agile_calculator.records.transformed.pull_request_cycle_time_record import PullRequestCycleTimeRecord
 
 
-class TestLeadTimeForChangesRecord:
+class TestPullRequestCycleTimeRecord:
     def test_init(self):
         merged_date = date(2023, 1, 1)
-        record = LeadTimeForChangesRecord(
+        record = PullRequestCycleTimeRecord(
             merged_date=merged_date,
             lead_time_seconds=3600
         )
@@ -15,9 +15,9 @@ class TestLeadTimeForChangesRecord:
 
     def test_x(self):
         merged_date = date(2023, 1, 1)
-        record = LeadTimeForChangesRecord(merged_date=merged_date)
+        record = PullRequestCycleTimeRecord(merged_date=merged_date)
         assert record.x() == merged_date
 
     def test_y(self):
-        record = LeadTimeForChangesRecord(lead_time_seconds=7200)
+        record = PullRequestCycleTimeRecord(lead_time_seconds=7200)
         assert record.y() == 7200
