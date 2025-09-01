@@ -1,20 +1,13 @@
+from dataclasses import dataclass
 from datetime import date
-from typing import Any
 
 from agile_calculator.records.transformed_record import TransformedRecord
 
 
+@dataclass
 class PullRequestCycleTimeRecord(TransformedRecord):
-    def __init__(
-        self,
-        number: int | None = None,
-        title: str | None = None,
-        merged_date: date | None = None,
-        lead_time_hours: float | None = None,
-        **kwargs: Any,
-    ) -> None:
-        self.merged_date = merged_date
-        self.lead_time_hours = lead_time_hours
+    merged_date: date | None = None
+    lead_time_hours: float | None = None
 
     def x(self) -> date:
         if self.merged_date is None:

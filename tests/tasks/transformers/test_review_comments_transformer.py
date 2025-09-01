@@ -1,4 +1,3 @@
-
 from datetime import date, datetime, timedelta
 
 import pytest
@@ -53,7 +52,7 @@ class TestReviewCommentsTransformer:
             self.create_pr_record(None, 100),  # Not merged, should be ignored
         ]
 
-        result = transformer.run(records)
+        result = list(transformer.run(iter(records)))
 
         assert len(result) == 2
         assert isinstance(result[0], ReviewCommentsRecord)
@@ -73,7 +72,7 @@ class TestReviewCommentsTransformer:
             self.create_pr_record(None, 5),  # Should be skipped
         ]
 
-        mapped = list(transformer._map_records(records))
+        mapped = list(transformer._map_records(iter(records)))
 
         assert len(mapped) == 1
         assert mapped[0].merged_date == today
@@ -92,7 +91,7 @@ class TestReviewCommentsTransformer:
             ReviewCommentsRecord(merged_date=today, review_comments=20),
         ]
 
-        reduced = list(transformer._reduce_records(records))
+        reduced = list(transformer._reduce_records(iter(records)))
 
         assert len(reduced) == 2
         assert reduced[0].merged_date == yesterday
@@ -104,7 +103,7 @@ class TestReviewCommentsTransformer:
         """
         Tests that running the transformer with an empty list results in an empty list.
         """
-        result = transformer.run([])
+        result = list(transformer.run(iter([])))
         assert len(result) == 0
 
     def test_run_with_no_merged_prs(self, transformer):
@@ -115,5 +114,5 @@ class TestReviewCommentsTransformer:
             self.create_pr_record(None, 10),
             self.create_pr_record(None, 20),
         ]
-        result = transformer.run(records)
+        result = list(transformer.run(iter(records)))
         assert len(result) == 0

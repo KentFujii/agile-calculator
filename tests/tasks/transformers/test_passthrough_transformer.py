@@ -1,6 +1,10 @@
 from unittest.mock import MagicMock
-from agile_calculator.tasks.transformers.passthrough_transformer import PassthroughTransformer
+
 from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
+from agile_calculator.tasks.transformers.passthrough_transformer import (
+    PassthroughTransformer,
+)
+
 
 class TestPassthroughTransformer:
     def test_passthrough_transformer(self):

@@ -1,20 +1,13 @@
+from dataclasses import dataclass
 from datetime import date
-from typing import Any
 
 from agile_calculator.records.transformed_record import TransformedRecord
 
 
+@dataclass
 class ReviewCommentsRecord(TransformedRecord):
-    def __init__(
-        self,
-        number: int | None = None,
-        title: str | None = None,
-        merged_date: date | None = None,
-        review_comments: int | None = None,
-        **kwargs: Any,
-    ) -> None:
-        self.merged_date = merged_date
-        self.review_comments = review_comments
+    merged_date: date | None = None
+    review_comments: int | None = None
 
     def x(self) -> date:
         if self.merged_date is None:

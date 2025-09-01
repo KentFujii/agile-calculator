@@ -1,6 +1,8 @@
 from datetime import date
 
-from agile_calculator.records.transformed.review_comments_record import ReviewCommentsRecord
+from agile_calculator.records.transformed.review_comments_record import (
+    ReviewCommentsRecord,
+)
 
 
 class TestReviewCommentsRecord:

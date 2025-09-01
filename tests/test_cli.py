@@ -1,6 +1,8 @@
 from unittest.mock import patch
+
 from agile_calculator.cli import main
 from agile_calculator.workflows.extracting_workflow import ExtractingWorkflow
+
 
 class TestCli:
     @patch('fire.Fire')
