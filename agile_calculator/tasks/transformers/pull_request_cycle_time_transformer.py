@@ -12,12 +12,14 @@ from agile_calculator.records.transformed.pull_request_cycle_time_record import 
 
 
 class PullRequestCycleTimeTransformer:
-    def run(self, records: list[PullRequestRecord]) -> list[PullRequestCycleTimeRecord]:
-        mapped_records = list(self._map_records(records))
-        reduced_records = list(self._reduce_records(mapped_records))
+    def run(self, records: Iterator[PullRequestRecord]) -> Iterator[PullRequestCycleTimeRecord]:
+        mapped_records = self._map_records(records)
+        reduced_records = self._reduce_records(mapped_records)
         return reduced_records
 
-    def _reduce_records(self, records: list[PullRequestCycleTimeRecord]) -> Iterator[PullRequestCycleTimeRecord]:
+    def _reduce_records(
+        self, records: Iterator[PullRequestCycleTimeRecord]
+    ) -> Iterator[PullRequestCycleTimeRecord]:
         merged_dict = defaultdict(list)
         for r in records:
             merged_dict[r.merged_date].append(r.lead_time_hours)
@@ -25,7 +27,7 @@ class PullRequestCycleTimeTransformer:
         for k, v in sorted_items:
             yield PullRequestCycleTimeRecord(merged_date=k, lead_time_hours=v)
 
-    def _map_records(self, records: list[PullRequestRecord]) -> Iterator[PullRequestCycleTimeRecord]:
+    def _map_records(self, records: Iterator[PullRequestRecord]) -> Iterator[PullRequestCycleTimeRecord]:
         for record in records:
             if not record.merged_at:
                 continue

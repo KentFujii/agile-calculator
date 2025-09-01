@@ -60,9 +60,7 @@ select = ["E", "F", "W", "I", "N"]
 ignore = ["E501"]
 
 # 除外するディレクトリ
-exclude = [
- "tests/*"
-]
+exclude = []
 
 [tool.ruff.format]
 # Black互換のフォーマットを有効にする

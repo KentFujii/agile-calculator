@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import datetime
 
 import pytest
 
@@ -67,7 +67,7 @@ class TestPullRequestCycleTimeTransformer:
         transformer = PullRequestCycleTimeTransformer()
 
         # Execute
-        result = transformer.run(records)
+        result = list(transformer.run(iter(records)))
 
         # Assertions
         assert len(result) == 2
@@ -100,10 +100,10 @@ class TestPullRequestCycleTimeTransformer:
             )
         ]
         transformer = PullRequestCycleTimeTransformer()
-        result = transformer.run(records)
+        result = list(transformer.run(iter(records)))
         assert len(result) == 0
 
     def test_run_with_empty_list(self):
         transformer = PullRequestCycleTimeTransformer()
-        result = transformer.run([])
+        result = list(transformer.run(iter([])))
         assert len(result) == 0

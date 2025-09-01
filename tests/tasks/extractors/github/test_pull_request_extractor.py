@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta, timezone
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
-from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
 from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
+
 
 @pytest.fixture
 def mock_github_client(mocker):
@@ -29,7 +29,7 @@ class TestPullRequestExtractor:
         mock_github_client.get_repo.return_value = mock_repo
 
         extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
-        result = extractor.run()
+        result = list(extractor.run())
 
         assert len(result) == 1
         assert result[0].number == 1
@@ -44,7 +44,7 @@ class TestPullRequestExtractor:
         mock_github_client.get_repo.return_value = mock_repo
 
         extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
-        result = extractor.run()
+        result = list(extractor.run())
 
         assert len(result) == 1
         assert result[0].user == "user1"
@@ -62,7 +62,7 @@ class TestPullRequestExtractor:
         mock_github_client.get_repo.return_value = mock_repo
 
         extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
-        result = extractor.run()
+        result = list(extractor.run())
 
         assert len(result) == 1
         assert result[0].number == 1
@@ -76,7 +76,7 @@ class TestPullRequestExtractor:
         mock_github_client.get_repo.return_value = mock_repo
 
         extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
-        result = extractor.run()
+        result = list(extractor.run())
 
         assert len(result) == 1
         assert result[0].number == 1
@@ -105,7 +105,7 @@ class TestPullRequestExtractor:
         extractor = PullRequestExtractor(repo_name="test/repo", users=(), since_days=5)
 
         # Execute
-        result = extractor.run()
+        result = list(extractor.run())
 
         # Assertions
         assert len(result) == 2
@@ -125,7 +125,7 @@ class TestPullRequestExtractor:
         )
 
         # Execute
-        result = extractor.run()
+        result = list(extractor.run())
 
         # Assertions
         assert len(result) == 0

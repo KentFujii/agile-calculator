@@ -10,12 +10,14 @@ from agile_calculator.records.transformed.review_comments_record import (
 
 
 class ReviewCommentsTransformer:
-    def run(self, records: list[PullRequestRecord]) -> list[ReviewCommentsRecord]:
-        mapped_records = list(self._map_records(records))
-        reduced_records = list(self._reduce_records(mapped_records))
+    def run(self, records: Iterator[PullRequestRecord]) -> Iterator[ReviewCommentsRecord]:
+        mapped_records = self._map_records(records)
+        reduced_records = self._reduce_records(mapped_records)
         return reduced_records
 
-    def _reduce_records(self, records: list[ReviewCommentsRecord]) -> Iterator[ReviewCommentsRecord]:
+    def _reduce_records(
+        self, records: Iterator[ReviewCommentsRecord]
+    ) -> Iterator[ReviewCommentsRecord]:
         merged_dict = defaultdict(list)
         for r in records:
             merged_dict[r.merged_date].append(r.review_comments)
@@ -23,7 +25,7 @@ class ReviewCommentsTransformer:
         for k, v in sorted_items:
             yield ReviewCommentsRecord(merged_date=k, review_comments=int(v))
 
-    def _map_records(self, records: list[PullRequestRecord]) -> Iterator[ReviewCommentsRecord]:
+    def _map_records(self, records: Iterator[PullRequestRecord]) -> Iterator[ReviewCommentsRecord]:
         for record in records:
             if not record.merged_at:
                 continue

@@ -1,7 +1,7 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
 from agile_calculator.workflows.extracting_workflow import ExtractingWorkflow
-from agile_calculator.workflows.transforming.pull_request_workflow import PullRequestWorkflow
-from agile_calculator.tasks.extractors.github.pull_request_extractor import PullRequestExtractor
+
 
 class TestExtractingWorkflow:
     @patch("agile_calculator.workflows.extracting_workflow.PullRequestExtractor", autospec=True)
