@@ -6,6 +6,7 @@ from agile_calculator.records.transformed_record import TransformedRecord
 
 @dataclass
 class ReviewCommentsRecord(TransformedRecord):
+    merged_date: date | None = None
     review_comments: int | None = None
 
     def x(self) -> date:

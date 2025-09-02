@@ -6,6 +6,7 @@ from agile_calculator.records.transformed_record import TransformedRecord
 
 @dataclass
 class PullRequestCycleTimeRecord(TransformedRecord):
+    merged_date: date | None = None
     lead_time_hours: float | None = None
 
     def x(self) -> date:
