@@ -71,7 +71,6 @@ line-ending = "auto"
 
 [tool.ty.environment]
 root = ["."]
-python = "/usr/local/bin/python"
 
 [tool.ty.src]
 include = ["./agile_calculator/**"]

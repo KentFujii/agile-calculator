@@ -21,6 +21,25 @@ class TestExtractingWorkflow:
         result = workflow.pull_requests(repo_name, users, since_days)
 
         # Assert
-        mock_extractor.assert_called_once_with(repo_name, users, since_days)
+        mock_extractor.assert_called_once_with(repo_name, users, since_days, "main")
         mock_workflow.assert_called_once_with(extractor=mock_extractor.return_value)
         assert result == mock_workflow.return_value
+
+    @patch("agile_calculator.workflows.extracting_workflow.PullRequestExtractor", autospec=True)
+    @patch("agile_calculator.workflows.extracting_workflow.PullRequestWorkflow", autospec=True)
+    def test_pull_requests_with_custom_base_branch(self, mock_workflow, mock_extractor):
+        """
+        Tests that a custom base_branch is correctly passed to the extractor.
+        """
+        # Arrange
+        workflow = ExtractingWorkflow()
+        repo_name = "test/repo"
+        users = ("user1",)
+        since_days = 14
+        base_branch = "develop"
+
+        # Act
+        workflow.pull_requests(repo_name, users, since_days, base_branch=base_branch)
+
+        # Assert
+        mock_extractor.assert_called_once_with(repo_name, users, since_days, base_branch)
