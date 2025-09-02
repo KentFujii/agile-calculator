@@ -129,3 +129,35 @@ class TestPullRequestExtractor:
 
         # Assertions
         assert len(result) == 0
+
+    def test_uses_base_branch_parameter(self, mock_github_client):
+        """Tests that the `base_branch` parameter is passed to the `get_pulls` call."""
+        mock_repo = MagicMock()
+        mock_repo.get_pulls.return_value = []
+        mock_github_client.get_repo.return_value = mock_repo
+
+        # Test with a custom branch
+        extractor = PullRequestExtractor(
+            repo_name="test/repo",
+            users=(),
+            since_days=5,
+            base_branch="develop"
+        )
+        list(extractor.run())  # Consume the iterator
+
+        mock_repo.get_pulls.assert_called_once_with(
+            state="close", sort="created", direction="desc", base="develop"
+        )
+
+        # Test with the default branch
+        mock_repo.get_pulls.reset_mock()
+        extractor_main = PullRequestExtractor(
+            repo_name="test/repo",
+            users=(),
+            since_days=5
+        )
+        list(extractor_main.run())
+
+        mock_repo.get_pulls.assert_called_once_with(
+            state="close", sort="created", direction="desc", base="main"
+        )
