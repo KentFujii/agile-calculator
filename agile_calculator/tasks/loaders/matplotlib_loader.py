@@ -5,9 +5,10 @@ import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 
 from agile_calculator.records.transformed_record import TransformedRecord
+from agile_calculator.tasks.loaders.base_loader import BaseLoader
 
 
-class MatplotlibLoader:
+class MatplotlibLoader(BaseLoader):
     DEFAULT_INTERVAL_DAYS = 7
     OUTPUT_FILENAME = "matplotlib.png"
 
