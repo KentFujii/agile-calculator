@@ -17,7 +17,7 @@ jobs:
       # - uses: mxschmitt/action-tmate@v3
       - name: Run
         run: |
-          echo -n "$GITHUB_TOKEN" > .env
+          echo -n "GITHUB_CLASSIC_TOKEN=${GITHUB_TOKEN}" > .env
           docker compose build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
