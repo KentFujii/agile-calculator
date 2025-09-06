@@ -29,5 +29,5 @@ jobs:
             KentFujii/agile-calculator \
             "" \
             90 \
-            pull_request_cycle_time \
+            cycle_time \
             matplotlib
