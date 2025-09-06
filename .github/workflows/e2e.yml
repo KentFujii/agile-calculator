@@ -1,0 +1,22 @@
+name: Create PR with Gemini
+
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # - uses: mxschmitt/action-tmate@v3
+      - name: Fetch Issue Details
+        run: |
+          agile-calculator --log_level=DEBUG pull_requests KentFujii/agile-calculator "" 90 pull_request_cycle_time matplotlib
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
