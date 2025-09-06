@@ -60,9 +60,7 @@ select = ["E", "F", "W", "I", "N"]
 ignore = ["E501"]
 
 # 除外するディレクトリ
-exclude = [
- "tests/*"
-]
+exclude = []
 
 [tool.ruff.format]
 # Black互換のフォーマットを有効にする
@@ -73,7 +71,6 @@ line-ending = "auto"
 
 [tool.ty.environment]
 root = ["."]
-python = "/usr/local/bin/python"
 
 [tool.ty.src]
 include = ["./agile_calculator/**"]

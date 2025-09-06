@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta, timezone
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
-from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
 from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
+
 
 @pytest.fixture
 def mock_github_client(mocker):
@@ -29,7 +29,7 @@ class TestPullRequestExtractor:
         mock_github_client.get_repo.return_value = mock_repo
 
         extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
-        result = extractor.run()
+        result = list(extractor.run())
 
         assert len(result) == 1
         assert result[0].number == 1
@@ -44,7 +44,7 @@ class TestPullRequestExtractor:
         mock_github_client.get_repo.return_value = mock_repo
 
         extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
-        result = extractor.run()
+        result = list(extractor.run())
 
         assert len(result) == 1
         assert result[0].user == "user1"
@@ -62,7 +62,7 @@ class TestPullRequestExtractor:
         mock_github_client.get_repo.return_value = mock_repo
 
         extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
-        result = extractor.run()
+        result = list(extractor.run())
 
         assert len(result) == 1
         assert result[0].number == 1
@@ -76,7 +76,7 @@ class TestPullRequestExtractor:
         mock_github_client.get_repo.return_value = mock_repo
 
         extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
-        result = extractor.run()
+        result = list(extractor.run())
 
         assert len(result) == 1
         assert result[0].number == 1
@@ -105,7 +105,7 @@ class TestPullRequestExtractor:
         extractor = PullRequestExtractor(repo_name="test/repo", users=(), since_days=5)
 
         # Execute
-        result = extractor.run()
+        result = list(extractor.run())
 
         # Assertions
         assert len(result) == 2
@@ -125,7 +125,39 @@ class TestPullRequestExtractor:
         )
 
         # Execute
-        result = extractor.run()
+        result = list(extractor.run())
 
         # Assertions
         assert len(result) == 0
+
+    def test_uses_base_branch_parameter(self, mock_github_client):
+        """Tests that the `base_branch` parameter is passed to the `get_pulls` call."""
+        mock_repo = MagicMock()
+        mock_repo.get_pulls.return_value = []
+        mock_github_client.get_repo.return_value = mock_repo
+
+        # Test with a custom branch
+        extractor = PullRequestExtractor(
+            repo_name="test/repo",
+            users=(),
+            since_days=5,
+            base_branch="develop"
+        )
+        list(extractor.run())  # Consume the iterator
+
+        mock_repo.get_pulls.assert_called_once_with(
+            state="close", sort="created", direction="desc", base="develop"
+        )
+
+        # Test with the default branch
+        mock_repo.get_pulls.reset_mock()
+        extractor_main = PullRequestExtractor(
+            repo_name="test/repo",
+            users=(),
+            since_days=5
+        )
+        list(extractor_main.run())
+
+        mock_repo.get_pulls.assert_called_once_with(
+            state="close", sort="created", direction="desc", base="main"
+        )
