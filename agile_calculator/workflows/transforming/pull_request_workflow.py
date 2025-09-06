@@ -25,7 +25,7 @@ class PullRequestWorkflow:
     def __init__(self, extractor: PullRequestExtractor) -> None:
         self._extractor = extractor
 
-    def pull_request_cycle_time(self) -> PullRequestCycleTimeWorkflow:
+    def cycle_time(self) -> PullRequestCycleTimeWorkflow:
         """
         Pull Requestのサイクルタイムを、一日ごとの移動平均推移で計算します。
         """

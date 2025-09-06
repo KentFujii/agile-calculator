@@ -1,0 +1,33 @@
+name: Create PR with Gemini
+
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # - uses: mxschmitt/action-tmate@v3
+      - name: Run
+        run: |
+          echo -n "GITHUB_CLASSIC_TOKEN=${GITHUB_TOKEN}" > .env
+          docker compose build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build
+        run: |
+          docker compose run jupyter agile-calculator \
+            --log_level=DEBUG \
+            pull_requests \
+            KentFujii/agile-calculator \
+            "" \
+            90 \
+            cycle_time \
+            matplotlib
