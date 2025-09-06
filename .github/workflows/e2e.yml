@@ -15,8 +15,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       # - uses: mxschmitt/action-tmate@v3
-      - name: Fetch Issue Details
+      - name: Run
         run: |
-          agile-calculator --log_level=DEBUG pull_requests KentFujii/agile-calculator "" 90 pull_request_cycle_time matplotlib
+          echo -n "$GITHUB_TOKEN" > .env
+          docker compose build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build
+        run: |
+          docker compose run jupyter agile-calculator \
+            --log_level=DEBUG \
+            pull_requests \
+            KentFujii/agile-calculator \
+            "" \
+            90 \
+            pull_request_cycle_time \
+            matplotlib
