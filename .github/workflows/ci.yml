@@ -1,4 +1,4 @@
-name: Create PR with Gemini
+name: CI
 
 on:
   pull_request:
@@ -39,4 +39,12 @@ jobs:
             "" \
             90 \
             cycle_time \
+            matplotlib
+          docker compose run --rm jupyter agile-calculator \
+            --log_level=DEBUG \
+            pull_requests \
+            KentFujii/agile-calculator \
+            "" \
+            90 \
+            review_comments \
             matplotlib
