@@ -73,7 +73,7 @@ line-ending = "auto"
 
 [tool.ty.environment]
 root = ["."]
-python = "/usr/local/bin/python"
+python = "/home/jules/.pyenv/versions/3.12.11/bin/python"
 
 [tool.ty.src]
 include = ["./agile_calculator/**"]

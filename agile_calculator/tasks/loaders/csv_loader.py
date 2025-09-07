@@ -1,6 +1,6 @@
 import csv
 from datetime import timedelta
-from typing import Sequence, Any
+from typing import Any, Sequence
 
 from agile_calculator.records.transformed_record import TransformedRecord
 from agile_calculator.tasks.loaders.base_loader import BaseLoader

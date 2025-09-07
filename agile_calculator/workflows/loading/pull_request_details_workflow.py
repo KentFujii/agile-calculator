@@ -16,7 +16,12 @@ class PullRequestDetailsWorkflow:
         """
         計算結果をCSVへ出力します。
         """
-        CsvLoader().run(
+        output_path = "pull_request_details.csv"
+        columns = [
+            "number", "title", "user", "state", "created_at",
+            "merged_at", "additions", "deletions", "changed_files"
+        ]
+        CsvLoader(output_path=output_path, columns=columns).run(
             self._transformer.run(
                 self._extractor.run()
             )
