@@ -7,8 +7,8 @@ from agile_calculator.tasks.transformers.passthrough_transformer import (
 from agile_calculator.tasks.transformers.pull_request_cycle_time_transformer import (
     PullRequestCycleTimeTransformer,
 )
-from agile_calculator.tasks.transformers.review_comments_transformer import (
-    ReviewCommentsTransformer,
+from agile_calculator.tasks.transformers.pull_request_review_comments_transformer import (
+    PullRequestReviewCommentsTransformer,
 )
 from agile_calculator.workflows.loading.pull_request_cycle_time_workflow import (
     PullRequestCycleTimeWorkflow,
@@ -40,7 +40,7 @@ class PullRequestWorkflow:
         """
         return PullRequestReviewCommentsWorkflow(
             extractor=self._extractor,
-            transformer=ReviewCommentsTransformer()
+            transformer=PullRequestReviewCommentsTransformer()
         )
 
     def details(self) -> PullRequestDetailsWorkflow:
