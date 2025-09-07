@@ -18,7 +18,7 @@ class PullRequestDetailsWorkflow:
         """
         計算結果をCSVへ出力します。
         """
-        CsvLoader(self._output_path, self._columns).run(
+        CsvLoader().run(
             self._transformer.run(
                 self._extractor.run()
             )

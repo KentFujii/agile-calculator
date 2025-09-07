@@ -10,28 +10,34 @@ class CsvLoader(BaseLoader):
     """
     TransformedRecordのリストを指定されたカラムに基づいてCSVファイルに出力するクラス
     """
-    def __init__(self, output_path: str, columns: Sequence[str]) -> None:
-        """
-        CsvLoaderのコンストラクタ
-
-        Args:
-            output_path (str): CSVファイルの出力先パス
-            columns (Sequence[str]): CSVのヘッダーとなるカラム名のシーケンス
-        """
-        self.output_path = output_path
-        self.columns = columns
+    OUTPUT_PATH = "csv_loader.csv"
 
     def run(self, records: Sequence[TransformedRecord]) -> None:
         """
         レコードのリストを指定されたパスにCSVファイルとして書き出す。
         レコードが空の場合でもヘッダーのみのファイルを作成する。
+        TransformedRecordの型からフィールドを自動抽出し、CSVの列として扱う。
         """
-        with open(self.output_path, "w", newline="", encoding="utf-8") as f:
+        # フィールド名の抽出
+        if records:
+            # dataclassの場合
+            if hasattr(records[0], "__dataclass_fields__"):
+                columns = list(records[0].__dataclass_fields__.keys())
+            else:
+                columns = [attr for attr in dir(records[0]) if not attr.startswith('_') and not callable(getattr(records[0], attr))]
+        else:
+            # recordsが空の場合はTransformedRecordからフィールドを抽出
+            if hasattr(TransformedRecord, "__dataclass_fields__"):
+                columns = list(TransformedRecord.__dataclass_fields__.keys())
+            else:
+                columns = [attr for attr in dir(TransformedRecord) if not attr.startswith('_') and not callable(getattr(TransformedRecord, attr))]
+
+        with open(self.OUTPUT_PATH, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
-            writer.writerow(self.columns)
+            writer.writerow(columns)
 
             for record in records:
-                row_data = [self._format_value(getattr(record, col, None)) for col in self.columns]
+                row_data = [self._format_value(getattr(record, col, None)) for col in columns]
                 writer.writerow(row_data)
 
     def _format_value(self, value: Any) -> str:
