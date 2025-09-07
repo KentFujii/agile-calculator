@@ -1,39 +1,28 @@
 from unittest.mock import MagicMock
 from agile_calculator.tasks.transformers.pull_request_details_transformer import PullRequestDetailsTransformer
 from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
-
 from agile_calculator.records.transformed.pull_request_details_record import PullRequestDetailsRecord
 
 class TestPullRequestDetailsTransformer:
     def test_pull_request_details_transformer_with_mock(self):
         """
-        MagicMockの場合はそのまま返す（型がPullRequestRecordでない場合）
+        MagicMockの場合でも変換できることをテスト
         """
         mock_record = MagicMock(spec=PullRequestRecord)
-        mock_record.number = None
-        mock_record.title = None
-        mock_record.draft = None
-        mock_record.user = None
-        mock_record.created_at = None
-        mock_record.updated_at = None
-        mock_record.merged_at = None
-        mock_record.closed_at = None
-        mock_record.state = None
-        mock_record.base_ref = None
-        mock_record.head_ref = None
-        mock_record.merged = None
-        mock_record.merge_commit_sha = None
-        mock_record.comments = None
-        mock_record.review_comments = None
-        mock_record.commits = None
-        mock_record.additions = None
-        mock_record.deletions = None
-        mock_record.changed_files = None
+        mock_record.model_dump.return_value = {
+            "number": 1, "title": "Test", "draft": False, "user": "testuser",
+            "created_at": None, "updated_at": None, "merged_at": None,
+            "closed_at": None, "state": "closed", "base_ref": "main",
+            "head_ref": "feature", "merged": False, "merge_commit_sha": None,
+            "comments": 0, "review_comments": 0, "commits": 1,
+            "additions": 10, "deletions": 5, "changed_files": 2
+        }
         mock_records = [mock_record]
         transformer = PullRequestDetailsTransformer()
         result = transformer.run(mock_records)
-        # 返り値がPullRequestDetailsRecordの配列であることをassert
         assert all(isinstance(r, PullRequestDetailsRecord) for r in result)
+        assert result[0].number == 1
+        assert result[0].title == "Test"
 
     def test_pull_request_details_transformer_maps_record(self):
         """

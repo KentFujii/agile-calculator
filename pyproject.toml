@@ -30,6 +30,7 @@ dependencies = [
     "ruff==0.12.5",
     "ty>=0.0.1a16",
     "fire>=0.7.0",
+    "pydantic",
 ]
 
 [project.urls]

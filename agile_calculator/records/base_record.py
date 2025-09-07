@@ -1,7 +1,5 @@
-from abc import ABC, abstractmethod
+from pydantic import BaseModel
 
 
-class BaseRecord(ABC):
-    @abstractmethod
-    def __repr__(self) -> str:
-        pass
+class BaseRecord(BaseModel):
+    pass
