@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from agile_calculator.records.extracted_record import ExtractedRecord
 
 
