@@ -43,11 +43,34 @@ class PullRequestWorkflow:
             transformer=PullRequestReviewCommentsTransformer()
         )
 
-    def details(self) -> PullRequestDetailsWorkflow:
+    def details(self, output_path: str = "pull_request_details.csv") -> PullRequestDetailsWorkflow:
         """
         Pull Requestの詳細情報をCSV形式で出力します。
         """
+        columns = [
+            "number",
+            "title",
+            "draft",
+            "user",
+            "created_at",
+            "updated_at",
+            "merged_at",
+            "closed_at",
+            "state",
+            "base_ref",
+            "head_ref",
+            "merged",
+            "merge_commit_sha",
+            "comments",
+            "review_comments",
+            "commits",
+            "additions",
+            "deletions",
+            "changed_files",
+        ]
         return PullRequestDetailsWorkflow(
             extractor=self._extractor,
-            transformer=PassthroughTransformer()
+            transformer=PassthroughTransformer(),
+            output_path=output_path,
+            columns=columns
         )

@@ -8,15 +8,17 @@ from agile_calculator.tasks.transformers.passthrough_transformer import (
 
 
 class PullRequestDetailsWorkflow:
-    def __init__(self, extractor: PullRequestExtractor, transformer: PassthroughTransformer) -> None:
+    def __init__(self, extractor: PullRequestExtractor, transformer: PassthroughTransformer, output_path: str, columns: list[str]) -> None:
         self._extractor = extractor
         self._transformer = transformer
+        self._output_path = output_path
+        self._columns = columns
 
     def csv(self) -> None:
         """
         計算結果をCSVへ出力します。
         """
-        CsvLoader().run(
+        CsvLoader(self._output_path, self._columns).run(
             self._transformer.run(
                 self._extractor.run()
             )
