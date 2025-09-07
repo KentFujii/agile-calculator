@@ -10,7 +10,7 @@ class CsvLoader(BaseLoader):
     """
     TransformedRecordのリストを指定されたカラムに基づいてCSVファイルに出力するクラス
     """
-    OUTPUT_PATH = "csv_loader.csv"
+    OUTPUT_PATH = "loader.csv"
 
     def run(self, records: Sequence[TransformedRecord]) -> None:
         """
