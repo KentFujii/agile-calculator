@@ -16,8 +16,8 @@ from agile_calculator.workflows.loading.pull_request_cycle_time_workflow import 
 from agile_calculator.workflows.loading.pull_request_details_workflow import (
     PullRequestDetailsWorkflow,
 )
-from agile_calculator.workflows.loading.review_comments_workflow import (
-    ReviewCommentsWorkflow,
+from agile_calculator.workflows.loading.pull_request_review_comments_workflow import (
+    PullRequestReviewCommentsWorkflow,
 )
 
 
@@ -34,11 +34,11 @@ class PullRequestWorkflow:
             transformer=PullRequestCycleTimeTransformer()
         )
 
-    def review_comments(self) -> ReviewCommentsWorkflow:
+    def review_comments(self) -> PullRequestReviewCommentsWorkflow:
         """
         Pull Requestのレビューコメント数を、一日ごとの移動平均推移で計算します。
         """
-        return ReviewCommentsWorkflow(
+        return PullRequestReviewCommentsWorkflow(
             extractor=self._extractor,
             transformer=ReviewCommentsTransformer()
         )

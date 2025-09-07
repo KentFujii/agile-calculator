@@ -7,7 +7,7 @@ from agile_calculator.tasks.transformers.review_comments_transformer import (
 )
 
 
-class ReviewCommentsWorkflow:
+class PullRequestReviewCommentsWorkflow:
     def __init__(self, extractor: PullRequestExtractor, transformer: ReviewCommentsTransformer) -> None:
         self._extractor = extractor
         self._transformer = transformer

@@ -30,21 +30,29 @@ jobs:
       - name: Typecheck
         run: |
           docker compose run --rm jupyter uv run ty check
-      - name: E2E
+      - name: E2E for Pull Request
         run: |
           docker compose run --rm jupyter agile-calculator \
             --log_level=DEBUG \
             pull_requests \
-            KentFujii/agile-calculator \
-            "" \
-            90 \
+            --repo_name=KentFujii/agile-calculator \
+            --users="" \
+            --since_days=90 \
+            details \
+            csv
+          docker compose run --rm jupyter agile-calculator \
+            --log_level=DEBUG \
+            pull_requests \
+            --repo_name=KentFujii/agile-calculator \
+            --users="" \
+            --since_days=90 \
             cycle_time \
             matplotlib
           docker compose run --rm jupyter agile-calculator \
             --log_level=DEBUG \
             pull_requests \
-            KentFujii/agile-calculator \
-            "" \
-            90 \
+            --repo_name=KentFujii/agile-calculator \
+            --users="" \
+            --since_days=90 \
             review_comments \
             matplotlib
