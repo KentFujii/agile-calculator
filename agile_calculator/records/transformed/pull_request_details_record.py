@@ -45,3 +45,6 @@ class PullRequestDetailsRecord(ExtractedRecord):
         self.additions = additions
         self.deletions = deletions
         self.changed_files = changed_files
+
+    def __repr__(self) -> str:
+        return f"<PullRequestDetailsRecord #{self.number} {self.title}>"
