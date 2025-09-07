@@ -1,6 +1,8 @@
 from datetime import date
 
-from agile_calculator.records.transformed.pull_request_cycle_time_record import PullRequestCycleTimeRecord
+from agile_calculator.records.transformed.pull_request_cycle_time_record import (
+    PullRequestCycleTimeRecord,
+)
 
 
 class TestPullRequestCycleTimeRecord:

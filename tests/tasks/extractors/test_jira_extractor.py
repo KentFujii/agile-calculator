@@ -1,7 +1,7 @@
-import pytest
-from unittest.mock import patch, MagicMock, PropertyMock
-from collections import namedtuple
+from unittest.mock import MagicMock, PropertyMock, patch
+
 from agile_calculator.tasks.extractors.jira_extractor import JiraExtractor
+
 
 class TestJiraExtractor:
     @patch('agile_calculator.tasks.extractors.jira_extractor.JIRA')

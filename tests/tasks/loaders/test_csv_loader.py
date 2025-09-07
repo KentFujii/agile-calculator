@@ -1,9 +1,11 @@
-import os
 import csv
+import os
 from dataclasses import dataclass
 from datetime import date, timedelta
+
 from agile_calculator.records.transformed_record import TransformedRecord
 from agile_calculator.tasks.loaders.csv_loader import CsvLoader
+
 
 # Define the MockTransformedRecord for testing purposes
 @dataclass

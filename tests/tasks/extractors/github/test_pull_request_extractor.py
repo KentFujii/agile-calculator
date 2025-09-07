@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta, timezone
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
-from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
 from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
+
 
 @pytest.fixture
 def mock_github_client(mocker):
