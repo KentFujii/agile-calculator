@@ -8,11 +8,9 @@ from agile_calculator.tasks.transformers.pull_request_details_transformer import
 
 
 class PullRequestDetailsWorkflow:
-    def __init__(self, extractor: PullRequestExtractor, transformer: PullRequestDetailsTransformer, output_path: str, columns: list[str]) -> None:
+    def __init__(self, extractor: PullRequestExtractor, transformer: PullRequestDetailsTransformer) -> None:
         self._extractor = extractor
         self._transformer = transformer
-        self._output_path = output_path
-        self._columns = columns
 
     def csv(self) -> None:
         """

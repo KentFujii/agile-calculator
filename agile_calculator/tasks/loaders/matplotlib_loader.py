@@ -10,7 +10,7 @@ from agile_calculator.tasks.loaders.base_loader import BaseLoader
 
 class MatplotlibLoader(BaseLoader):
     DEFAULT_INTERVAL_DAYS = 7
-    OUTPUT_FILENAME = "matplotlib.png"
+    OUTPUT_FILENAME = "loader.png"
 
     def __init__(self, title: str, x_label: str, y_label: str) -> None:
         self.title = title
