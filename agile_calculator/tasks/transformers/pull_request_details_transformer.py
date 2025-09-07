@@ -11,27 +11,5 @@ class PullRequestDetailsTransformer(BaseTransformer):
     def run(self, records: List[PullRequestRecord]) -> List[PullRequestDetailsRecord]:
         mapped = []
         for record in records:
-            mapped.append(
-                PullRequestDetailsRecord(
-                    number=record.number,
-                    title=record.title,
-                    draft=record.draft,
-                    user=record.user,
-                    created_at=record.created_at,
-                    updated_at=record.updated_at,
-                    merged_at=record.merged_at,
-                    closed_at=record.closed_at,
-                    state=record.state,
-                    base_ref=record.base_ref,
-                    head_ref=record.head_ref,
-                    merged=record.merged,
-                    merge_commit_sha=record.merge_commit_sha,
-                    comments=record.comments,
-                    review_comments=record.review_comments,
-                    commits=record.commits,
-                    additions=record.additions,
-                    deletions=record.deletions,
-                    changed_files=record.changed_files,
-                )
-            )
+            mapped.append(PullRequestDetailsRecord.model_validate(record.model_dump()))
         return mapped

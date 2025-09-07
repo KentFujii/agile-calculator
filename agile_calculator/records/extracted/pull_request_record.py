@@ -1,55 +1,14 @@
 from datetime import date, datetime
+from typing import ClassVar
 
-from agile_calculator.records.extracted_record import ExtractedRecord
+from agile_calculator.records.pull_request_base import PullRequestBase
 
 
-class PullRequestRecord(ExtractedRecord):
-    def __init__(
-        self,
-        number: int | None = None,
-        title: str | None = None,
-        draft: bool | None = None,
-        user: str | None = None,
-        created_at: datetime | None = None,
-        updated_at: datetime | None = None,
-        merged_at: datetime | None = None,
-        closed_at: datetime | None = None,
-        state: str | None = None,
-        base_ref: str | None = None,
-        head_ref: str | None = None,
-        merged: bool | None = None,
-        merge_commit_sha: str | None = None,
-        comments: int | None = None,
-        review_comments: int | None = None,
-        commits: int | None = None,
-        additions: int | None = None,
-        deletions: int | None = None,
-        changed_files: int | None = None,
-    ) -> None:
-        self.number = number
-        self.title = title
-        self.draft = draft
-        self.user = user
-        self.created_at = created_at
-        self.updated_at = updated_at
-        self.merged_at = merged_at
-        self.closed_at = closed_at
-        self.state = state
-        self.base_ref = base_ref
-        self.head_ref = head_ref
-        self.merged = merged
-        self.merge_commit_sha = merge_commit_sha
-        self.comments = comments
-        self.review_comments = review_comments
-        self.commits = commits
-        self.additions = additions
-        self.deletions = deletions
-        self.changed_files = changed_files
-
+class PullRequestRecord(PullRequestBase):
     def merged_date(self) -> date | None:
         return self.merged_at.date() if self.merged_at else None
 
-    HOURS_PER_WEEKEND_DAY = 24
+    HOURS_PER_WEEKEND_DAY: ClassVar[int] = 24
 
     def _get_weekend_days(self, start_dt: datetime, end_dt: datetime) -> int:
         start_date = start_dt.date()
@@ -86,6 +45,3 @@ class PullRequestRecord(ExtractedRecord):
         lead_time_seconds = total_seconds - weekend_seconds
 
         return max(0, lead_time_seconds) / 3600
-
-    def __repr__(self) -> str:
-        return f"<PullRequestRecord #{self.number} {self.title}>"
