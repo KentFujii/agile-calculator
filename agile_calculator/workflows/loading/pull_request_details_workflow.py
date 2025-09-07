@@ -1,3 +1,6 @@
+from agile_calculator.records.transformed.pull_request_details_record import (
+    PullRequestDetailsRecord,
+)
 from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
@@ -16,7 +19,7 @@ class PullRequestDetailsWorkflow:
         """
         計算結果をCSVへ出力します。
         """
-        CsvLoader().run(
+        CsvLoader(PullRequestDetailsRecord).run(
             self._transformer.run(
                 self._extractor.run()
             )
