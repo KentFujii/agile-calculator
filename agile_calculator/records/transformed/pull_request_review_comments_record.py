@@ -4,7 +4,7 @@ from typing import Any
 from agile_calculator.records.transformed_record import TransformedRecord
 
 
-class ReviewCommentsRecord(TransformedRecord):
+class PullRequestReviewCommentsRecord(TransformedRecord):
     def __init__(
         self,
         number: int | None = None,
@@ -28,7 +28,7 @@ class ReviewCommentsRecord(TransformedRecord):
 
     def __repr__(self) -> str:
         return (
-            f"<ReviewCommentsRecord "
+            f"<PullRequestReviewCommentsRecord "
             f"x: merged_date={self.merged_date}>, "
             f"y: review_comments={self.review_comments}>"
         )

@@ -2,13 +2,13 @@ from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
 from agile_calculator.tasks.loaders.matplotlib_loader import MatplotlibLoader
-from agile_calculator.tasks.transformers.review_comments_transformer import (
-    ReviewCommentsTransformer,
+from agile_calculator.tasks.transformers.pull_request_review_comments_transformer import (
+    PullRequestReviewCommentsTransformer,
 )
 
 
 class PullRequestReviewCommentsWorkflow:
-    def __init__(self, extractor: PullRequestExtractor, transformer: ReviewCommentsTransformer) -> None:
+    def __init__(self, extractor: PullRequestExtractor, transformer: PullRequestReviewCommentsTransformer) -> None:
         self._extractor = extractor
         self._transformer = transformer
 
