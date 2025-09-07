@@ -1,11 +1,11 @@
 from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
-from agile_calculator.tasks.transformers.passthrough_transformer import (
-    PassthroughTransformer,
-)
 from agile_calculator.tasks.transformers.pull_request_cycle_time_transformer import (
     PullRequestCycleTimeTransformer,
+)
+from agile_calculator.tasks.transformers.pull_request_details_transformer import (
+    PullRequestDetailsTransformer,
 )
 from agile_calculator.tasks.transformers.pull_request_review_comments_transformer import (
     PullRequestReviewCommentsTransformer,
@@ -70,7 +70,7 @@ class PullRequestWorkflow:
         ]
         return PullRequestDetailsWorkflow(
             extractor=self._extractor,
-            transformer=PassthroughTransformer(),
+            transformer=PullRequestDetailsTransformer(),
             output_path=output_path,
             columns=columns
         )
