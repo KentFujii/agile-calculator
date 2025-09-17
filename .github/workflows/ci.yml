@@ -56,3 +56,13 @@ jobs:
             --since_days=90 \
             review_comments \
             matplotlib
+      - name: E2E for Comment
+        run: |
+          docker compose run --rm jupyter agile-calculator \
+            --log_level=DEBUG \
+            comments \
+            --repo_name=KentFujii/agile-calculator \
+            --users="" \
+            --since_days=90 \
+            details \
+            csv

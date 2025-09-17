@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime, timedelta
 
 from agile_calculator.records.extracted.comment_record import CommentRecord
 from agile_calculator.tasks.extractors.github_extractor import GitHubExtractor
@@ -18,7 +19,11 @@ class CommentExtractor(GitHubExtractor):
 
     def _extract_comment_records(self, pull_requests):
         for pr in pull_requests:
+            if pr.created_at < datetime.now(pr.created_at.tzinfo) - timedelta(days=self.since_days):
+                break
             for comment in pr.get_comments():
+                if comment.user.login not in self.users:
+                    continue
                 record = CommentRecord(
                     id=comment.id,
                     body=comment.body,
