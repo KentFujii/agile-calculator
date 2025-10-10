@@ -22,7 +22,7 @@ class CommentExtractor(GitHubExtractor):
             if pr.created_at < datetime.now(pr.created_at.tzinfo) - timedelta(days=self.since_days):
                 break
             for comment in pr.get_comments():
-                if comment.user.login not in self.users:
+                if self.users and comment.user.login not in self.users:
                     continue
                 record = CommentRecord(
                     id=comment.id,
