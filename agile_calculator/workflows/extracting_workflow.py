@@ -1,5 +1,8 @@
 import logging
 
+from agile_calculator.tasks.extractors.jira.issue_extractor import (
+    IssueExtractor,
+)
 from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
@@ -20,6 +23,16 @@ class ExtractingWorkflow:
         logging.basicConfig(level=level)
         logging.getLogger("urllib3").setLevel(logging.WARNING)
         logging.getLogger("matplotlib").setLevel(logging.WARNING)
+
+    def jira_issues(self, project_key: str) -> IssueExtractor:
+        """
+        JiraのIssueからデータを抽出します。
+
+        :param project_key: プロジェクトキー (例: 'PROJECT-1')
+        """
+        issue_extractor = IssueExtractor()
+        for issue in issue_extractor.run(project_key):
+            logging.info(f"Extracted issue: {issue.key} - {issue.summary} - {issue.sprint}")
 
     def pull_requests(self, repo_name: str, users: tuple, since_days: int) -> PullRequestWorkflow:
         """

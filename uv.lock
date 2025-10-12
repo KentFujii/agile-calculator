@@ -32,7 +32,7 @@ dependencies = [
 requires-dist = [
     { name = "fire", specifier = ">=0.7.0" },
     { name = "ipython", specifier = "==8.34.0" },
-    { name = "jira", specifier = "==3.8.0" },
+    { name = "jira", specifier = "==3.10.5" },
     { name = "jupyterlab", specifier = "==4.4.5" },
     { name = "matplotlib", specifier = "==3.10.3" },
     { name = "pandas", specifier = "==2.3.1" },
@@ -924,20 +924,19 @@ wheels = [
 
 [[package]]
 name = "jira"
-version = "3.8.0"
+version = "3.10.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "defusedxml" },
     { name = "packaging" },
-    { name = "pillow" },
     { name = "requests" },
     { name = "requests-oauthlib" },
     { name = "requests-toolbelt" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/78/b4/557e4c80c0ea12164ffeec0e29372c085bfb263faad53cef5e1455523bec/jira-3.8.0.tar.gz", hash = "sha256:63719c529a570aaa01c3373dbb5a104dab70381c5be447f6c27f997302fa335a", size = 102927, upload-time = "2024-03-25T12:17:03.287Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/65/73/ee4daa7cf4eea457180de0ea78b730b44bb5ad2829dae49cf708a1460819/jira-3.10.5.tar.gz", hash = "sha256:2d09ae3bf4741a2787dd889dfea5926a5d509aac3b28ab3b98c098709e6ee72d", size = 105870, upload-time = "2025-07-28T12:18:22.796Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4f/52/bb617020064261ba31cc965e932943458b7facfd9691ad7f76a2b631f44f/jira-3.8.0-py3-none-any.whl", hash = "sha256:12190dc84dad00b8a6c0341f7e8a254b0f38785afdec022bd5941e1184a5a3fb", size = 77505, upload-time = "2024-03-25T12:16:59.916Z" },
+    { url = "https://files.pythonhosted.org/packages/89/57/ad078d7379e390798559446607e413fc953c7510711462ab34194dba5924/jira-3.10.5-py3-none-any.whl", hash = "sha256:d4da1385c924ee693d6cc9838e56a34e31d74f0d6899934ef35bbd0d2d33997f", size = 79250, upload-time = "2025-07-28T12:18:21.368Z" },
 ]
 
 [[package]]
