@@ -1,0 +1,12 @@
+{
+  "theme": "GitHub",
+  "autoAccept": true,
+  "fileFiltering": {
+    "respectGitIgnore": true,
+    "enableRecursiveFileSearch": true
+  },
+  "contextFileName": [
+    "AGENTS.md"
+  ],
+  "preferredEditor": "vscode"
+}
