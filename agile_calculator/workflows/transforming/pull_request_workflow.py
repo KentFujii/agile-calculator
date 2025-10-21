@@ -19,6 +19,13 @@ from agile_calculator.workflows.loading.pull_request_details_workflow import (
 from agile_calculator.workflows.loading.pull_request_review_comments_workflow import (
     PullRequestReviewCommentsWorkflow,
 )
+from agile_calculator.workflows.loading.pull_request_merged_count_workflow import (
+    PullRequestMergedCountWorkflow,
+)
+from agile_calculator.tasks.transformers.pull_request_merged_count_transformer import (
+    PullRequestMergedCountTransformer,
+)
+
 
 
 class PullRequestWorkflow:
@@ -41,6 +48,15 @@ class PullRequestWorkflow:
         return PullRequestReviewCommentsWorkflow(
             extractor=self._extractor,
             transformer=PullRequestReviewCommentsTransformer()
+        )
+
+    def merged_count(self) -> PullRequestMergedCountWorkflow:
+        """
+        日ごとのマージされたPR数の合計を計算します。
+        """
+        return PullRequestMergedCountWorkflow(
+            extractor=self._extractor,
+            transformer=PullRequestMergedCountTransformer(),
         )
 
     def details(self) -> PullRequestDetailsWorkflow:
