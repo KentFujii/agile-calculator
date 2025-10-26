@@ -1,5 +1,23 @@
 description = "技術的解決策を設計する。"
 
 prompt = """
-WIP...
+入力: {{args}}（ユーザーストーリー／要件の引用可）
+
+出力（Markdown のみ）:
+## 概要
+- 対象サブストーリーと提案する実装方針（1〜2行）
+
+## 主要コンポーネント（簡潔）
+- コンポーネント名 — 役割 — 推奨ファイルパス（例: `PRTransformer` — PR集計 — `agile_calculator/tasks/transformers/pr_transformer.py`）
+
+## データフロー（1行）
+- 入力 -> 処理 -> 出力（例: CSV -> transform -> aggregated CSV）
+
+## 重要な設計上の決定（短く）
+- 決定1（例: チャンク処理でメモリを節約）
+- 決定2
+
+## リスクと対策（短く）
+- リスク1 — 緩和案
+- リスク2 — 緩和案
 """
