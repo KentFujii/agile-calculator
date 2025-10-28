@@ -1,6 +1,6 @@
 import csv
 from datetime import timedelta
-from typing import Any, Sequence
+from typing import Any, Sequence, Type
 
 from agile_calculator.records.transformed_record import TransformedRecord
 from agile_calculator.tasks.loaders.base_loader import BaseLoader
@@ -12,6 +12,9 @@ class CsvLoader(BaseLoader):
     """
     OUTPUT_PATH = "loader.csv"
 
+    def __init__(self, record_type: Type[TransformedRecord]):
+        self._record_type = record_type
+
     def run(self, records: Sequence[TransformedRecord]) -> None:
         """
         レコードのリストを指定されたパスにCSVファイルとして書き出す。
@@ -20,17 +23,9 @@ class CsvLoader(BaseLoader):
         """
         # フィールド名の抽出
         if records:
-            # dataclassの場合
-            if hasattr(records[0], "__dataclass_fields__"):
-                columns = list(records[0].__dataclass_fields__.keys())
-            else:
-                columns = [attr for attr in dir(records[0]) if not attr.startswith('_') and not callable(getattr(records[0], attr))]
+            columns = list(records[0].model_fields.keys())
         else:
-            # recordsが空の場合はTransformedRecordからフィールドを抽出
-            if hasattr(TransformedRecord, "__dataclass_fields__"):
-                columns = list(TransformedRecord.__dataclass_fields__.keys())
-            else:
-                columns = [attr for attr in dir(TransformedRecord) if not attr.startswith('_') and not callable(getattr(TransformedRecord, attr))]
+            columns = list(self._record_type.model_fields.keys())
 
         with open(self.OUTPUT_PATH, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
