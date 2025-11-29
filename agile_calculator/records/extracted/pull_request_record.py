@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date
 
 from agile_calculator.records.pull_request_base import PullRequestBase
 
@@ -18,3 +18,7 @@ class PullRequestRecord(PullRequestBase):
         total_seconds = (self.merged_at - self.created_at).total_seconds()
 
         return total_seconds / 3600
+
+    def changed_lines(self) -> int:
+        """Get total changed lines (additions + deletions)."""
+        return (self.additions or 0) + (self.deletions or 0)

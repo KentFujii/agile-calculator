@@ -1,14 +1,23 @@
 from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
+from agile_calculator.tasks.transformers.pull_request_changed_lines_transformer import (
+    PullRequestChangedLinesTransformer,
+)
 from agile_calculator.tasks.transformers.pull_request_cycle_time_transformer import (
     PullRequestCycleTimeTransformer,
 )
 from agile_calculator.tasks.transformers.pull_request_details_transformer import (
     PullRequestDetailsTransformer,
 )
+from agile_calculator.tasks.transformers.pull_request_merged_count_transformer import (
+    PullRequestMergedCountTransformer,
+)
 from agile_calculator.tasks.transformers.pull_request_review_comments_transformer import (
     PullRequestReviewCommentsTransformer,
+)
+from agile_calculator.workflows.loading.pull_request_changed_lines_workflow import (
+    PullRequestChangedLinesWorkflow,
 )
 from agile_calculator.workflows.loading.pull_request_cycle_time_workflow import (
     PullRequestCycleTimeWorkflow,
@@ -16,16 +25,12 @@ from agile_calculator.workflows.loading.pull_request_cycle_time_workflow import 
 from agile_calculator.workflows.loading.pull_request_details_workflow import (
     PullRequestDetailsWorkflow,
 )
-from agile_calculator.workflows.loading.pull_request_review_comments_workflow import (
-    PullRequestReviewCommentsWorkflow,
-)
 from agile_calculator.workflows.loading.pull_request_merged_count_workflow import (
     PullRequestMergedCountWorkflow,
 )
-from agile_calculator.tasks.transformers.pull_request_merged_count_transformer import (
-    PullRequestMergedCountTransformer,
+from agile_calculator.workflows.loading.pull_request_review_comments_workflow import (
+    PullRequestReviewCommentsWorkflow,
 )
-
 
 
 class PullRequestWorkflow:
@@ -57,6 +62,15 @@ class PullRequestWorkflow:
         return PullRequestMergedCountWorkflow(
             extractor=self._extractor,
             transformer=PullRequestMergedCountTransformer(),
+        )
+
+    def changed_lines(self) -> PullRequestChangedLinesWorkflow:
+        """
+        Pull Requestの変更行数（additions + deletions）を、一日ごとの移動平均推移で計算します。
+        """
+        return PullRequestChangedLinesWorkflow(
+            extractor=self._extractor,
+            transformer=PullRequestChangedLinesTransformer(),
         )
 
     def details(self) -> PullRequestDetailsWorkflow:

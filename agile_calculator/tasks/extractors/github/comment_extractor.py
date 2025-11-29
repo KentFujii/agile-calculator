@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from agile_calculator.records.extracted.comment_record import CommentRecord
 from agile_calculator.tasks.extractors.github_extractor import GitHubExtractor
 
+
 class CommentExtractor(GitHubExtractor):
     def __init__(self, repo_name: str, users: tuple, since_days: int):
         super().__init__()
