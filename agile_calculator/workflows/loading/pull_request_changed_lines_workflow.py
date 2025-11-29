@@ -17,7 +17,7 @@ class PullRequestChangedLinesWorkflow:
         計算結果をMatplotlibへ出力します。
         """
         MatplotlibLoader(
-            "Pull Request Changed Lines (Average)",
+            "Pull Request Changed Lines (MA)",
             "Merged Date",
             "Changed Lines"
         ).run(
