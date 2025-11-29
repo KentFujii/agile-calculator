@@ -1,16 +1,16 @@
 import logging
 
-from agile_calculator.tasks.extractors.github.pull_request_extractor import (
-    PullRequestExtractor,
-)
 from agile_calculator.tasks.extractors.github.comment_extractor import (
     CommentExtractor,
 )
-from agile_calculator.workflows.transforming.pull_request_workflow import (
-    PullRequestWorkflow,
+from agile_calculator.tasks.extractors.github.pull_request_extractor import (
+    PullRequestExtractor,
 )
 from agile_calculator.workflows.transforming.comment_workflow import (
     CommentWorkflow,
+)
+from agile_calculator.workflows.transforming.pull_request_workflow import (
+    PullRequestWorkflow,
 )
 
 

@@ -1,10 +1,10 @@
 from agile_calculator.tasks.extractors.github.comment_extractor import (
     CommentExtractor,
 )
+from agile_calculator.tasks.loaders.csv_loader import CsvLoader
 from agile_calculator.tasks.transformers.comment_details_transformer import (
     CommentDetailsTransformer,
 )
-from agile_calculator.tasks.loaders.csv_loader import CsvLoader
 
 
 class CommentDetailsWorkflow:
