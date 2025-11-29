@@ -5,6 +5,7 @@ from typing import Iterable, Iterator
 from github.PullRequest import PullRequest
 
 from agile_calculator.records.extracted.pull_request_record import PullRequestRecord
+from agile_calculator.records.pull_request_base import Review
 from agile_calculator.tasks.extractors.github_extractor import GitHubExtractor
 
 
@@ -28,6 +29,12 @@ class PullRequestExtractor(GitHubExtractor):
                 continue
             if pr.created_at < datetime.now(pr.created_at.tzinfo) - timedelta(days=self.since_days):
                 break
+
+            reviews = [
+                Review(user=review.user.login if review.user else "Ghost", state=review.state)
+                for review in pr.get_reviews()
+            ]
+
             record = PullRequestRecord(
                 number=pr.number,
                 title=pr.title,
@@ -48,6 +55,7 @@ class PullRequestExtractor(GitHubExtractor):
                 additions=pr.additions,
                 deletions=pr.deletions,
                 changed_files=pr.changed_files,
+                reviews=reviews,
             )
             logging.debug(record)
             yield record

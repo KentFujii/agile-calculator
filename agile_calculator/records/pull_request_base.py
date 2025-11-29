@@ -1,6 +1,13 @@
 from datetime import datetime
 
+from pydantic import BaseModel
+
 from agile_calculator.records.extracted_record import ExtractedRecord
+
+
+class Review(BaseModel):
+    user: str
+    state: str
 
 
 class PullRequestBase(ExtractedRecord):
@@ -23,3 +30,4 @@ class PullRequestBase(ExtractedRecord):
     additions: int | None = None
     deletions: int | None = None
     changed_files: int | None = None
+    reviews: list[Review] | None = None

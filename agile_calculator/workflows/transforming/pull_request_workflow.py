@@ -1,6 +1,9 @@
 from agile_calculator.tasks.extractors.github.pull_request_extractor import (
     PullRequestExtractor,
 )
+from agile_calculator.tasks.transformers.pull_request_approval_transformer import (
+    PullRequestApprovalTransformer,
+)
 from agile_calculator.tasks.transformers.pull_request_changed_lines_transformer import (
     PullRequestChangedLinesTransformer,
 )
@@ -15,6 +18,9 @@ from agile_calculator.tasks.transformers.pull_request_merged_count_transformer i
 )
 from agile_calculator.tasks.transformers.pull_request_review_comments_transformer import (
     PullRequestReviewCommentsTransformer,
+)
+from agile_calculator.workflows.loading.pull_request_approval_workflow import (
+    PullRequestApprovalWorkflow,
 )
 from agile_calculator.workflows.loading.pull_request_changed_lines_workflow import (
     PullRequestChangedLinesWorkflow,
@@ -36,6 +42,15 @@ from agile_calculator.workflows.loading.pull_request_review_comments_workflow im
 class PullRequestWorkflow:
     def __init__(self, extractor: PullRequestExtractor) -> None:
         self._extractor = extractor
+
+    def approvals(self) -> PullRequestApprovalWorkflow:
+        """
+        Pull Requestの承認回数を集計します。
+        """
+        return PullRequestApprovalWorkflow(
+            extractor=self._extractor,
+            transformer=PullRequestApprovalTransformer(),
+        )
 
     def cycle_time(self) -> PullRequestCycleTimeWorkflow:
         """

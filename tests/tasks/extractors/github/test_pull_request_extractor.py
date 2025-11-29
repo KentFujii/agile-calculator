@@ -129,3 +129,27 @@ class TestPullRequestExtractor:
 
         # Assertions
         assert len(result) == 0
+
+    def test_extracts_reviews(self, mock_github_client, mock_pull_request_factory):
+        """Tests that reviews are correctly extracted."""
+        now = datetime.now(timezone.utc)
+        reviews_data = [
+            {"user": "reviewer1", "state": "APPROVED"},
+            {"user": "reviewer2", "state": "CHANGES_REQUESTED"},
+        ]
+        mock_pr = mock_pull_request_factory(
+            1, "PR 1", "user1", now - timedelta(days=1), merged_at=now, merged=True, reviews=reviews_data
+        )
+        mock_repo = MagicMock()
+        mock_repo.get_pulls.return_value = [mock_pr]
+        mock_github_client.get_repo.return_value = mock_repo
+
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
+        result = extractor.run()
+
+        assert len(result) == 1
+        assert len(result[0].reviews) == 2
+        assert result[0].reviews[0].user == "reviewer1"
+        assert result[0].reviews[0].state == "APPROVED"
+        assert result[0].reviews[1].user == "reviewer2"
+        assert result[0].reviews[1].state == "CHANGES_REQUESTED"

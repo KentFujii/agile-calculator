@@ -20,6 +20,7 @@ def mock_pull_request_factory():
         state="closed",
         merged=False,
         base_ref="main",
+        reviews=None,
     ):
         """Helper function to create a mock pull request with specified attributes."""
         mock_pr = MagicMock()
@@ -42,6 +43,16 @@ def mock_pull_request_factory():
         mock_pr.additions = 100
         mock_pr.deletions = 50
         mock_pr.changed_files = 5
+
+        mock_reviews = []
+        if reviews:
+            for r in reviews:
+                mock_review = MagicMock()
+                mock_review.user.login = r.get("user")
+                mock_review.state = r.get("state")
+                mock_reviews.append(mock_review)
+        mock_pr.get_reviews.return_value = mock_reviews
+
         return mock_pr
 
     return _create_mock_pull_request
