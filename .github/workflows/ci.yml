@@ -38,6 +38,14 @@ jobs:
             --repo_name=KentFujii/agile-calculator \
             --users="" \
             --since_days=90 \
+            details \
+            csv
+          docker compose run --rm jupyter agile-calculator \
+            --log_level=DEBUG \
+            pull_requests \
+            --repo_name=KentFujii/agile-calculator \
+            --users="" \
+            --since_days=90 \
             cycle_time \
             matplotlib
           docker compose run --rm jupyter agile-calculator \
@@ -56,14 +64,6 @@ jobs:
             --since_days=90 \
             merged_count \
             matplotlib
-          docker compose run --rm jupyter agile-calculator \
-            --log_level=DEBUG \
-            pull_requests \
-            --repo_name=KentFujii/agile-calculator \
-            --users="" \
-            --since_days=90 \
-            details \
-            csv
           docker compose run --rm jupyter agile-calculator \
             --log_level=DEBUG \
             pull_requests \
