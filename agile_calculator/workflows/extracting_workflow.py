@@ -21,26 +21,28 @@ class ExtractingWorkflow:
         logging.getLogger("urllib3").setLevel(logging.WARNING)
         logging.getLogger("matplotlib").setLevel(logging.WARNING)
 
-    def pull_requests(self, repo_name: str, users: tuple, since_days: int) -> PullRequestWorkflow:
+    def pull_requests(self, repo_name: str, users: tuple, since_days: int, base_branch: str) -> PullRequestWorkflow:
         """
         GitHubのPull Requestからデータを抽出します。
 
         :param repo_name: リポジトリ名 (例: 'owner/repo')
         :param users: 特定のユーザーのPull Requestのみを取得する場合、そのユーザー名 (例: 'BBKing,albert-king,freddie_king')
         :param since_days: 何日前からのデータを取得するか (例: 7)
+        :param base_branch: 比較対象のブランチ名 (例: 'main')
         """
         return PullRequestWorkflow(
-            extractor=PullRequestExtractor(repo_name, users, since_days),
+            extractor=PullRequestExtractor(repo_name, users, since_days, base_branch),
         )
 
-    def comments(self, repo_name: str, users: tuple, since_days: int) -> CommentWorkflow:
+    def comments(self, repo_name: str, users: tuple, since_days: int, base_branch: str) -> CommentWorkflow:
         """
         GitHubのCommentからデータを抽出します。
 
         :param repo_name: リポジトリ名 (例: 'owner/repo')
         :param users: 特定のユーザーのCommentのみを取得する場合、そのユーザー名 (例: 'BBKing,albert-king,freddie_king')
         :param since_days: 何日前からのデータを取得するか (例: 7)
+        :param base_branch: 比較対象のブランチ名 (例: 'main')
         """
         return CommentWorkflow(
-            extractor=CommentExtractor(repo_name, users, since_days),
+            extractor=CommentExtractor(repo_name, users, since_days, base_branch),
         )

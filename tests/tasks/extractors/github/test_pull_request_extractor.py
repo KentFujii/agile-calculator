@@ -28,7 +28,7 @@ class TestPullRequestExtractor:
         mock_repo.get_pulls.return_value = [mock_pr]
         mock_github_client.get_repo.return_value = mock_repo
 
-        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5, base_branch="main")
         result = extractor.run()
 
         assert len(result) == 1
@@ -43,7 +43,7 @@ class TestPullRequestExtractor:
         mock_repo.get_pulls.return_value = [mock_pr_user1, mock_pr_user2]
         mock_github_client.get_repo.return_value = mock_repo
 
-        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5, base_branch="main")
         result = extractor.run()
 
         assert len(result) == 1
@@ -61,7 +61,7 @@ class TestPullRequestExtractor:
         mock_repo.get_pulls.return_value = mock_prs
         mock_github_client.get_repo.return_value = mock_repo
 
-        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5, base_branch="main")
         result = extractor.run()
 
         assert len(result) == 1
@@ -75,7 +75,7 @@ class TestPullRequestExtractor:
         mock_repo.get_pulls.return_value = [mock_pr]
         mock_github_client.get_repo.return_value = mock_repo
 
-        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5)
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5, base_branch="main")
         result = extractor.run()
 
         assert len(result) == 1
@@ -102,7 +102,7 @@ class TestPullRequestExtractor:
         mock_github_client.get_repo.return_value = mock_repo
 
         # Instantiate the extractor with no users filter
-        extractor = PullRequestExtractor(repo_name="test/repo", users=(), since_days=5)
+        extractor = PullRequestExtractor(repo_name="test/repo", users=(), since_days=5, base_branch="main")
 
         # Execute
         result = extractor.run()
@@ -121,7 +121,7 @@ class TestPullRequestExtractor:
 
         # Instantiate the extractor
         extractor = PullRequestExtractor(
-            repo_name="test/repo", users=("user1",), since_days=5
+            repo_name="test/repo", users=("user1",), since_days=5, base_branch="main"
         )
 
         # Execute

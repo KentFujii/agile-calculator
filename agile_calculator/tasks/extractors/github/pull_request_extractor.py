@@ -9,17 +9,18 @@ from agile_calculator.tasks.extractors.github_extractor import GitHubExtractor
 
 
 class PullRequestExtractor(GitHubExtractor):
-    def __init__(self, repo_name: str, users: tuple, since_days: int):
+    def __init__(self, repo_name: str, users: tuple, since_days: int, base_branch: str):
         super().__init__()
         self.repo_name = repo_name
         self.users = users
         self.since_days = since_days
+        self.base_branch = base_branch
 
     # TODO: .github.PullRequestExtractorに継承させる
     # https://docs.github.com/en/rest/pulls/pulls?apiVersion=2022-11-28#get-a-pull-request
     def run(self) -> list[PullRequestRecord]:
         repo = self.client.get_repo(self.repo_name)
-        pull_requests = repo.get_pulls(state="close", sort="created", direction="desc", base='main')
+        pull_requests = repo.get_pulls(state="close", sort="created", direction="desc", base=self.base_branch)
         return list(self._extract_request_records(pull_requests))
 
     def _extract_request_records(self, pull_requests: Iterable[PullRequest]) -> Iterator[PullRequestRecord]:
