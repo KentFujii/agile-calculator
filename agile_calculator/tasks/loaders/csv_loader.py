@@ -2,6 +2,8 @@ import csv
 from datetime import timedelta
 from typing import Any, Sequence
 
+from pydantic import BaseModel
+
 from agile_calculator.records.transformed_record import TransformedRecord
 from agile_calculator.tasks.loaders.base_loader import BaseLoader
 
@@ -20,14 +22,20 @@ class CsvLoader(BaseLoader):
         """
         # フィールド名の抽出
         if records:
+            # Pydantic Modelの場合
+            if isinstance(records[0], BaseModel):
+                columns = list(type(records[0]).model_fields.keys())
             # dataclassの場合
-            if hasattr(records[0], "__dataclass_fields__"):
+            elif hasattr(records[0], "__dataclass_fields__"):
                 columns = list(records[0].__dataclass_fields__.keys())
             else:
                 columns = [attr for attr in dir(records[0]) if not attr.startswith('_') and not callable(getattr(records[0], attr))]
         else:
             # recordsが空の場合はTransformedRecordからフィールドを抽出
-            if hasattr(TransformedRecord, "__dataclass_fields__"):
+            # Pydantic Modelの場合 (TransformedRecordはBaseModelを継承しているため、サブクラスかどうかチェック)
+            if issubclass(TransformedRecord, BaseModel):
+                columns = list(TransformedRecord.model_fields.keys())
+            elif hasattr(TransformedRecord, "__dataclass_fields__"):
                 columns = list(TransformedRecord.__dataclass_fields__.keys())
             else:
                 columns = [attr for attr in dir(TransformedRecord) if not attr.startswith('_') and not callable(getattr(TransformedRecord, attr))]
