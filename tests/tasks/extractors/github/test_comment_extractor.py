@@ -50,7 +50,7 @@ class TestCommentExtractor:
         """Tests that the run method returns a list of CommentRecord objects."""
         mocker.patch('agile_calculator.tasks.extractors.github_extractor.Github', return_value=mock_github_client)
 
-        extractor = CommentExtractor(repo_name="test/repo", users=("test_user", "another_user"), since_days=5)
+        extractor = CommentExtractor(repo_name="test/repo", users=("test_user", "another_user"), since_days=5, base_branch="main")
         result = extractor.run()
 
         assert len(result) == 2
@@ -62,13 +62,13 @@ class TestCommentExtractor:
         """Tests that the run method filters pull requests by since_days."""
         mocker.patch('agile_calculator.tasks.extractors.github_extractor.Github', return_value=mock_github_client)
 
-        extractor = CommentExtractor(repo_name="test/repo", users=(), since_days=5)
+        extractor = CommentExtractor(repo_name="test/repo", users=(), since_days=5, base_branch="main")
         result = extractor.run()
 
         # The second PR is older than 5 days, so it should be ignored.
         assert len(result) == 2
 
-        extractor_long_duration = CommentExtractor(repo_name="test/repo", users=(), since_days=20)
+        extractor_long_duration = CommentExtractor(repo_name="test/repo", users=(), since_days=20, base_branch="main")
         result_long_duration = extractor_long_duration.run()
         assert len(result_long_duration) == 2 # mock_pr2 has no comments
 
@@ -76,7 +76,7 @@ class TestCommentExtractor:
         """Tests that the run method filters comments by users."""
         mocker.patch('agile_calculator.tasks.extractors.github_extractor.Github', return_value=mock_github_client)
 
-        extractor = CommentExtractor(repo_name="test/repo", users=("test_user",), since_days=5)
+        extractor = CommentExtractor(repo_name="test/repo", users=("test_user",), since_days=5, base_branch="main")
         result = extractor.run()
 
         assert len(result) == 1
@@ -87,7 +87,7 @@ class TestCommentExtractor:
         mock_github_client.get_repo.return_value.get_pulls.return_value = []
         mocker.patch('agile_calculator.tasks.extractors.github_extractor.Github', return_value=mock_github_client)
 
-        extractor = CommentExtractor(repo_name="test/repo", users=(), since_days=5)
+        extractor = CommentExtractor(repo_name="test/repo", users=(), since_days=5, base_branch="main")
         result = extractor.run()
 
         assert len(result) == 0
@@ -100,7 +100,7 @@ class TestCommentExtractor:
         mock_github_client.get_repo.return_value.get_pulls.return_value = [mock_pr]
         mocker.patch('agile_calculator.tasks.extractors.github_extractor.Github', return_value=mock_github_client)
 
-        extractor = CommentExtractor(repo_name="test/repo", users=(), since_days=5)
+        extractor = CommentExtractor(repo_name="test/repo", users=(), since_days=5, base_branch="main")
         result = extractor.run()
 
         assert len(result) == 0
