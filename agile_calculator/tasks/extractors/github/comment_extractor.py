@@ -33,6 +33,7 @@ class CommentExtractor(GitHubExtractor):
                     created_at=comment.created_at,
                     updated_at=comment.updated_at,
                     pull_request_url=comment.pull_request_url,
+                    pull_request_number=pr.number,
                     author_association=comment.author_association,
                     url=comment.url,
                     html_url=comment.html_url,

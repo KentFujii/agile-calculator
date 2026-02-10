@@ -34,10 +34,12 @@ class TestCommentExtractor:
         mock_comment2.html_url = "https://github.com/test/repo/pull/1#discussion_r2"
 
         mock_pr1 = MagicMock()
+        mock_pr1.number = 1
         mock_pr1.created_at = datetime.now()
         mock_pr1.get_comments.return_value = [mock_comment1, mock_comment2]
 
         mock_pr2 = MagicMock()
+        mock_pr2.number = 2
         mock_pr2.created_at = datetime.now() - timedelta(days=10)
         mock_pr2.get_comments.return_value = []
 
@@ -56,7 +58,9 @@ class TestCommentExtractor:
         assert len(result) == 2
         assert all(isinstance(record, CommentRecord) for record in result)
         assert result[0].user == "test_user"
+        assert result[0].pull_request_number == 1
         assert result[1].user == "another_user"
+        assert result[1].pull_request_number == 1
 
     def test_run_filters_by_since_days(self, mocker, mock_github_client):
         """Tests that the run method filters pull requests by since_days."""
