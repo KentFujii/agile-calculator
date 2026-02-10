@@ -10,6 +10,7 @@ class CommentBase(ExtractedRecord):
     created_at: datetime | None = None
     updated_at: datetime | None = None
     pull_request_url: str | None = None
+    pull_request_number: int | None = None
     author_association: str | None = None
     url: str | None = None
     html_url: str | None = None
