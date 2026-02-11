@@ -129,3 +129,20 @@ class TestPullRequestExtractor:
 
         # Assertions
         assert len(result) == 0
+
+    def test_extracts_pull_request_description(self, mock_github_client, mock_pull_request_factory):
+        """Tests that the pull request description (body) is extracted."""
+        now = datetime.now(timezone.utc)
+        expected_body = "This is a test description"
+        mock_pr = mock_pull_request_factory(
+            1, "PR 1", "user1", now - timedelta(days=2), merged_at=now - timedelta(days=1), merged=True, body=expected_body
+        )
+        mock_repo = MagicMock()
+        mock_repo.get_pulls.return_value = [mock_pr]
+        mock_github_client.get_repo.return_value = mock_repo
+
+        extractor = PullRequestExtractor(repo_name="test/repo", users=("user1",), since_days=5, base_branch="main")
+        result = extractor.run()
+
+        assert len(result) == 1
+        assert result[0].body == expected_body

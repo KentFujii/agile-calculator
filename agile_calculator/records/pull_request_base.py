@@ -6,6 +6,7 @@ from agile_calculator.records.extracted_record import ExtractedRecord
 class PullRequestBase(ExtractedRecord):
     number: int | None = None
     title: str | None = None
+    body: str | None = None
     draft: bool | None = None
     user: str | None = None
     created_at: datetime | None = None

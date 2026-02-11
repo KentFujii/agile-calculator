@@ -10,7 +10,7 @@ class TestPullRequestDetailsTransformer:
         """
         mock_record = MagicMock(spec=PullRequestRecord)
         mock_record.model_dump.return_value = {
-            "number": 1, "title": "Test", "draft": False, "user": "testuser",
+            "number": 1, "title": "Test", "body": "test body", "draft": False, "user": "testuser",
             "created_at": None, "updated_at": None, "merged_at": None,
             "closed_at": None, "state": "closed", "base_ref": "main",
             "head_ref": "feature", "merged": False, "merge_commit_sha": None,
@@ -23,6 +23,7 @@ class TestPullRequestDetailsTransformer:
         assert all(isinstance(r, PullRequestDetailsRecord) for r in result)
         assert result[0].number == 1
         assert result[0].title == "Test"
+        assert result[0].body == "test body"
 
     def test_pull_request_details_transformer_maps_record(self):
         """
@@ -31,6 +32,7 @@ class TestPullRequestDetailsTransformer:
         pr = PullRequestRecord(
             number=1,
             title="Test PR",
+            body="test body description",
             draft=False,
             user="user1",
             created_at=None,
@@ -56,6 +58,7 @@ class TestPullRequestDetailsTransformer:
         assert isinstance(details, PullRequestDetailsRecord)
         assert details.number == pr.number
         assert details.title == pr.title
+        assert details.body == pr.body
         assert details.user == pr.user
         assert details.state == pr.state
         assert details.base_ref == pr.base_ref
