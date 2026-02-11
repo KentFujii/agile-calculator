@@ -32,6 +32,7 @@ class PullRequestExtractor(GitHubExtractor):
             record = PullRequestRecord(
                 number=pr.number,
                 title=pr.title,
+                body=pr.body,
                 draft=pr.draft,
                 user=pr.user.login,
                 created_at=pr.created_at,

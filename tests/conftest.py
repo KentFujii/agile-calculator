@@ -20,11 +20,13 @@ def mock_pull_request_factory():
         state="closed",
         merged=False,
         base_ref="main",
+        body="Mock description",
     ):
         """Helper function to create a mock pull request with specified attributes."""
         mock_pr = MagicMock()
         mock_pr.number = number
         mock_pr.title = title
+        mock_pr.body = body
         mock_pr.draft = False
         mock_pr.user.login = user_login
         mock_pr.created_at = created_at
