@@ -11,5 +11,5 @@ class PullRequestDetailsTransformer(BaseTransformer):
     def run(self, records: List[PullRequestRecord]) -> List[PullRequestDetailsRecord]:
         mapped = []
         for record in records:
-            mapped.append(PullRequestDetailsRecord.model_validate(record.model_dump()))
+            mapped.append(PullRequestDetailsRecord(**record.__dict__))
         return mapped

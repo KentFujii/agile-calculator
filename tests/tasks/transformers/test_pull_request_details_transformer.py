@@ -9,14 +9,31 @@ class TestPullRequestDetailsTransformer:
         MagicMockの場合でも変換できることをテスト
         """
         mock_record = MagicMock(spec=PullRequestRecord)
-        mock_record.model_dump.return_value = {
-            "number": 1, "title": "Test", "draft": False, "user": "testuser",
-            "created_at": None, "updated_at": None, "merged_at": None,
-            "closed_at": None, "state": "closed", "base_ref": "main",
-            "head_ref": "feature", "merged": False, "merge_commit_sha": None,
-            "comments": 0, "review_comments": 0, "commits": 1,
-            "additions": 10, "deletions": 5, "changed_files": 2
-        }
+        # Using **record.__dict__ requires fields to be present in __dict__.
+        # Setting attributes on MagicMock places them in its __dict__.
+        mock_record.number = 1
+        mock_record.title = "Test"
+        mock_record.draft = False
+        mock_record.user = "testuser"
+        mock_record.created_at = None
+        mock_record.updated_at = None
+        mock_record.merged_at = None
+        mock_record.closed_at = None
+        mock_record.state = "closed"
+        mock_record.base_ref = "main"
+        mock_record.head_ref = "feature"
+        mock_record.merged = False
+        mock_record.merge_commit_sha = None
+        mock_record.comments = 0
+        mock_record.review_comments = 0
+        mock_record.commits = 1
+        mock_record.additions = 10
+        mock_record.deletions = 5
+        mock_record.changed_files = 2
+
+        # Note: MagicMock.__dict__ will contain these fields PLUS internal _mock_ attributes.
+        # PullRequestDetailsRecord must be able to handle extra fields (default behavior: ignore).
+
         mock_records = [mock_record]
         transformer = PullRequestDetailsTransformer()
         result = transformer.run(mock_records)
